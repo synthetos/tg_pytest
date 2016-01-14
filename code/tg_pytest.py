@@ -120,13 +120,11 @@ def before_each_test(s):
 #   analyze_r() - analyze response objects in response list
 #
 #   t_data is the test specification, which contains analysis data
-#   tr_data is the 'r' part of the t_data (derived for convenience)
-#   tt_data is the 't' part of the t_data (derived for convenience)
 #   r_datae is a list of decoded JSON responses from the test run
-#   r_data is the iterator for responses from that list. Matches to tr_data
 #   out_fd is None if output file is not enabled
-
-#   Currently only checks Status return
+#
+#   tr_data is the 'r' part of the t_data (derived for convenience)
+#   rr_data is the 'r' part of the r_data. Matches to tr_data
 #
 
 def analyze_r(t_data, r_datae, out_fd):
@@ -134,14 +132,11 @@ def analyze_r(t_data, r_datae, out_fd):
         return
 
     tr_data = t_data["r"]
-    tt_data = t_data["t"]
-
     for r_data in r_datae:
         if "r" not in r_data:       # not an 'r' response line
             continue
             
-        # test if keys are present and match in t_data
-        rr_data = r_data["r"]
+        rr_data = r_data["r"]       # test if keys are present and match t_data
         for key in tr_data:
             if key in rr_data:
                 if tr_data[key] == rr_data[key]:
@@ -159,32 +154,32 @@ def analyze_r(t_data, r_datae, out_fd):
 #   Currently only checks stat value
 #
 
-def analyze_sr(t_data, r_data, out_fd):
-    if "sr" not in t_data:                   # are we analyzing sr's in this test?
+def analyze_sr(t_data, r_datae, out_fd):
+    if "sr" not in t_data:          # are we analyzing sr's in this test?
         return
 
     # find last SR in the response set
     last_sr = None
-    for response in r_data:
-        if "sr" in response:
-            last_sr = response
+    for r_data in r_datae:
+        if "sr" in r_data:
+            last_sr = r_data
     
     if last_sr == None:
         return
 
-    # test status if present in the t_data            
-    if "stat" in t_data["sr"]:
-        if "stat" not in last_sr["sr"]:
-            print("  ??????: stat is not present, {0}".format(last_sr["response"]))
-            return
-            
-        t_stat = t_data['sr']['stat']
-        r_stat = last_sr['sr']['stat']
-        if(r_stat != t_stat):
-            print("  FAILED: stat: {1} should be {2}, {0}".format(last_sr["response"], r_stat, t_stat))
-        else:
-            print("  passed: stat: {1}, {0}".format(last_sr["response"], r_stat))
+    # test if keys are present and match t_data           
+    rsr_data = last_sr["sr"]
+    tsr_data = t_data["sr"]
 
+    for key in tsr_data:
+        if key in rsr_data:
+            if tsr_data[key] == rsr_data[key]:
+                print("  passed: {0}: {1}, {2}".format(key, rsr_data[key], last_sr["response"]))
+            else:
+                print("  FAILED: {0}: {1} should be {2}, {3}".format(key, rsr_data[key], tsr_data[key], last_sr["response"]))
+        else:
+            print("  MISSING: \"{0}\" is missing from response, {1}".format(key, last_sr["response"]))
+        
 #
 #   analyze_er() - analyze exception reports
 #
@@ -193,7 +188,7 @@ def analyze_sr(t_data, r_data, out_fd):
 #
 
 def analyze_er(t_data, r_data, out_fd):
-    if "er" not in t_data:                   # are we analyzing er's in this test?
+    if "er" not in t_data:          # are we analyzing er's in this test?
         return
 
     for response in r_data:

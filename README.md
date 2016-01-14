@@ -55,17 +55,14 @@ Refer to test-001.json to follow along:
 
   - "t" is the test data, consisting of:
     - "label" will be displayed when the test is run
-    - "send" array of one or more lines to send for the test
-    - "fail" can be "hard" or "soft". Hard will abort the test run
-  - "r" contains the elements to check in the 'r 'responses:
-    - Include any keys that must match, e.g. xvm:12000.
-    - Only exact matches are supported
+    - "send" is na array of one or more strings to send for the test
+    - "fail" can be "hard" or "soft". Hard will abort the test run (future)
+  - "r" contains the elements to check in all 'r' responses:
+    - If 'r' is present, test all keys for exact match, e.g. xvm:12000
     - Use "status" to match the status in the footer
     - Use "count" to match the count in the footer
   - "sr" contains the elements to check in the last status report:
-    - "stat" must match or the test will fail
-    - The 'sr' or any 'sr' elements can be omitted and will not be tested
-    - Currently no other 'sr' elements are supported
+    - If 'sr' is present, test all keys or exact match, e.g. stat:3
   - "er" contains the elements to check in any exception reports
     - If 'er' is present in the test spec any ERs thrown will be displayed
     - No elements are actually matched.
