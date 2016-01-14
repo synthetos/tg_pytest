@@ -3,7 +3,7 @@
 
 Python-based TinyG tester for v8 and g2 code bases
 The tester runs JSON test files and reports results
-This project is maintained in the WingIDE Python but can use any Py env.
+This project is maintained in the WingIDE Python but can use any Python environment.
 
 Please note: tg_pytest is only intended to get the easy tests done;
 It is not intended to be a full-featured test framework.
@@ -78,7 +78,9 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
          "fail":"soft"}
 
 ### Known Limitations and Open Issues:
-  - Currently the USB port finder only works on OSX, but can be relatively
-      easily extended to Linux and Windows as all it needs to do is find the
-      USB port string
-  - Currently there is no buffer management on the send string. For any given test the send string array should be limited to 254 characters (v8 streaming mode), or 24 lines (v8 line mode), or 3000 characters (g2)  
+  - Currently the USB port finder only works on OSX, but can be relatively easily extended to Linux and Windows as all it needs to do is find the USB port string
+  - There is no buffer management on the send string, nor is there likely to be. For any given test the send string array should be limited to 254 characters (v8 streaming mode), or 24 lines (v8 line mode), or 3000 characters (g2)  
+  - Only exact-match checking is supported. This should be enough
+
+### TODO list
+  - Build a synthetic status report by combining the contents of all the SRs in the response set. Last value wins.
