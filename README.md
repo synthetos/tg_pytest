@@ -51,16 +51,17 @@ and looking for the ongoing results. It's a batch tester, not streaming.
       JSON linter like Atom (use json-linter package)
   - Not much is supported yet. As new items are added they will appear here
 
-Refer to test-001.json to follow along with the below:
-  
-  - "label" will be displayed when the test is run
+Refer to test-001.json to follow along:
+
   - "t" is the test data, consisting of:
+    - "label" will be displayed when the test is run
     - "send" array of one or more lines to send for the test
     - "fail" can be "hard" or "soft". Hard will abort the test run
   - "r" contains the elements to check in the 'r 'responses:
-    - "status" must match on all lines or the test will fail
-    - The 'r' or any 'r' elements can be omitted and will not be tested
-    - Currently no other 'r' elements are supported
+    - Include any keys that must match, e.g. xvm:12000.
+    - Only exact matches are supported
+    - Use "status" to match the status in the footer
+    - Use "count" to match the count in the footer
   - "sr" contains the elements to check in the last status report:
     - "stat" must match or the test will fail
     - The 'sr' or any 'sr' elements can be omitted and will not be tested
@@ -69,7 +70,18 @@ Refer to test-001.json to follow along with the below:
     - If 'er' is present in the test spec any ERs thrown will be displayed
     - No elements are actually matched.
 
+Note that strings in embedded JSON do not need to be escaped, as TinyG will always accept JSON in relaxed mode, regardless of whether it's set to relaxed or strict JSON mode. (In strict mode all *responses* will be strict, of course). The following example still produces valid JSON but is simpler to edit and maintain:
+
+    "t":{"label":"Read axis configuration",
+         "send":["{\"x\":null}"],
+         "fail":"soft"}         ...can be sent as:
+
+    "t":{"label":"Read axis configuration",
+         "send":["{x:null}"],
+         "fail":"soft"}
+
 ### Known Limitations and Open Issues:
   - Currently the USB port finder only works on OSX, but can be relatively
       easily extended to Linux and Windows as all it needs to do is find the
       USB port string
+  - Currently there is no buffer management on the send string. For any given test the send string array should be limited to 254 characters (v8 streaming mode), or 24 lines (v8 line mode), or 3000 characters (g2)  

@@ -12,6 +12,7 @@ __license__ = 'Python'
 TEST_DATA_DIR = "../data"
 TEST_MASTER_FILE = "test-master.cfg"
 
+OUTFILE_ENABLED = False                 # True or False
 SERIAL_TIMEOUT = 1                      # in seconds
 
 
@@ -119,27 +120,37 @@ def before_each_test(s):
 #   analyze_r() - analyze response objects in response list
 #
 #   t_data is the test specification, which contains analysis data
-#   r_data is a list of decoded JSON responses from the test run
+#   tr_data is the 'r' part of the t_data (derived for convenience)
+#   tt_data is the 't' part of the t_data (derived for convenience)
+#   r_datae is a list of decoded JSON responses from the test run
+#   r_data is the iterator for responses from that list. Matches to tr_data
+#   out_fd is None if output file is not enabled
+
 #   Currently only checks Status return
 #
 
-def analyze_r(t_data, r_data, out_fd):
-    if "r" not in t_data:
-        return                          # not analyzing r's in this test
+def analyze_r(t_data, r_datae, out_fd):
+    if "r" not in t_data:           # are we analyzing r's in this test?
+        return
 
-    for response in r_data:
-        if "r" not in response:
+    tr_data = t_data["r"]
+    tt_data = t_data["t"]
+
+    for r_data in r_datae:
+        if "r" not in r_data:       # not an 'r' response line
             continue
             
-        # test status if present in the t_data
-        if "status" in t_data["r"]:
-            t_status = t_data['r']['status']
-            r_status = response['f'][1]
-            if(r_status != t_status):
-                print("  FAILED: Status: {1} should be {2}, {0}".format(response["response"], r_status, t_status))
+        # test if keys are present and match in t_data
+        rr_data = r_data["r"]
+        for key in tr_data:
+            if key in rr_data:
+                if tr_data[key] == rr_data[key]:
+                    print("  passed: {0}: {1}, {2}".format(key, rr_data[key], r_data["response"]))
+                else:
+                    print("  FAILED: {0}: {1} should be {2}, {3}".format(key, rr_data[key], tr_data[key], r_data["response"]))
             else:
-                print("  passed: Status: {1}, {0}".format(response["response"], r_status))
-
+                print("  MISSING: \"{0}\" is missing from response, {1}".format(key, r_data["response"]))
+                
 #
 #   analyze_sr() - analyze last status report for completion conditions
 #
@@ -149,8 +160,8 @@ def analyze_r(t_data, r_data, out_fd):
 #
 
 def analyze_sr(t_data, r_data, out_fd):
-    if "sr" not in t_data:
-        return                          # not analyzing sr's in this test
+    if "sr" not in t_data:                   # are we analyzing sr's in this test?
+        return
 
     # find last SR in the response set
     last_sr = None
@@ -182,8 +193,8 @@ def analyze_sr(t_data, r_data, out_fd):
 #
 
 def analyze_er(t_data, r_data, out_fd):
-    if "er" not in t_data:
-        return                          # not analyzing er's in this test
+    if "er" not in t_data:                   # are we analyzing er's in this test?
+        return
 
     for response in r_data:
         if "er" in response:
@@ -211,15 +222,19 @@ def run_test_file(s, t_data, out_fd):
     for line in send:
         s.write(line+"\n")
 
-    r_data = []
+    r_datae = []
     for line in s.readlines():
-        r_data.append(json.loads(line))
-        r_data[-1]["response"] = line.strip()   # Add the response line to the dictionary
+        r_datae.append(json.loads(line))
+        r_datae[-1]["response"] = line.strip()   # Add the response line to the dictionary
+
+        if "r" in r_datae[-1]:
+            r_datae[-1]["r"]["status"] = r_datae[-1]['f'][1]  # extract status code from footer              
+            r_datae[-1]["r"]["count"] = r_datae[-1]['f'][2]   # extract byte/line count from footer
          
     # Run analyzers 
-    analyze_r(t_data, r_data, out_fd)
-    analyze_sr(t_data, r_data, out_fd)
-    analyze_er(t_data, r_data, out_fd)
+    analyze_r(t_data, r_datae, out_fd)
+    analyze_sr(t_data, r_datae, out_fd)
+    analyze_er(t_data, r_datae, out_fd)
 
 ################################## MAIN PROGRAM BODY ###########################
 #
@@ -273,14 +288,20 @@ def main():
         if tests == "fail":
             break;
 
-        # Open an output file if that was successful
-        out_file = test_file.split('.')[0]   # remove file ext from filename
-        out_file = normpath(join(out_file + "-out-" + timestamp + ".txt"))
-        out_fd = open(out_file, 'w')
-        print
-        print("RUNNING: {0} --> {1}".format(test_file, out_file))
+        # Open an output file if enabled
+        if OUTFILE_ENABLED:
+            out_file = test_file.split('.')[0]   # remove file ext from filename
+            out_file = normpath(join(out_file + "-out-" + timestamp + ".txt"))
+            try:
+                out_fd = open(out_file, 'w')
+            except:
+                print("Could not open output file {0}".format(out_file))
+        else:
+            out_fd = None
 
         # Run the test or tests found in the file
+        print
+        print("RUNNING: {0}".format(test_file))
         for test in tests:
             status = run_test_file(s, test, out_fd)
             if (status == "quit"):

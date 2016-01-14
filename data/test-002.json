@@ -5,11 +5,20 @@
 #   Basic configuration tests
 #
 
-# Test 1 - Axis configs
+# Test 1 - Read axis configs
 {
     "t":{"label":"Read axis configuration",
-        "send":["{x:n}"],
-        "fail":"soft"},
+         "send":["{x:n}"],
+         "fail":"soft"},
     "r":{"status":0},
+    "er":{}
+}
+
+# Test 2 - Axis settings
+{
+    "t":{"label":"Set axis max velocity",
+         "send":["{xvm:12000}"],
+         "fail":"soft"},
+    "r":{"status":0,"xvm":12000},
     "er":{}
 }
