@@ -1,0 +1,15 @@
+################################################################################
+#
+#   test-002.json
+#
+#   Basic configuration tests
+#
+
+# Test 1 - Axis configs
+{
+    "t":{"label":"Read axis configuration",
+        "send":["{x:n}"],
+        "fail":"soft"},
+    "r":{"status":0},
+    "er":{}
+}

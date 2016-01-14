@@ -1,17 +1,18 @@
 """ pytest.py  Simple functional/regression tester for TinyG and G2
 
 """
+__author__ = 'Alden Hart'
+__version__ = '$Revision: 0.1 $'[11:-2]
+__date__ = '$Date: 2016/01/14 12:00:00 $'
+__copyright__ = 'Copyright (c) 2016 Alden Hart'
+__license__ = 'Python'
 
 #### CONSTANTS ####
 
 TEST_DATA_DIR = "../data"
 TEST_MASTER_FILE = "test-master.cfg"
 
-__author__ = 'Alden Hart'
-__version__ = '$Revision: 0.1 $'[11:-2]
-__date__ = '$Date: 2016/01/07 12:00:00 $'
-__copyright__ = 'Copyright (c) 2016 Alden Hart'
-__license__ = 'Python'
+SERIAL_TIMEOUT = 1                      # in seconds
 
 
 #### PACKAGES ####
@@ -64,7 +65,7 @@ def open_serial_port():
     
     port = ports[0]
     try:
-        s = serial.Serial(port, 115200, rtscts=1, timeout=1)
+        s = serial.Serial(port, 115200, rtscts=1, timeout=SERIAL_TIMEOUT)
     except:
         print("Could not open serial port %s " % port)
         print("Maybe already open in another program like Coolterm")
@@ -135,9 +136,9 @@ def analyze_r(t_data, r_data, out_fd):
             t_status = t_data['r']['status']
             r_status = response['f'][1]
             if(r_status != t_status):
-                print("  FAILED: {0}, Status is {1} should be {2}".format(response["response"], r_status, t_status))
+                print("  FAILED: Status: {1} should be {2}, {0}".format(response["response"], r_status, t_status))
             else:
-                print("  passed: {0}, Status is {1}".format(response["response"], r_status))
+                print("  passed: Status: {1}, {0}".format(response["response"], r_status))
 
 #
 #   analyze_sr() - analyze last status report for completion conditions
@@ -163,15 +164,15 @@ def analyze_sr(t_data, r_data, out_fd):
     # test status if present in the t_data            
     if "stat" in t_data["sr"]:
         if "stat" not in last_sr["sr"]:
-            print("  ??????: {0}, stat is not present".format(last_sr["response"]))
+            print("  ??????: stat is not present, {0}".format(last_sr["response"]))
             return
             
         t_stat = t_data['sr']['stat']
         r_stat = last_sr['sr']['stat']
         if(r_stat != t_stat):
-            print("  FAILED: {0}, stat is {1} should be {2}".format(last_sr["response"], r_stat, t_stat))
+            print("  FAILED: stat: {1} should be {2}, {0}".format(last_sr["response"], r_stat, t_stat))
         else:
-            print("  passed: {0}, stat is {1}".format(last_sr["response"], r_stat))
+            print("  passed: stat: {1}, {0}".format(last_sr["response"], r_stat))
 
 #
 #   analyze_er() - analyze exception reports
@@ -197,8 +198,12 @@ def analyze_er(t_data, r_data, out_fd):
 def run_test_file(s, t_data, out_fd):
     before_each_test_file(s)
 
-    if "label" in t_data:
-        print t_data["label"]
+    if "t" not in t_data:
+        print("ERROR: No test data provided")
+        return
+    
+    if "label" in t_data["t"]:
+        print t_data["t"]["label"]
     
     # Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
@@ -272,6 +277,7 @@ def main():
         out_file = test_file.split('.')[0]   # remove file ext from filename
         out_file = normpath(join(out_file + "-out-" + timestamp + ".txt"))
         out_fd = open(out_file, 'w')
+        print
         print("RUNNING: {0} --> {1}".format(test_file, out_file))
 
         # Run the test or tests found in the file

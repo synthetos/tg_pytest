@@ -8,8 +8,9 @@
 
 # Test 1 - Traverse
 {
-    "label":"G0 movement",
-    "t":{"send":["g0x10y10","g0x0y0"],"fail":"soft"},
+    "t":{"label":"G0 movement",
+         "send":["g0x10y10","g0x0y0"],
+         "fail":"soft"},
     "r":{"status":0},
     "sr":{"stat":3},
     "er":{}
@@ -17,8 +18,9 @@
 
 # Test 2 - Feed
 {
-    "label":"G1 movement",
-    "t":{"send":["F1000", "g1x10y10","g1x0y0"],"fail":"soft"},
+    "t":{"label":"G1 movement",
+         "send":["F1000", "g1x10y10","g1x0y0"],
+         "fail":"soft"},
     "r":{"status":0},
     "sr":{"stat":3},
     "er":{}
@@ -26,8 +28,9 @@
 
 # Test 3 - Bad command
 {
-    "label":"Bad Gcode command",
-    "t":{"send":["G7x34.23"],"fail":"soft"},
+    "t":{"label":"Bad Gcode command",
+         "send":["G7x34.23"],
+         "fail":"soft"},
     "r":{"status":131},
     "sr":{"stat":3},
     "er":{}

@@ -69,7 +69,7 @@ Refer to test-001.json to follow along with the below:
     - If 'er' is present in the test spec any ERs thrown will be displayed
     - No elements are actually matched.
 
-### Open Issues:
+### Known Limitations and Open Issues:
   - Currently the USB port finder only works on OSX, but can be relatively
       easily extended to Linux and Windows as all it needs to do is find the
       USB port string
