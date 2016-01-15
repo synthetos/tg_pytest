@@ -42,22 +42,24 @@ from inspect import getmembers
 #
 #   Serial Ports and Board Initialization
 #
-#   Return a list of available serial ports or a [None] list
-#   Only works on OSX and FTDI (v8)
-#   Could be generalized - try something like this (which doesn't work yet):
-#    from serial.tools.list_ports import comports
-#    uports = sorted(p[0] for p in comports() )
-#    ports = [p.encode("utf8") for p in uports]
 #
 def get_serial_ports():
+    """
+    Return a list of available serial ports or a [None] list
+    Only works on OSX
+    Could be generalized for other platforms - try something like this (which doesn't work yet):
+        from serial.tools.list_ports import comports
+        uports = sorted(p[0] for p in comports() )
+        ports = [p.encode("utf8") for p in uports]
+    """    
     return glob.glob('/dev/tty.usb*')
 
-#
-#   Open port or die trying
-#   Does not yet handle multiple connected devices
-#   The test code relies on a reasonable read timeout - like 1 second
-#
+
 def open_serial_port(): 
+    """
+    Open port or die trying
+    Does not yet handle multiple connected devices
+    """
     ports = get_serial_ports()
     if len(ports) == 0:
         print ("No serial port found, Exiting")
@@ -78,10 +80,11 @@ def open_serial_port():
         print("Serial port opened:    {0}".format(s.name))
     return s
 
-#
-#   Initialize TinyG - send something to ensure board is responding and set JSON mode
-#
+
 def init_tinyg(s): 
+    """
+    Initialize TinyG - send something to ensure board is responding and set JSON mode
+    """
     s.write("{\"fb\":null}\n")      # The first write often returns garbage
     r = s.readline()
     s.write("{\"fb\":null}\n")      # So do it again
@@ -115,80 +118,64 @@ def before_each_test(s):
 #   Analyzers
 #
 
-#
-#   analyze_r() - analyze response objects in response list
-#
-#   t_data is the test specification, which contains analysis data
-#   r_datae is a list of decoded JSON responses from the test run
-#   out_fd is None if output file is not enabled
-#
-#   tr_data is the 'r' part of the t_data (derived for convenience)
-#   rr_data is the 'r' part of the r_data. Matches to tr_data
-#
-
 def analyze_r(t_data, r_datae, out_fd):
+    """
+    Analyze response objects in response list
+    t_data is the test specification, which contains analysis data
+    r_datae is a list of decoded JSON responses from the test run
+    out_fd is None if output file is not enabled
+    """
     if "r" not in t_data:           # are we analyzing r's in this test?
         return
 
-    t_data_r = t_data["r"]
     for r_data in r_datae:
         if "r" not in r_data:       # not an 'r' response line
             continue
             
-        r_data_r = r_data["r"]       # test if keys are present and match t_data
-        for key in t_data_r:
-            if key in r_data_r:
-                if t_data_r[key] == r_data_r[key]:
-                    print("  passed: {0}: {1}, {2}".format(key, r_data_r[key], r_data["response"]))
+        for k in t_data["r"]:
+            if k in r_data["r"]:
+                if t_data["r"][k] == r_data["r"][k]:
+                    print("  passed: {0}: {1}, {2}".format(k, r_data["r"][k], r_data["response"]))
                 else:
-                    print("  FAILED: {0}: {1} should be {2}, {3}".format(key, r_data_r[key], t_data_r[key], r_data["response"]))
+                    print("  FAILED: {0}: {1} should be {2}, {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
             else:
-                print("  MISSING: \"{0}\" is missing from response, {1}".format(key, r_data["response"]))
+                print("  MISSING: \"{0}\" is missing from response, {1}".format(k, r_data["response"]))
                 
-#
-#   analyze_sr() - analyze last status report for completion conditions
-#
-#   t_data is the test specification, which contains analysis data
-#   r_data is a list of decoded JSON responses from the test run
-#   Currently only checks stat value
-#
 
 def analyze_sr(t_data, r_datae, out_fd):
+    """
+    Analyze last status report for completion conditions
+    t_data is the test specification, which contains analysis data
+    r_data is a list of decoded JSON responses from the test run
+    """
     if "sr" not in t_data:          # are we analyzing sr's in this test?
         return
 
-    # find last SR in the response set
-    last_sr = None
+    build_sr = {}                   # build a synthetic SR to reconstruct filtered SRs
+    last_sr = None                  # record the last SR
     for r_data in r_datae:
         if "sr" in r_data:
             last_sr = r_data
+            for k in r_data["sr"]:  # because a dictionary comprehension won't update KVs in an existing dict?
+                build_sr[k] = r_data["sr"][k]
     
-    if last_sr == None:
+    if last_sr == None:             # return if there were no SRs in the response set
         return
 
     # test if keys are present and match t_data           
-    r_data_sr = last_sr["sr"]
-    t_data_sr = t_data["sr"]
-
-    for key in t_data_sr:
-        if key in r_data_sr:
-            if tsr_data[key] == r_data_r[key]:
-                print("  passed: {0}: {1}, {2}".format(key, r_data_sr[key], last_sr["response"]))
+    for k in t_data["sr"]:
+        if k in build_sr:
+            if t_data["sr"][k] == build_sr[k]:
+                print("  passed: {0}: {1}, {2}".format(k, build_sr[k], last_sr["response"]))
             else:
-                print("  FAILED: {0}: {1} should be {2}, {3}".format(key, r_data_sr[key], t_data_sr[key], last_sr["response"]))
+                print("  FAILED: {0}: {1} should be {2}, {3}".format(k, build_sr[k], t_data["sr"][k], last_sr["response"]))
         else:
-            print("  MISSING: \"{0}\" is missing from response, {1}".format(key, last_sr["response"]))
-        
-#
-#   analyze_er() - analyze exception reports
-#
-#   t_data is the test specification, which contains analysis data
-#   r_data is a list of decoded JSON responses from the test run
-#
+            print("  MISSING: \"{0}\" is missing from response, {1}".format(k, last_sr["response"]))
+
 
 def analyze_er(t_data, r_datae, out_fd):
     """
-    analyze exception reports
+    Analyze exception reports
     t_data is the test specification, which contains analysis data
     r_data is a list of decoded JSON responses from the test run
     
@@ -199,7 +186,7 @@ def analyze_er(t_data, r_datae, out_fd):
 
     for r_data in r_datae:
         if "er" in r_data:
-            print("  EXCEPTION: {0}".format(response["response"]))
+            print("  EXCEPTION: {0}".format(r_data["response"]))
 
 ################################################################################
 #
@@ -214,7 +201,8 @@ def run_test_file(s, t_data, out_fd):
         return
     
     if "label" in t_data["t"]:
-        print t_data["t"]["label"]
+        print
+        print("TEST: {0}".format(t_data["t"]["label"]))
     
     # Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
@@ -235,6 +223,7 @@ def run_test_file(s, t_data, out_fd):
     analyze_r(t_data, r_datae, out_fd)
     analyze_sr(t_data, r_datae, out_fd)
     analyze_er(t_data, r_datae, out_fd)
+
 
 ################################## MAIN PROGRAM BODY ###########################
 #
@@ -259,7 +248,7 @@ def main():
         sys.exit(1)
 
     # Build a list of input files and test each one for existence
-    print("BUILDING TEST SET FROM MASTER FILE")
+    print("MASTER: Building test set from master file")
     temp_files = [x.strip() for x in master_fd.readlines()]     # raw file list
     test_files = []                                             # processed list
 
@@ -271,10 +260,10 @@ def main():
         try:
             exists(file)
             test_files.append(file)
-            print("  FILE: {0}".format(file))
+            print("  {0}".format(file))
         except:
-            print("  FILE: {0} cannot be opened, not added".format(file))
-    print    
+            print("  {0} cannot be opened, not added".format(file))
+    print
     
     # Iterate through the master file to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
@@ -301,7 +290,7 @@ def main():
 
         # Run the test or tests found in the file
         print
-        print("RUNNING: {0}".format(test_file))
+        print("FILE: {0}".format(test_file))
         for test in tests:
             status = run_test_file(s, test, out_fd)
             if (status == "quit"):
@@ -324,16 +313,14 @@ def main():
 
 ################################## UTILITIES ###################################
 
-#
-#   split_json_file
-#
-#   Accepts a file descriptor for a JSON test file
-#   Returns a list of decoded (loaded) JSON objects
-#   Test file contains 1 or more independent JSON objects that must be separated 
-#     by 1 or more comment lines
-#   Comments are any line starting with "#" and must not contain open curlies "{"
-#
 def split_json_file(fd):
+    """
+    Accepts a file descriptor for a JSON test file
+    Returns a list of decoded (loaded) JSON objects
+    Test file contains 1 or more independent JSON objects that must be separated 
+      by 1 or more comment lines
+    Comments are any line starting with "#" and must not contain open curlies "{"
+    """
     data = []
     file_text = fd.read()                   # may want a try/except block on this read
     chunks = file_text.split('#')

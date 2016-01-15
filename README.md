@@ -62,7 +62,7 @@ Refer to test-001.json to follow along:
     - If "r" is present, test all keys for exact match, e.g. xvm:12000
     - Use "status" to match the status in the footer
     - Use "count" to match the count in the footer
-  - "sr" contains the elements to check in the last status report:
+  - "sr" contains the elements to check in the status reports:
     - If "sr" is present, test all keys or exact match, e.g. stat:3
   - "er" contains the elements to check in any exception reports
     - Any ERs thrown will be displayed
@@ -85,4 +85,3 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
   - Only exact-match checking is supported. This should be enough
 
 ### TODO list
-  - Build a synthetic status report by combining the contents of all the SRs in the response set. Last value wins.
