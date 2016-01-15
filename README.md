@@ -53,20 +53,21 @@ ongoing results. It's a batch tester, not streaming.
 
 Refer to test-001.json to follow along:
 
-  - "t" is the test data, consisting of:
+  - "t" is the test data object, consisting of:
     - "label" will be displayed when the test is run
     - "send" is na array of one or more strings to send for the test
     - "delay" is an optional delay in seconds between send lines. Values < 1 are OK
-    - "fail" can be "hard" or "soft" (default if omitted). Hard will abort the test run.
-  - "r" contains the elements to check in all 'r' responses:
-    - If 'r' is present, test all keys for exact match, e.g. xvm:12000
+    - "fail" can be "hard" or "soft" (default if omitted). Hard will abort the test run (not yet implemented)
+  - "r" contains the elements to check in all "r" responses:
+    - If "r" is present, test all keys for exact match, e.g. xvm:12000
     - Use "status" to match the status in the footer
     - Use "count" to match the count in the footer
   - "sr" contains the elements to check in the last status report:
-    - If 'sr' is present, test all keys or exact match, e.g. stat:3
+    - If "sr" is present, test all keys or exact match, e.g. stat:3
   - "er" contains the elements to check in any exception reports
-    - If 'er' is present in the test spec any ERs thrown will be displayed
-    - No elements are actually matched.
+    - Any ERs thrown will be displayed
+    - ERs will be displayed by default unless disabled by "display":false
+    - No elements are actually matched
 
 Note that strings in embedded JSON do not need to be escaped, as TinyG will always accept JSON in relaxed mode, regardless of whether it's set to relaxed or strict JSON mode. (In strict mode all *responses* will be strict, of course). The shortcuts also work, like 't' for true or 'n' for null. The following example still produces valid JSON but is simpler to edit and maintain:
 

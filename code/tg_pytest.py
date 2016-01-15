@@ -130,18 +130,18 @@ def analyze_r(t_data, r_datae, out_fd):
     if "r" not in t_data:           # are we analyzing r's in this test?
         return
 
-    tr_data = t_data["r"]
+    t_data_r = t_data["r"]
     for r_data in r_datae:
         if "r" not in r_data:       # not an 'r' response line
             continue
             
-        rr_data = r_data["r"]       # test if keys are present and match t_data
-        for key in tr_data:
-            if key in rr_data:
-                if tr_data[key] == rr_data[key]:
-                    print("  passed: {0}: {1}, {2}".format(key, rr_data[key], r_data["response"]))
+        r_data_r = r_data["r"]       # test if keys are present and match t_data
+        for key in t_data_r:
+            if key in r_data_r:
+                if t_data_r[key] == r_data_r[key]:
+                    print("  passed: {0}: {1}, {2}".format(key, r_data_r[key], r_data["response"]))
                 else:
-                    print("  FAILED: {0}: {1} should be {2}, {3}".format(key, rr_data[key], tr_data[key], r_data["response"]))
+                    print("  FAILED: {0}: {1} should be {2}, {3}".format(key, r_data_r[key], t_data_r[key], r_data["response"]))
             else:
                 print("  MISSING: \"{0}\" is missing from response, {1}".format(key, r_data["response"]))
                 
@@ -167,15 +167,15 @@ def analyze_sr(t_data, r_datae, out_fd):
         return
 
     # test if keys are present and match t_data           
-    rsr_data = last_sr["sr"]
-    tsr_data = t_data["sr"]
+    r_data_sr = last_sr["sr"]
+    t_data_sr = t_data["sr"]
 
-    for key in tsr_data:
-        if key in rsr_data:
-            if tsr_data[key] == rsr_data[key]:
-                print("  passed: {0}: {1}, {2}".format(key, rsr_data[key], last_sr["response"]))
+    for key in t_data_sr:
+        if key in r_data_sr:
+            if tsr_data[key] == r_data_r[key]:
+                print("  passed: {0}: {1}, {2}".format(key, r_data_sr[key], last_sr["response"]))
             else:
-                print("  FAILED: {0}: {1} should be {2}, {3}".format(key, rsr_data[key], tsr_data[key], last_sr["response"]))
+                print("  FAILED: {0}: {1} should be {2}, {3}".format(key, r_data_sr[key], t_data_sr[key], last_sr["response"]))
         else:
             print("  MISSING: \"{0}\" is missing from response, {1}".format(key, last_sr["response"]))
         
@@ -186,20 +186,20 @@ def analyze_sr(t_data, r_datae, out_fd):
 #   r_data is a list of decoded JSON responses from the test run
 #
 
-def analyze_er(t_data, r_data, out_fd):
+def analyze_er(t_data, r_datae, out_fd):
     """
     analyze exception reports
     t_data is the test specification, which contains analysis data
     r_data is a list of decoded JSON responses from the test run
     
     """
-    if "er" not in t_data:          # are we analyzing er's in this test?
-        return
+    if "display" in t_data["er"]:
+        if t_data["er"]["display"] == False:
+            return
 
-    for response in r_data:
-        if "er" in response:
+    for r_data in r_datae:
+        if "er" in r_data:
             print("  EXCEPTION: {0}".format(response["response"]))
-
 
 ################################################################################
 #

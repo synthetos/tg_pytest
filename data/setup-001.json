@@ -1,0 +1,57 @@
+################################################################################
+#
+#   setup-001.json
+#
+#   Setup for disconnected tests (i.e. no machine)
+#
+
+#
+{
+    "t":{"label":"Set configs for no-machine tests",
+         "send":["{js:1}","{jv:5}","{tv:1}","{qv:0}","{sv:2}","{si:100}"],
+         "delay":0.100,
+         "fail":"hard"},
+         "verbosity":2,
+    "r":{"status":0},
+    "er":{}
+}
+#
+{
+    "t":{"label":"Set status report for no-machine tests",
+         "send":["{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}"],
+         "fail":"hard"},
+         "verbosity":2,
+    "r":{"status":0},
+    "er":{}
+}
+#
+{
+    "t":{"label":"Set gcode defaults for no-machine tests",
+         "send":["G21 G94 G90 G91.1",
+                 "G10 L2 P1 X0 Y0 Z0",
+                 "G10 L2 P2 X0 Y0 Z0",
+                 "G10 L2 P3 X0 Y0 Z0",
+                 "G10 L2 P4 X0 Y0 Z0",
+                 "G10 L2 P5 X0 Y0 Z0",
+                 "G10 L2 P6 X0 Y0 Z0",
+                 "G54"
+               ],
+         "fail":"hard"},
+    "r":{"status":0},
+    "er":{}
+}
+#
+{
+    "t":{"label":"Force home position for no-machine tests",
+         "send":["g28.3 x0 y0 z0"],
+         "fail":"hard"},
+    "r":{"status":0},
+    "er":{}
+}
+#
+{
+    "t":{"label":"Tail wag",
+         "send":["g0 x10 y10", "g0 x0 y0"]
+        },
+    "er":{}
+}
