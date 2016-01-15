@@ -12,9 +12,8 @@ __license__ = 'Python'
 TEST_DATA_DIR = "../data"
 TEST_MASTER_FILE = "test-master.cfg"
 
-OUTFILE_ENABLED = False                 # True or False
-SERIAL_TIMEOUT = 1                      # in seconds
-
+OUTFILE_ENABLED = False     # True or False
+SERIAL_TIMEOUT = 1          # in seconds
 
 #### PACKAGES ####
 
@@ -188,6 +187,12 @@ def analyze_sr(t_data, r_datae, out_fd):
 #
 
 def analyze_er(t_data, r_data, out_fd):
+    """
+    analyze exception reports
+    t_data is the test specification, which contains analysis data
+    r_data is a list of decoded JSON responses from the test run
+    
+    """
     if "er" not in t_data:          # are we analyzing er's in this test?
         return
 
@@ -254,8 +259,8 @@ def main():
         sys.exit(1)
 
     # Build a list of input files and test each one for existence
-    print("Adding files to test run")
-    temp_files = [x.strip() for x in master_fd.readlines()]     # input list
+    print("BUILDING TEST SET FROM MASTER FILE")
+    temp_files = [x.strip() for x in master_fd.readlines()]     # raw file list
     test_files = []                                             # processed list
 
     for file in temp_files:

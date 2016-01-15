@@ -6,9 +6,9 @@ The tester runs JSON test files and reports results
 This project is maintained in the WingIDE Python but can use any Python environment.
 
 Please note: tg_pytest is only intended to get the easy tests done;
-It is not intended to be a full-featured test framework.
-It is not suited to running continuous tests, i.e. running a Gcode file
-and looking for the ongoing results. It's a batch tester, not streaming.
+It is not intended to be a full-featured test framework. It is not suited
+to running continuous tests, i.e. running a Gcode file and looking for the
+ongoing results. It's a batch tester, not streaming.
 
 ### Usage:
 
@@ -21,7 +21,7 @@ and looking for the ongoing results. It's a batch tester, not streaming.
 #### Test Sequence (what should happen):
 
   - Open a tinyg port or fail trying
-  - Open test-master.cfg file.
+  - Open test-master.cfg file
   - Create a test date and time string as an ISO8601 string
   - For each test in the master file:
     - Open the JSON file for that test
@@ -56,7 +56,8 @@ Refer to test-001.json to follow along:
   - "t" is the test data, consisting of:
     - "label" will be displayed when the test is run
     - "send" is na array of one or more strings to send for the test
-    - "fail" can be "hard" or "soft". Hard will abort the test run (future)
+    - "delay" is an optional delay in seconds between send lines. Values < 1 are OK
+    - "fail" can be "hard" or "soft" (default if omitted). Hard will abort the test run.
   - "r" contains the elements to check in all 'r' responses:
     - If 'r' is present, test all keys for exact match, e.g. xvm:12000
     - Use "status" to match the status in the footer
@@ -67,14 +68,14 @@ Refer to test-001.json to follow along:
     - If 'er' is present in the test spec any ERs thrown will be displayed
     - No elements are actually matched.
 
-Note that strings in embedded JSON do not need to be escaped, as TinyG will always accept JSON in relaxed mode, regardless of whether it's set to relaxed or strict JSON mode. (In strict mode all *responses* will be strict, of course). The following example still produces valid JSON but is simpler to edit and maintain:
+Note that strings in embedded JSON do not need to be escaped, as TinyG will always accept JSON in relaxed mode, regardless of whether it's set to relaxed or strict JSON mode. (In strict mode all *responses* will be strict, of course). The shortcuts also work, like 't' for true or 'n' for null. The following example still produces valid JSON but is simpler to edit and maintain:
 
     "t":{"label":"Read axis configuration",
          "send":["{\"x\":null}"],
          "fail":"soft"}         ...can be sent as:
 
     "t":{"label":"Read axis configuration",
-         "send":["{x:null}"],
+         "send":["{x:n}"],
          "fail":"soft"}
 
 ### Known Limitations and Open Issues:
