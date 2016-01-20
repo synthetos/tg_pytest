@@ -12,8 +12,7 @@
          "send":["g0x10y10","g0x0y0"],
          "fail":"soft"},
     "r":{"status":0},
-    "sr":{"stat":3},
-    "er":{}
+    "sr":{"stat":3}
 }
 
 # Test 2 - Feed
@@ -22,8 +21,7 @@
          "send":["F1000", "g1x10y10","g1x0y0"],
          "fail":"soft"},
     "r":{"status":0},
-    "sr":{"stat":3},
-    "er":{}
+    "sr":{"stat":3}
 }
 
 # Test 3 - Bad command
@@ -32,6 +30,5 @@
          "send":["G7x34.23"],
          "fail":"soft"},
     "r":{"status":131},
-    "sr":{"stat":3},
-    "er":{}
+    "sr":{"stat":3}
 }

@@ -56,8 +56,8 @@ Refer to test-001.json to follow along:
   - "t" is the test data object, consisting of:
     - "label" will be displayed when the test is run
     - "send" is na array of one or more strings to send for the test
-    - "delay" is an optional delay in seconds between send lines. Values < 1 are OK
-    - "fail" can be "hard" or "soft" (default if omitted). Hard will abort the test run (not yet implemented)
+    - "delay" is optional delay in seconds between sends. Values < 1 are OK
+    - "fail" can be "hard" or "soft" (default if omitted). Hard will abort the test run (future)
   - "r" contains the elements to check in all "r" responses:
     - If "r" is present, test all keys for exact match, e.g. xvm:12000
     - Use "status" to match the status in the footer

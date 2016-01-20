@@ -1,0 +1,17 @@
+################################################################################
+#
+#   exceptionReports-001.json
+#
+
+{
+    "t":{"label":"Invoke bogus exception report",
+         "send":["{er:n}"]},
+        "r":{"status":29}
+}
+#
+{
+    "t":{"label":"Write during move to see rejected write",
+         "send":["g0 x10 f200", "{xvm:1000}"],
+         "delay":0.200},
+        "r":{"status":106}
+}

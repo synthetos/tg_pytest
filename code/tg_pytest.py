@@ -89,6 +89,8 @@ def init_tinyg(s):
     r = s.readline()
     s.write("{\"fb\":null}\n")      # So do it again
     r = s.readline()
+    s.write("{\"sr\":null}\n")      # So do it again
+    r = s.readline()
     print("Serial port connected: {0}".format(r))
 
 
@@ -96,6 +98,7 @@ def init_tinyg(s):
 #
 #   Test setup 
 #
+
 def before_all_tests(s):
     print("SETUP: Before all tests")
     s.write("{clear:null}\n")       # clear any alarms
@@ -145,8 +148,6 @@ def analyze_r(t_data, r_datae, out_fd):
 def analyze_sr(t_data, r_datae, out_fd):
     """
     Analyze last status report for completion conditions
-    t_data is the test specification, which contains analysis data
-    r_data is a list of decoded JSON responses from the test run
     """
     if "sr" not in t_data:          # are we analyzing sr's in this test?
         return
@@ -171,18 +172,18 @@ def analyze_sr(t_data, r_datae, out_fd):
                 print("  FAILED: {0}: {1} should be {2}, {3}".format(k, build_sr[k], t_data["sr"][k], last_sr["response"]))
         else:
             print("  MISSING: \"{0}\" is missing from response, {1}".format(k, last_sr["response"]))
-
+            
 
 def analyze_er(t_data, r_datae, out_fd):
     """
     Analyze exception reports
-    t_data is the test specification, which contains analysis data
-    r_data is a list of decoded JSON responses from the test run
-    
+    Disable using "display":false
+    Does not current match any keys - just displays the exception
     """
-    if "display" in t_data["er"]:
-        if t_data["er"]["display"] == False:
-            return
+    if "er" in t_data:
+        if "display" in t_data["er"]:
+            if t_data["er"]["display"] == False:
+                return
 
     for r_data in r_datae:
         if "er" in r_data:
@@ -203,17 +204,29 @@ def run_test_file(s, t_data, out_fd):
     if "label" in t_data["t"]:
         print
         print("TEST: {0}".format(t_data["t"]["label"]))
+
+    delay = 0
+    if "delay" in t_data["t"]:
+        delay = t_data["t"]["delay"]
     
     # Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
     for line in send:
+        print("  sending: {0}".format(line))
         s.write(line+"\n")
+        time.sleep(delay)
 
     r_datae = []
     for line in s.readlines():
-        r_datae.append(json.loads(line))
-        r_datae[-1]["response"] = line.strip()   # Add the response line to the dictionary
+        line = line.strip()
+        try:
+            r_datae.append(json.loads(line))
+        except:
+            print("  FAILED: Unable to decode response from TinyG {0}".format(line))
+            return
+
+        r_datae[-1]["response"] = line      # Add the response line to the dictionary
 
         if "r" in r_datae[-1]:
             r_datae[-1]["r"]["status"] = r_datae[-1]['f'][1]  # extract status code from footer              
@@ -229,6 +242,7 @@ def run_test_file(s, t_data, out_fd):
 #
 #   Main
 #
+
 def main():
 
     t_data = { "status":0 }
@@ -254,6 +268,9 @@ def main():
 
     for file in temp_files:
         if file[:1] == '#':                 # skip over commented lines
+            continue
+
+        if file == "":                      # skip over blank lines
             continue
 
         file = file.split('#')[0].strip()   # strip inline comments from file text line
@@ -321,14 +338,21 @@ def split_json_file(fd):
       by 1 or more comment lines
     Comments are any line starting with "#" and must not contain open curlies "{"
     """
-    data = []
-    file_text = fd.read()                   # may want a try/except block on this read
+    try:
+        file_text = fd.read()
+    except:
+        print("Cannot read JSON file")
+
     chunks = file_text.split('#')
     chunks = [x.strip() for x in chunks]
 
+    data = []
     for chunk in chunks:
-        if len(chunk) == 0:                 # skip blank line
+        if len(chunk) == 0:                 # skip blank lines
             continue
+        
+        if "EOF" in chunk:                  # look for end-of-file marker
+            return data
         
         if "{" not in chunk:                # skip comment
             continue

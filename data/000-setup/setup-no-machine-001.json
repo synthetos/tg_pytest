@@ -12,8 +12,7 @@
          "delay":0.100,
          "fail":"hard"},
          "verbosity":2,
-    "r":{"status":0},
-    "er":{}
+    "r":{"status":0}
 }
 #
 {
@@ -21,8 +20,7 @@
          "send":["{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}"],
          "fail":"hard"},
          "verbosity":2,
-    "r":{"status":0},
-    "er":{}
+    "r":{"status":0}
 }
 #
 {
@@ -37,21 +35,18 @@
                  "G54"
                ],
          "fail":"hard"},
-    "r":{"status":0},
-    "er":{}
+    "r":{"status":0}
 }
 #
 {
     "t":{"label":"Force home position for no-machine tests",
          "send":["g28.3 x0 y0 z0"],
          "fail":"hard"},
-    "r":{"status":0},
-    "er":{}
+    "r":{"status":0}
 }
 #
 {
     "t":{"label":"Tail wag",
          "send":["g0 x10 y10", "g0 x0 y0"]
-        },
-    "er":{}
+        }
 }
