@@ -1,0 +1,34 @@
+################################################################################
+#
+#   json-001.json - JSON tests
+#
+# SUCCESS CASES
+{
+    "t":{"label":"Simple JSON read request",
+         "send":["{fb:n}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Group JSON read request",
+         "send":["{x:n}"]},
+        "r":{"status":0}
+}
+# EXCEPTIONS
+{
+    "t":{"label":"JSON of excessive length > 128 bytes",
+         "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130\"}"]},
+        "r":{"status":107}
+}
+#
+{
+    "t":{"label":"JSON exceeds maximum pad characters",
+         "send":["                {x:n}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"JSON exceeds maximum name characters",
+         "send":["{nameistoolong:n}"]},
+        "r":{"status":107}
+}

@@ -1,0 +1,102 @@
+################################################################################
+#
+#   gcode-arc-g17-mm-baseline-001.json
+#
+# SETUP
+{
+    "t":{"label":"Set mm mode, XY plane, feed rate",
+         "send":["G21 G17 G94 G91.1", "F2000", "G0X100Y100Z0", "G28.1"]}
+}
+#
+# ARC TESTS START HERE
+#
+{
+    "t":{"label":"CW 90 degree arc",
+         "send":["G28","G2 I25 X125 Y125"]},
+    "sr":{"posx": 125, "posy": 125},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CW 180 degree arc",
+         "send":["G28","G2 I25 X150"]},
+    "sr":{"posx": 150, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CW 270 degree arc",
+         "send":["G28","G2 I25 X125 Y75"]},
+    "sr":{"posx": 125, "posy": 75},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CW 360 degree circle - full circle spec",
+         "send":["G28","G2 I25"]},
+    "sr":{"posx": 100, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CW 540 degree circle - 1.5 rotations",
+         "send":["G28","G2 I25 X150 P1"]},
+    "sr":{"posx": 150, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CW 720 degree circle - 2 rotations",
+       	 "send":["G28","G2 I25 P2"]},
+    "sr":{"posx": 100, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CW 720 degree helix - 2 rotations w/Z plunge",
+       	 "send":["G28","G2 I25 Z-25 P2"]},
+    "sr":{"posx": 100, "posy": 100, "posz": -25},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CCW 90 degree arc",
+      	 "send":["G28","G3 I25 X125 Y75"]},
+    "sr":{"posx": 125, "posy": 75},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CCW 180 degree arc",
+      	 "send":["G28","G3 I25 X150"]},
+    "sr":{"posx": 150, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CCW 360 degree circle - tests full circle specification",
+      	 "send":["G28","G3 I25"]},
+    "sr":{"posx": 100, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CCW 540 degree circle - 1.5 rotations",
+      	 "send":["G28","G3 I25 X150 P1"]},
+    "sr":{"posx": 150, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CCW 720 degree circle - 2 rotations",
+      	 "send":["G28","G3 I25 P2"]},
+    "sr":{"posx": 100, "posy": 100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"CCW 720 degree helix - 2 rotations w/Z plunge",
+      	 "send":["G28","G3 I25 Z-25 P2"]},
+    "sr":{"posx": 100, "posy": 100, "posz": -25},
+    "r":{"status":0}
+}

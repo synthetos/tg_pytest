@@ -10,13 +10,7 @@
 }
 #
 {
-    "t":{"label":"Try to add a bad token to status report",
-         "send":["{sr:{BOGUS:t}}","{sr:n}"]},
-        "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Request default status report - must have posx, posy, posz, posa for these tests to work",
+    "t":{"label":"Request default SR - must have posx, posy, posz, posa for these tests",
          "send":["{sr:n}"]},
          "r":{"status":0}
 }
@@ -40,8 +34,14 @@
 }
 #
 {
-    "t":{"label":"Add 'posa' to status report",
+    "t":{"label":"Add 'posa' to status report using 't'",
          "send":["{sr:{posa:t}}","{sr:n}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Add 'posa' to status report using 'true'",
+         "send":["{sr:{posa:true}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
@@ -65,32 +65,36 @@
 #
 {
     "t":{"label":"Setup full status report",
-      "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,admo:t,frmo:t,momo:t,stat:t"]},
+      "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,admo:t,frmo:t,momo:t,stat:t}}"]},
          "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Try to add a bad token to status report",
-         "send":["{sr:{BOGUS:t}}","{sr:n}"]},
-        "r":{"status":0}
+    "t":{"label":"Try to add a bad token to status report - single token",
+         "send":["{sr:{BOGUS:t}}"]},
+        "r":{"status":100}
 }
 #
 {
-    "t":{"label":"Try to add a bad token to status report",
-         "send":["{sr:{posx:t,BOGUS:t,posz:t}}","{sr:n}"]},
-        "r":{"status":0}
-}
-#
-
-# EOF
-{
-    "t":{"label":"Invoke status report",
-         "send":["{sr:n}"]},
-         "r":{"status":0}
+    "t":{"label":"Try to add a bad token to status report - list of tokens",
+         "send":["{sr:{posx:t,BOGUS:t,posz:t}}"]},
+        "r":{"status":100}
 }
 #
 {
-    "t":{"label":"Invoke status report",
-         "send":["{sr:n}"]},
-         "r":{"status":0}
+    "t":{"label":"Try to add token with string format",
+         "send":["{sr:{posx:\"ON\"}}"]},
+        "r":{"status":103}
+}
+#
+{
+    "t":{"label":"Try to add token with int format",
+         "send":["{sr:{posx:42}}"]},
+        "r":{"status":103}
+}
+#
+{
+    "t":{"label":"Try to add token with float format",
+         "send":["{sr:{posx:42.42}}"]},
+        "r":{"status":103}
 }

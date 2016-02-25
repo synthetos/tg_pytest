@@ -71,6 +71,7 @@ def open_serial_port():
     except:
         print("Could not open serial port %s " % port)
         print("Maybe already open in another program like Coolterm")
+        print("Quit TinyG Tester")
         sys.exit(1)
     
     if not s.isOpen :
@@ -101,6 +102,7 @@ def init_tinyg(s):
 
 def before_all_tests(s):
     print("SETUP: Before all tests")
+    s.write("M2\n")                 # end and motion
     s.write("{clear:null}\n")       # clear any alarms
     responses = s.readlines()       # read all output before returning
     return
@@ -113,6 +115,7 @@ def before_each_test_file(s):
 
 def before_each_test(s):
 #    print("SETUP: Before each test")
+    s.write("{clear:null}\n")       # clear any alarms
     return
 
 
@@ -131,18 +134,37 @@ def analyze_r(t_data, r_datae, out_fd):
     if "r" not in t_data:           # are we analyzing r's in this test?
         return
 
+
     for r_data in r_datae:
-        if "r" not in r_data:       # not an 'r' response line
+        if "r" not in r_data:       # this list element is not an 'r' response line
             continue
-            
+
+        if "response" in t_data["r"]:  # suppress the response
+            if t_data["r"]["response"] == False:
+                r_data["response"] = ""
+        """
         for k in t_data["r"]:
             if k in r_data["r"]:
                 if t_data["r"][k] == r_data["r"][k]:
-                    print("  passed: {0}: {1}, {2}".format(k, r_data["r"][k], r_data["response"]))
+                    if display:
+                        print("  passed: {0}: {1}, {2}".format(k, r_data["r"][k], r_data["response"]))
+                    else:
+                        print("  passed: {0}: {1}".format(k, r_data["r"][k]))
                 else:
-                    print("  FAILED: {0}: {1} should be {2}, {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
+                    if display:
+                        print("  FAILED: {0}: {1} should be {2}, {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
+                    else:
+                        print("  FAILED: {0}: {1} should be {2}".format(k, r_data["r"][k], t_data["r"][k]))
+        """
+
+        for k in t_data["r"]:
+            if k in r_data["r"]:
+                if t_data["r"][k] == r_data["r"][k]:
+                    print("  passed: {0}: {1} {2}".format(k, r_data["r"][k], r_data["response"]))
+                else:
+                    print("  FAILED: {0}: {1} should be {2} {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
             else:
-                print("  MISSING: \"{0}\" is missing from response, {1}".format(k, r_data["response"]))
+                print("  MISSING: \"{0}\" is missing from response {1}".format(k, r_data["response"]))
                 
 
 def analyze_sr(t_data, r_datae, out_fd):
