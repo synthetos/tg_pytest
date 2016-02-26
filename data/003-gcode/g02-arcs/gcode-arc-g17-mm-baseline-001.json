@@ -5,7 +5,19 @@
 # SETUP
 {
     "t":{"label":"Set mm mode, XY plane, feed rate",
-         "send":["G21 G17 G94 G91.1", "F2000", "G0X100Y100Z0", "G28.1"]}
+         "send":["G21 G17 G94 G91.1", "F2000"],
+         "fail":"hard"},
+    "r":{"status":0}
+}
+# Set current posint to be (100,100,0) in G55 offset
+# Use 100 ms delay to allow G10 persistence to worl on Xmega
+# Record current position as G28 home
+{
+    "t":{"label":"Set configs for no-machine tests",
+         "send":["G10 L20 P2 X100 Y100 Z0", "G55", "G28.1"],
+         "delay":0.100,
+         "fail":"hard"},
+    "r":{"status":0}
 }
 #
 # ARC TESTS START HERE
@@ -53,9 +65,9 @@
 }
 #
 {
-    "t":{"label":"CW 720 degree helix - 2 rotations w/Z plunge",
-       	 "send":["G28","G2 I25 Z-25 P2"]},
-    "sr":{"posx": 100, "posy": 100, "posz": -25},
+    "t":{"label":"CW 720 degree helix - 2 rotations w/Z rise",
+       	 "send":["G28","G2 I25 Z25 P2"]},
+    "sr":{"posx": 100, "posy": 100, "posz": 25},
     "r":{"status":0}
 }
 #
@@ -95,8 +107,8 @@
 }
 #
 {
-    "t":{"label":"CCW 720 degree helix - 2 rotations w/Z plunge",
-      	 "send":["G28","G3 I25 Z-25 P2"]},
-    "sr":{"posx": 100, "posy": 100, "posz": -25},
+    "t":{"label":"CCW 720 degree helix - 2 rotations w/Z rise",
+      	 "send":["G28","G3 I25 Z25 P2"]},
+    "sr":{"posx": 100, "posy": 100, "posz": 25},
     "r":{"status":0}
 }

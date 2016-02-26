@@ -11,6 +11,10 @@
 # ARC TESTS START HERE
 #
 {
+    "t":{"label":"POSITION Z IN MIDDLE OF RANGE, at least 20mm below max",
+}
+#
+{
     "t":{"label":"CW 90 degree arc",
          "send":["G28","G2 I20 X20 Z20"]},
     "sr":{"posx": 20, "posz": 20},
@@ -23,7 +27,7 @@
     "sr":{"posx": 40, "posz": 0},
     "r":{"status":0}
 }
-#
+#EOF
 {
     "t":{"label":"CW 360 degree circle - full circle spec",
          "send":["G28","G2 I20"]},

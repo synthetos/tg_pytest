@@ -47,6 +47,6 @@
 #
 {
     "t":{"label":"Tail wag",
-         "send":["g0 x10 y10", "g0 x0 y0"]
+         "send":["g0 x2 y2", "g0 x0 y0"]
         }
 }
