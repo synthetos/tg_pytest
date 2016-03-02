@@ -10,7 +10,14 @@ It is not intended to be a full-featured test framework. It is not suited
 to running continuous tests, i.e. running a Gcode file and looking for the
 ongoing results. It's a batch tester, not streaming.
 
-### Usage:
+### How It works
+ - The tester opens the test-master.cfg file and runs each uncommented JSON file in sequence.
+ - Each JSON file contains one or more test structured as a standalone JSON object.
+ - Each test is run by sending all the strings in the `send` array, then waiting for all the JSON responses to be returned from the board. Responses may consist of `r`, `sr` and `er` JSON objects. Responses are decoded and put in a list of decoded JSON objects.
+ - After a 1 second timeout (settable in python) the tester stops listening and analyzes the response list. A separate analyzer is called for `r`, `sr` and `er` responses. Results are sent to the screen (and in the future to an optional file).
+ - Note: `sr` responses are rolled up into a "synthetic" status report, which is the union of all elements received by all status reports. The last instance of an element is what sticks. (It's still useful set status reports to Verbose: See `/data/000-setup/setup-centered-baseline-001.json` for an example.)
+
+### Usage
 
   - Make sure you have a TinyG v8 or g2 powered and plugged in and it's
       not already connected to some other USB host (like Coolterm)
@@ -22,10 +29,10 @@ ongoing results. It's a batch tester, not streaming.
 
   - Open a tinyg port or fail trying
   - Open test-master.cfg file
-  - Create a test date and time string as an ISO8601 string
+  - Create a test date and time string as an ISO8601 string (future)
   - For each test in the master file:
     - Open the JSON file for that test
-    - Create an output file suffixed by the ISO8601 date/time string
+    - Create an output file suffixed by the ISO8601 date/time string (future)
     - Iterate through the input file. For each test in the file:
       - Send the test string(s) to the tinyg and collect all responses
       - Parse responses according to test data provided (see below)
@@ -72,8 +79,6 @@ Refer to smoke-001.json to follow along:
     - No elements are actually matched
 
 As new test functionality is added it will appear here<br>
-
-Note that the `sr` tests generate a "synthetic" status report, which is the union of all elements received by all status reports. The last instance of an element is what sticks. It's still useful set status reports to Verbose: See `/data/000-setup/setup-centered-baseline-001.json` for an example.
 
 Note that strings in embedded JSON do not need to be escaped, as TinyG will always accept JSON in relaxed mode, regardless of whether it's set to relaxed or strict JSON mode. (In strict mode all *responses* will be strict, of course). The shortcuts also work, like 't' for true or 'n' for null. The following example still produces valid JSON but is simpler to edit and maintain:
 
