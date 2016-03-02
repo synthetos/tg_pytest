@@ -13,7 +13,7 @@ TEST_DATA_DIR = "../data"
 TEST_MASTER_FILE = "test-master.cfg"
 
 OUTFILE_ENABLED = False     # True or False
-SERIAL_TIMEOUT = 1          # in seconds
+
 
 #### PACKAGES ####
 
@@ -36,63 +36,48 @@ from serial.tools.list_ports import comports
 import inspect
 import pprint
 from inspect import getmembers
-
+from tg_utils import TinyG
 
 ################################################################################
 #
 #   Serial Ports and Board Initialization
 #
 #
+
 def get_serial_ports():
-    """
-    Return a list of available serial ports or a [None] list
-    Only works on OSX
-    Could be generalized for other platforms - try something like this (which doesn't work yet):
-        from serial.tools.list_ports import comports
-        uports = sorted(p[0] for p in comports() )
-        ports = [p.encode("utf8") for p in uports]
-    """    
-    return glob.glob('/dev/tty.usb*')
+    """ Lists serial port names
 
-
-def open_serial_port(): 
+        :raises EnvironmentError:
+            On unsupported or unknown platforms
+        :returns:
+            A list of the serial ports available on the system
     """
-    Open port or die trying
-    Does not yet handle multiple connected devices
-    """
-    ports = get_serial_ports()
-    if len(ports) == 0:
-        print ("No serial port found, Exiting")
-        sys.exit(1)
-    
-    port = ports[0]
-    try:
-        s = serial.Serial(port, 115200, rtscts=1, timeout=SERIAL_TIMEOUT)
-    except:
-        print("Could not open serial port %s " % port)
-        print("Maybe already open in another program like Coolterm")
-        print("Quit TinyG Tester")
-        sys.exit(1)
-    
-    if not s.isOpen :
-        print("Could not open serial port: {0}".format(s.name))
-        sys.exit(1)
+    if sys.platform.startswith('win'):
+        ports = ['COM%s' % (i + 1) for i in range(256)]
+    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        # this excludes your current terminal "/dev/tty"
+        ports = glob.glob('/dev/tty[A-Za-z]*')
+    elif sys.platform.startswith('darwin'):
+        ports = glob.glob('/dev/tty.*')
     else:
-        print("Serial port opened:    {0}".format(s.name))
-    return s
+        raise EnvironmentError('Unsupported platform')
+
+    result = []
+    for port in ports:
+        try:
+            s = serial.Serial(port)
+            s.close()
+            result.append(port)
+        except (OSError, serial.SerialException):
+            pass
+    return result  
 
 
-def init_tinyg(s): 
-    """
-    Initialize TinyG - send something to ensure board is responding and set JSON mode
-    """
-    s.write("{\"fb\":null}\n")      # The first write often returns garbage
-    r = s.readline()
-    s.write("{\"fb\":null}\n")      # So do it again
-    r = s.readline()
-    s.write("{\"sr\":null}\n")      # So do it again
-    r = s.readline()
-    print("Serial port connected: {0}".format(r))
+
+
+
+
+
 
 
 ################################################################################
@@ -100,22 +85,22 @@ def init_tinyg(s):
 #   Test setup 
 #
 
-def before_all_tests(s):
+def before_all_tests():
     print("SETUP: Before all tests")
-    s.write("M2\n")                 # end and motion
-    s.write("{clear:null}\n")       # clear any alarms
-    responses = s.readlines()       # read all output before returning
+    tg.write("M2\n")                 # end and motion
+    tg.write("{clear:null}\n")       # clear any alarms
+    responses = tg.readlines()       # read all output before returning
     return
 
 
-def before_each_test_file(s):
+def before_each_test_file():
 #    print("SETUP: Before each test file")
     return
 
 
-def before_each_test(s):
+def before_each_test():
 #    print("SETUP: Before each test")
-    s.write("{clear:null}\n")       # clear any alarms
+    tg.write("{clear:null}\n")       # clear any alarms
     return
 
 
@@ -165,7 +150,7 @@ def analyze_r(t_data, r_datae, out_fd):
                     print("  FAILED: {0}: {1} should be {2} {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
             else:
                 print("  MISSING: \"{0}\" is missing from response {1}".format(k, r_data["response"]))
-                
+
 
 def analyze_sr(t_data, r_datae, out_fd):
     """
@@ -181,7 +166,7 @@ def analyze_sr(t_data, r_datae, out_fd):
             last_sr = r_data
             for k in r_data["sr"]:  # because a dictionary comprehension won't update KVs in an existing dict?
                 build_sr[k] = r_data["sr"][k]
-    
+
     if last_sr == None:             # return if there were no SRs in the response set
         return
 
@@ -194,7 +179,7 @@ def analyze_sr(t_data, r_datae, out_fd):
                 print("  FAILED: {0}: {1} should be {2}, {3}".format(k, build_sr[k], t_data["sr"][k], last_sr["response"]))
         else:
             print("  MISSING: \"{0}\" is missing from response, {1}".format(k, last_sr["response"]))
-            
+
 
 def analyze_er(t_data, r_datae, out_fd):
     """
@@ -216,13 +201,13 @@ def analyze_er(t_data, r_datae, out_fd):
 #   Run a test file with one or more tests
 #
 
-def run_test_file(s, t_data, out_fd):
-    before_each_test_file(s)
+def run_test_file(t_data, out_fd):
+    before_each_test_file()
 
     if "t" not in t_data:
         print("ERROR: No test data provided")
         return
-    
+
     if "label" in t_data["t"]:
         print
         print("TEST: {0}".format(t_data["t"]["label"]))
@@ -230,17 +215,17 @@ def run_test_file(s, t_data, out_fd):
     delay = 0
     if "delay" in t_data["t"]:
         delay = t_data["t"]["delay"]
-    
+
     # Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
     for line in send:
         print("  sending: {0}".format(line))
-        s.write(line+"\n")
+        tg.write(line+"\n")
         time.sleep(delay)
 
     r_datae = []
-    for line in s.readlines():
+    for line in tg.readlines():
         line = line.strip()
         try:
             r_datae.append(json.loads(line))
@@ -253,7 +238,7 @@ def run_test_file(s, t_data, out_fd):
         if "r" in r_datae[-1]:
             r_datae[-1]["r"]["status"] = r_datae[-1]['f'][1]  # extract status code from footer              
             r_datae[-1]["r"]["count"] = r_datae[-1]['f'][2]   # extract byte/line count from footer
-         
+
     # Run analyzers 
     analyze_r(t_data, r_datae, out_fd)
     analyze_sr(t_data, r_datae, out_fd)
@@ -264,15 +249,20 @@ def run_test_file(s, t_data, out_fd):
 #
 #   Main
 #
+global tg
+
+tg = TinyG()
 
 def main():
 
     t_data = { "status":0 }
-
+    
     # Open and initialize TinyG port
     print("Starting TinyG Tester")
-    s = open_serial_port()
-    init_tinyg(s)               # We are open and ready to rock the kitty time
+    #s = tg.open_serial_port()
+    tg.init_tinyg()      #We are open and ready to rock the kitty time
+    
+    
 
     # Open master input file - contains a list of JSON files to process
     os.chdir(TEST_DATA_DIR)
@@ -303,11 +293,11 @@ def main():
         except:
             print("  {0} cannot be opened, not added".format(file))
     print
-    
+
     # Iterate through the master file to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
-    before_all_tests(s)
-    
+    before_all_tests()
+
     for test_file in test_files:
 
         # Open input file, read the file and split into 1 or more JSON objects
@@ -331,12 +321,12 @@ def main():
         print
         print("FILE: {0}".format(test_file))
         for test in tests:
-            status = run_test_file(s, test, out_fd)
+            status = run_test_file(test, out_fd)
             if (status == "quit"):
                 break;
 
     # Close files USB port and exit
-    s.close()
+    tg.serial_close()
     master_fd.close()
     try:
         in_fd.close()
@@ -372,10 +362,10 @@ def split_json_file(fd):
     for chunk in chunks:
         if len(chunk) == 0:                 # skip blank lines
             continue
-        
+
         if "EOF" in chunk:                  # look for end-of-file marker
             return data
-        
+
         if "{" not in chunk:                # skip comment
             continue
 
@@ -386,7 +376,7 @@ def split_json_file(fd):
         except:
             print("{0} FAILED JSON PARSE, QUITTING".format(line))
             return "fail"
-            
+
     return data
 
 #
@@ -407,7 +397,7 @@ def utf2str(dictionary):
     if not isinstance(dictionary, dict):
         return dictionary
     return dict((str(k), utf2str(v)) 
-        for k, v in dictionary.items())
+                for k, v in dictionary.items())
 
 
 # DO NOT DELETE
