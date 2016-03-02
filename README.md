@@ -14,7 +14,7 @@ ongoing results. It's a batch tester, not streaming.
 
   - Make sure you have a TinyG v8 or g2 powered and plugged in and it's
       not already connected to some other USB host (like Coolterm)
-  - Edit the /data/test-master.cfg file for the tests tou want to run
+  - Edit the /data/test-master.cfg file for the tests you want to run
   - Make sure each JSON test file is correct (see below)
   - Run tg_pytest from your Python environment
 
@@ -32,26 +32,28 @@ ongoing results. It's a batch tester, not streaming.
 
 ### JSON test files:
 
-  - A JSON test file contains one or more tests (see test-001.json)
+  - A JSON test file contains one or more tests
+    - see `/data/001-smoke/smoke-001.json` for an example
   - Each test is defined by an independent JSON object
-  - Tests must be separated by at least one '#' comment line
+  - The JSON objects for the tests must be separated by at least one '#' comment line
+  - Adding EOF to a comment line will stop processing at that line
 
 #### Comments:
 
   - Comments are Python style. Currently only # is supported, not """
   - Open curlies are not allowed in comments '{'
-  - Blank lines are OK, but are not test separators
+  - Blank lines are also OK, but do not act as test separators
 
 ### Tests / Test JSON:
 
-  - A test runs all the send lines, collects all the response lines
-      (r's, sr's and er's), then analyzes according to the test JSON   
-  - Each test must be a parsable JSON object. If in doubt, lint it
-      It's useful to edit these files in an editor with a built-in
-      JSON linter like Atom (use json-linter package)
-  - Not much is supported yet. As new items are added they will appear here
+  - A test runs all the `send` lines, collects all the response lines
+      (`r`'s, `sr`'s and `er`'s), then analyzes according to the test JSON   
+  - Each test must be a parsable JSON object. If in doubt, lint it.
+    - It's useful to edit these files in an editor with a built-in
+      JSON linter like Atom (use json-linter package).
+    - It may also be useful to cut and paste a JSON object into jsonlint.com for checking.
 
-Refer to test-001.json to follow along:
+Refer to smoke-001.json to follow along:
 
   - "t" is the test data object, consisting of:
     - "label" will be displayed when the test is run
@@ -63,11 +65,15 @@ Refer to test-001.json to follow along:
     - Use "status" to match the status in the footer
     - Use "count" to match the count in the footer
   - "sr" contains the elements to check in the status reports:
-    - If "sr" is present, test all keys or exact match, e.g. stat:3
+    - If "sr" is present, test all keys for exact match, e.g. stat:3
   - "er" contains the elements to check in any exception reports
     - Any ERs thrown will be displayed
     - ERs will be displayed by default unless disabled by "display":false
     - No elements are actually matched
+
+As new test functionality is added it will appear here<br>
+
+Note that the `sr` tests generate a "synthetic" status report, which is the union of all elements received by all status reports. The last instance of an element is what sticks. It's still useful set status reports to Verbose: See `/data/000-setup/setup-centered-baseline-001.json` for an example.
 
 Note that strings in embedded JSON do not need to be escaped, as TinyG will always accept JSON in relaxed mode, regardless of whether it's set to relaxed or strict JSON mode. (In strict mode all *responses* will be strict, of course). The shortcuts also work, like 't' for true or 'n' for null. The following example still produces valid JSON but is simpler to edit and maintain:
 
@@ -79,9 +85,17 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
          "send":["{x:n}"],
          "fail":"soft"}
 
+### Running Tests
+   - Tests are run in the order listed in `/data/test-master.cfg`
+   - Tests can be commented in and out using # in the first char.
+   - A test run should start with a setup file such as `/data/000-setup/setup-centered-baseline-001.json`
+   - Tests can be designed to run on a naked board (board and motors), or a machine. If the test is run on the machine some guidance should be provided for the initial conditions. It's common to run a test from the middle of travel - i.e. 1/2 way between limits on X, Y and Z. See arc tests for examples.
+
 ### Known Limitations and Open Issues:
-  - Currently the USB port finder only works on OSX, but can be relatively easily extended to Linux and Windows as all it needs to do is find the USB port string
   - There is no buffer management on the send string, nor is there likely to be. For any given test the send string array should be limited to 254 characters (v8 streaming mode), or 24 lines (v8 line mode), or 3000 characters (g2)  
-  - Only exact-match checking is supported. This should be enough
+  - Only exact-match checking is supported. This should be enough for now.
+
+### Changes
+- As of 3/1/16 the USB port finder now works on OSX and Windows. It should also work on Linux but has not been tested.
 
 ### TODO list

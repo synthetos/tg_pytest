@@ -1,9 +1,9 @@
 ################################################################################
 #
-#   test-001.json
+#   smoke-001.json
 #
 #   Basic motion tests and smoke tests
-#   See README.txt for instruction on formatting and usage
+#   See README.md for instruction on formatting and usage
 #
 
 # Test 1 - Traverse
@@ -25,6 +25,16 @@
 }
 
 # Test 3 - Bad command
+{
+    "t":{"label":"Bad Gcode command",
+         "send":["G7x34.23"],
+         "fail":"soft"},
+    "r":{"status":131},
+    "sr":{"stat":3}
+}
+#EOF
+# Example of how to stop the file
+# Test 4 - This test will not be run due to the EOF
 {
     "t":{"label":"Bad Gcode command",
          "send":["G7x34.23"],
