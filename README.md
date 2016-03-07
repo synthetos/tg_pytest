@@ -90,6 +90,16 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
          "send":["{x:n}"],
          "fail":"soft"}
 
+### Before and After Tests
+JSON objects can be provided that will run before and after tests:
+
+ - `before_all_tests` will run before all tests in a file
+ - `after_all_tests` will run after all tests in a file
+ - `before_each_test` will run before each test in a file
+ - `after_each_test` will run after each test in a file
+
+The format is the same as the `t` object. The `send` data is sent. `Label` is displayed for before_all and after_all, but ignored for before_each and after_each. See `/data/001-smoke/smoke-001.json` for examples.
+
 ### Running Tests
    - Tests are run in the order listed in `/data/test-master.cfg`
    - Tests can be commented in and out using # in the first char.

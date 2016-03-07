@@ -5,7 +5,32 @@
 #   Basic motion tests and smoke tests
 #   See README.md for instruction on formatting and usage
 #
-
+{
+  "before_all_tests":{
+    "label":"Setup for smoke tests",
+    "send":["G21 G90 G94",
+            "G10 L20 P2 X0 Y0 Z0",
+            "G55",
+            "G28.1",
+            "F2000" ]
+  }
+}
+#
+{
+  "after_all_tests":{
+    "label":"Return to home",
+    "send":["{clear:n}","G28"]
+  }
+}
+#
+{
+  "before_each_test":{
+    "send":["{clear:n}","G28"]
+  }
+}
+#
+# TESTS BEGIN HERE
+#
 # Test 1 - Traverse
 {
     "t":{"label":"G0 movement",
