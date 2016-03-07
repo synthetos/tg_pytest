@@ -155,30 +155,30 @@ def send_stuff(key, data):
     return
 
 
-def before_all_tests(data):
-    if "label" in data["before_all_tests"]:
+def before_all_tests(key, data):
+    if "label" in data[key]:
         print
-        print("BEFORE: {0}".format(data["before_all_tests"]["label"]))
+        print("BEFORE: {0}".format(data[key]["label"]))
 
     tg.write("M2\n")                        # end any motion
     tg.write("{clear:null}\n")              # clear any alarms
-    send_stuff("before_all_tests", data)
+    send_stuff(key, data)
     return
 
-def after_all_tests(data):
-    if "label" in data["after_all_tests"]:
+def after_all_tests(key, data):
+    if "label" in data[key]:
         print
-        print("AFTER: {0}".format(data["after_all_tests"]["label"]))
+        print("AFTER: {0}".format(data[key]["label"]))
 
-    send_stuff("after_all_tests", data)
+    send_stuff(key, data)
     return
 
-def before_each_test(data):
-    send_stuff("before_each_test", data)
+def before_each_test(key, data):
+    send_stuff(key, data)
     return
     
-def after_each_test(data):
-    send_stuff("after_each_test", data)
+def after_each_test(key, data):
+    send_stuff(key, data)
     return
 
 
@@ -202,7 +202,7 @@ def run_test(t_data, bet_data, aet_data, out_fd):
         delay = t_data["t"]["delay"]
 
     # Send prep strings
-    before_each_test(bet_data)
+    before_each_test("before_each_test", bet_data)
 
     ### Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
@@ -232,7 +232,7 @@ def run_test(t_data, bet_data, aet_data, out_fd):
     analyze_sr(t_data, r_datae, out_fd)
     analyze_er(t_data, r_datae, out_fd)
 
-    after_each_test(aet_data)
+    after_each_test("after_each_test", aet_data)
 
 
 ################################## MAIN PROGRAM BODY ###########################
@@ -248,11 +248,8 @@ def main():
     
     # Open and initialize TinyG port
     print("Starting TinyG Tester")
-    #s = tg.open_serial_port()
-    
-    #Initialize the TinyG connection.
-    tg.init_tinyg()      #We are open and ready to rock the kitty time
-    
+    tg.init_tinyg()          # Initialize the TinyG connection.
+                             # We are open and ready to rock the kitty time
 
     # Open master input file - contains a list of JSON files to process
     os.chdir(TEST_DATA_DIR)
@@ -335,7 +332,7 @@ def main():
                 after_each_data = obj
                 
         # Run tests
-        before_all_tests(before_all_data)
+        before_all_tests("before_all_tests", before_all_data)
         
         for t_data in tests:
             if "t" in t_data:
@@ -343,7 +340,7 @@ def main():
                 if (status == "quit"):
                     break;
 
-        after_all_tests(after_all_data)
+        after_all_tests("after_all_tests", after_all_data)
 
     # Close files USB port and exit
     tg.serial_close()
