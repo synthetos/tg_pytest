@@ -3,7 +3,6 @@
 """
 __author__ = 'Alden Hart'
 __version__ = '$Revision: 0.1 $'[11:-2]
-__date__ = '$Date: 2016/01/14 12:00:00 $'
 __copyright__ = 'Copyright (c) 2016 Alden Hart'
 __license__ = 'Python'
 
@@ -11,9 +10,7 @@ __license__ = 'Python'
 
 TEST_DATA_DIR = "../data"
 TEST_MASTER_FILE = "test-master.cfg"
-
 OUTFILE_ENABLED = False     # True or False
-
 
 #### PACKAGES ####
 
@@ -36,13 +33,7 @@ from serial.tools.list_ports import comports
 import inspect
 import pprint
 from inspect import getmembers
-from tg_utils import TinyG
-
-################################################################################
-#
-#   Serial Ports and Board Initialization
-#
-#
+from tg_utils import TinyG          # Serial ports and board initialization
 
 
 ################################################################################

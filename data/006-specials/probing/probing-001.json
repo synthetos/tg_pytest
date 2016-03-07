@@ -65,8 +65,8 @@
 #
 {
     "t":{"label":"PROBE TEST - travel too short",
-         "send":["G28","G38.2 Z-0.250"]},
-         "r":{"status":142}
+         "send":["G28","G38.2 F400 Z-0.250"]},
+         "r":{"status":251}
 }
 #
 {
