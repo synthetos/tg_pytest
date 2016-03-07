@@ -135,18 +135,32 @@ def analyze_er(t_data, r_datae, out_fd):
 #   Before and afters 
 #
 
-def before_all_tests():
+def before_all_tests(bat_data):
     print("SETUP: Before all tests")
-    tg.write("M2\n")                 # end and motion
-    tg.write("{clear:null}\n")       # clear any alarms
+    tg.write("M2\n")                        # end and motion
+    tg.write("{clear:null}\n")              # clear any alarms
+
+    if "before_all_tests" not in bat_data:  # silent return is OK
+        return;
+
+    delay = 0
+    if "delay" in bat_data["before_all_tests"]:
+        delay = t_data["t"]["delay"]
+
+    # Send the setup string(s)
+    send = [x.encode("utf8") for x in bat_data["before_all_tests"]["send"]]   
+    for line in send:
+        print("  sending: {0}".format(line))
+        tg.write(line+"\n")
+        time.sleep(delay)
+
     responses = tg.readlines()       # read all output before returning
     return
 
 
-def before_each_test_file():
-    print("SETUP: Before each test file")
-    return
-
+#def before_each_test_file():
+#    print("SETUP: Before each test file")
+#    return
 
 def before_each_test(bet_data):
     
@@ -164,9 +178,10 @@ def before_each_test(bet_data):
         tg.write(line+"\n")
         time.sleep(delay)
 
+    responses = tg.readlines()       # read all output before returning
     # consume all output prior to resuming test
-    for line in tg.readlines():
-        pass
+#    for line in tg.readlines():
+#        pass
     
     return
 
@@ -276,7 +291,7 @@ def main():
 
     # Iterate through the master file list to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
-    before_all_tests()
+#    before_all_tests(bat_data)
 
     for test_file in test_files:
 
@@ -301,12 +316,20 @@ def main():
         print
         print("FILE: {0}".format(test_file))
 
-        # Extract before_all_tests object (OK if it doesn't exist)
-        for bet_data in tests:
-            if "before_each_test" in bet_data:    # silent return is OK
-                break;
-
-        # Run tests - run before_each_test before each test
+        # Extract before-test data objects (it's OK if they don't exist)
+        bat_data = ""
+        bet_data = ""
+        for obj in tests:
+            if "before_all_tests" in obj:    # silent return is OK
+                bat_data = obj
+                continue
+            if "before_each_test" in obj:    # silent return is OK
+                bet_data = obj
+                
+        print bat_data
+        print bet_data
+        # Run tests
+        before_all_tests(bat_data)
         for t_data in tests:
             if "t" in t_data:
                 status = run_test(t_data, bet_data, out_fd)
