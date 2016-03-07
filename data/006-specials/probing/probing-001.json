@@ -33,13 +33,20 @@
             "G55",
             "G28.1",
             "F2000"
-            ],
-    "fail":"hard"}
+    ]
+  }
 }
 #
 {
   "before_each_test":{
     "label":"Clear alarms and return to home",
+    "send":["{clear:n}","G28"]
+  }
+}
+#
+{
+  "after_all_tests":{
+    "label":"Return to home",
     "send":["{clear:n}","G28"]
   }
 }
@@ -75,7 +82,7 @@
        "send":["G38.2 F400 Z-0.250"]},
   "r":{"status":251}
 }
-#
+# EOF
 {
   "t":{"label":"Return to home",
     	 "send":["G28"]},

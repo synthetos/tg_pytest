@@ -135,54 +135,50 @@ def analyze_er(t_data, r_datae, out_fd):
 #   Before and afters 
 #
 
-def before_all_tests(bat_data):
-    print("SETUP: Before all tests")
-    tg.write("M2\n")                        # end and motion
-    tg.write("{clear:null}\n")              # clear any alarms
+def send_stuff(key, data):
 
-    if "before_all_tests" not in bat_data:  # silent return is OK
+    if key not in data:  # silent return is OK
         return;
 
     delay = 0
-    if "delay" in bat_data["before_all_tests"]:
-        delay = t_data["t"]["delay"]
-
+    if "delay" in data[key]:
+        delay = data[key]["delay"]
+    
     # Send the setup string(s)
-    send = [x.encode("utf8") for x in bat_data["before_all_tests"]["send"]]   
+    send = [x.encode("utf8") for x in data[key]["send"]]   
     for line in send:
         print("  sending: {0}".format(line))
         tg.write(line+"\n")
         time.sleep(delay)
-
-    responses = tg.readlines()       # read all output before returning
+    
+    responses = tg.readlines()       # collect all output before returning
     return
 
 
-#def before_each_test_file():
-#    print("SETUP: Before each test file")
-#    return
+def before_all_tests(data):
+    if "label" in data["before_all_tests"]:
+        print
+        print("BEFORE: {0}".format(data["before_all_tests"]["label"]))
 
-def before_each_test(bet_data):
-    
-    if "before_each_test" not in bet_data:    # silent return is OK
-        return;
-    
-    delay = 0
-    if "delay" in bet_data["before_each_test"]:
-        delay = t_data["t"]["delay"]
+    tg.write("M2\n")                        # end any motion
+    tg.write("{clear:null}\n")              # clear any alarms
+    send_stuff("before_all_tests", data)
+    return
 
-    # Send the setup string(s)
-    send = [x.encode("utf8") for x in bet_data["before_each_test"]["send"]]   
-    for line in send:
-        print("  sending: {0}".format(line))
-        tg.write(line+"\n")
-        time.sleep(delay)
+def after_all_tests(data):
+    if "label" in data["after_all_tests"]:
+        print
+        print("AFTER: {0}".format(data["after_all_tests"]["label"]))
 
-    responses = tg.readlines()       # read all output before returning
-    # consume all output prior to resuming test
-#    for line in tg.readlines():
-#        pass
+    send_stuff("after_all_tests", data)
+    return
+
+def before_each_test(data):
+    send_stuff("before_each_test", data)
+    return
     
+def after_each_test(data):
+    send_stuff("after_each_test", data)
     return
 
 
@@ -191,7 +187,7 @@ def before_each_test(bet_data):
 #   Run a test from a file
 #
 
-def run_test(t_data, bet_data, out_fd):
+def run_test(t_data, bet_data, aet_data, out_fd):
 
     if "t" not in t_data:
         print("ERROR: No test data provided")
@@ -236,16 +232,15 @@ def run_test(t_data, bet_data, out_fd):
     analyze_sr(t_data, r_datae, out_fd)
     analyze_er(t_data, r_datae, out_fd)
 
+    after_each_test(aet_data)
+
 
 ################################## MAIN PROGRAM BODY ###########################
 #
 #   Main
 #
 global tg
-
-
-#Create the TinyG Object
-tg = TinyG()
+tg = TinyG()    # Create the TinyG Object
 
 def main():
 
@@ -316,25 +311,39 @@ def main():
         print
         print("FILE: {0}".format(test_file))
 
-        # Extract before-test data objects (it's OK if they don't exist)
-        bat_data = ""
-        bet_data = ""
+        # Extract before/after data objects (it's OK if they don't exist)
+        before_all_data = ""
+        before_each_data = ""
+        after_all_data = ""
+        after_each_data = ""
+        
         for obj in tests:
-            if "before_all_tests" in obj:    # silent return is OK
-                bat_data = obj
+
+            if "before_all_tests" in obj:
+                before_all_data = obj
                 continue
-            if "before_each_test" in obj:    # silent return is OK
-                bet_data = obj
+
+            if "before_each_test" in obj:
+                before_each_data = obj
+                continue
+
+            if "after_all_tests" in obj:
+                after_all_data = obj
+                continue
+
+            if "after_each_test" in obj:
+                after_each_data = obj
                 
-        print bat_data
-        print bet_data
         # Run tests
-        before_all_tests(bat_data)
+        before_all_tests(before_all_data)
+        
         for t_data in tests:
             if "t" in t_data:
-                status = run_test(t_data, bet_data, out_fd)
+                status = run_test(t_data, before_each_data, after_each_data, out_fd)
                 if (status == "quit"):
                     break;
+
+        after_all_tests(after_all_data)
 
     # Close files USB port and exit
     tg.serial_close()
