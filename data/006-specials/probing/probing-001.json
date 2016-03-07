@@ -37,35 +37,41 @@
     "r":{"status":0}
 }
 #
+{ "before_each_test":{
+    "label":"Clear alarms and return to home",
+     "send":["{clear:n}","G28"]
+  }
+}
+#
 # PROBE TESTS START HERE
 #
 {
     "t":{"label":"PROBE TEST - succeeds",
-         "send":["G28","G38.2 F400 Z-40"]},
+         "send":["G38.2 F400 Z-40"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"PROBE TEST - fails to contact",
-         "send":["G28","G38.2 F400 Z-20"]},
+         "send":["G38.2 F400 Z-20"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"PROBE TEST - missing feed rate",
-         "send":["G28","G38.2 Z-40"]},
+         "send":["G38.2 Z-40"]},
          "r":{"status":142}
 }
 #
 {
     "t":{"label":"PROBE TEST - zero feed rate",
-         "send":["G28","G38.2 F0 Z-40"]},
+         "send":["G38.2 F0 Z-40"]},
          "r":{"status":142}
 }
 #
 {
     "t":{"label":"PROBE TEST - travel too short",
-         "send":["G28","G38.2 F400 Z-0.250"]},
+         "send":["G38.2 F400 Z-0.250"]},
          "r":{"status":251}
 }
 #

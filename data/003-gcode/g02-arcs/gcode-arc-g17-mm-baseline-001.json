@@ -6,7 +6,7 @@
 #   Prior to running this file:
 #     Position the machine in the center of travel in X, Y and Z
 #     Clearance must be at least 25mm positive and negative in each dimension.
-#     This position will be set to (0,0,0) by the setup-centered-baseline (G28.3 command)
+#     This position will be set (0,0,0) by setup-centered's G28.3 command
 #
 # TEST SETUP
 #   Selects:

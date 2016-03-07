@@ -36,29 +36,6 @@ from inspect import getmembers
 from tg_utils import TinyG          # Serial ports and board initialization
 
 
-################################################################################
-#
-#   Test setup 
-#
-
-def before_all_tests():
-    print("SETUP: Before all tests")
-    tg.write("M2\n")                 # end and motion
-    tg.write("{clear:null}\n")       # clear any alarms
-    responses = tg.readlines()       # read all output before returning
-    return
-
-
-def before_each_test_file():
-#    print("SETUP: Before each test file")
-    return
-
-
-def before_each_test():
-#    print("SETUP: Before each test")
-    tg.write("{clear:null}\n")       # clear any alarms
-    return
-
 
 ################################################################################
 #
@@ -152,13 +129,54 @@ def analyze_er(t_data, r_datae, out_fd):
         if "er" in r_data:
             print("  EXCEPTION: {0}".format(r_data["response"]))
 
+
 ################################################################################
 #
-#   Run a test file with one or more tests
+#   Before and afters 
 #
 
-def run_test_file(t_data, out_fd):
-    before_each_test_file()
+def before_all_tests():
+    print("SETUP: Before all tests")
+    tg.write("M2\n")                 # end and motion
+    tg.write("{clear:null}\n")       # clear any alarms
+    responses = tg.readlines()       # read all output before returning
+    return
+
+
+def before_each_test_file():
+    print("SETUP: Before each test file")
+    return
+
+
+def before_each_test(bet_data):
+    
+    if "before_each_test" not in bet_data:    # silent return is OK
+        return;
+    
+    delay = 0
+    if "delay" in bet_data["before_each_test"]:
+        delay = t_data["t"]["delay"]
+
+    # Send the setup string(s)
+    send = [x.encode("utf8") for x in bet_data["before_each_test"]["send"]]   
+    for line in send:
+        print("  sending: {0}".format(line))
+        tg.write(line+"\n")
+        time.sleep(delay)
+
+    # consume all output prior to resuming test
+    for line in tg.readlines():
+        pass
+    
+    return
+
+
+################################################################################
+#
+#   Run a test from a file
+#
+
+def run_test(t_data, bet_data, out_fd):
 
     if "t" not in t_data:
         print("ERROR: No test data provided")
@@ -172,7 +190,10 @@ def run_test_file(t_data, out_fd):
     if "delay" in t_data["t"]:
         delay = t_data["t"]["delay"]
 
-    # Send the test string(s)
+    # Send prep strings
+    before_each_test(bet_data)
+
+    ### Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
     for line in send:
@@ -222,7 +243,6 @@ def main():
     #Initialize the TinyG connection.
     tg.init_tinyg()      #We are open and ready to rock the kitty time
     
-    
 
     # Open master input file - contains a list of JSON files to process
     os.chdir(TEST_DATA_DIR)
@@ -254,7 +274,7 @@ def main():
             print("  {0} cannot be opened, not added".format(file))
     print
 
-    # Iterate through the master file to run the tests
+    # Iterate through the master file list to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
     before_all_tests()
 
@@ -280,10 +300,18 @@ def main():
         # Run the test or tests found in the file
         print
         print("FILE: {0}".format(test_file))
-        for test in tests:
-            status = run_test_file(test, out_fd)
-            if (status == "quit"):
+
+        # Extract before_all_tests object (OK if it doesn't exist)
+        for bet_data in tests:
+            if "before_each_test" in bet_data:    # silent return is OK
                 break;
+
+        # Run tests - run before_each_test before each test
+        for t_data in tests:
+            if "t" in t_data:
+                status = run_test(t_data, bet_data, out_fd)
+                if (status == "quit"):
+                    break;
 
     # Close files USB port and exit
     tg.serial_close()
