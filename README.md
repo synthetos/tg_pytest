@@ -53,29 +53,37 @@ ongoing results. It's a batch tester, not streaming.
 
 ### Tests / Test JSON:
 
-  - A test runs all the `send` lines, collects all the response lines
-      (`r`'s, `sr`'s and `er`'s), then analyzes according to the test JSON   
-  - Each test must be a parsable JSON object. If in doubt, lint it.
-    - It's useful to edit these files in an editor with a built-in
-      JSON linter like Atom (use json-linter package).
-    - It may also be useful to cut and paste a JSON object into jsonlint.com for checking.
+  - A test (`t`) runs all the `send` lines, collects all the response lines (r{}, sr{}, & er{}'s)
+    then analyzes according to the analyzers: `r`, `sr`, `er`
+  - JSON Elements are listed below, and are not order dependent. Arrays are order dependent.
+  - Each JSON test must be a parsable JSON object or the test will fail to execute. If in doubt, lint it.
+    - It's useful to edit JSON files in an editor with a built-in JSON linter like Atom (use json-linter package).
+    - It can also be useful to paste a JSON object into jsonlint.com for checking
 
-Refer to smoke-001.json to follow along:
+**JSON Elements** _(See smoke-001.json for examples)_:
 
-  - "t" is the test data object, consisting of:
-    - "label" will be displayed when the test is run
-    - "send" is na array of one or more strings to send for the test
-    - "delay" is optional delay in seconds between sends. Values < 1 are OK
-    - "fail" can be "hard" or "soft" (default if omitted). Hard will abort the test run (future)
-  - "r" contains the elements to check in all "r" responses:
-    - If "r" is present, test all keys for exact match, e.g. xvm:12000
-    - Use "status" to match the status in the footer
-    - Use "count" to match the count in the footer
-  - "sr" contains the elements to check in the status reports:
-    - If "sr" is present, test all keys for exact match, e.g. stat:3
-  - "er" contains the elements to check in any exception reports
+  - `t` is the test data object, consisting of:
+    - `label` will be displayed when the test is run
+    - `send` is an array of one or more strings to send for the test (MANDATORY)
+    - `delay` is optional delay in seconds between sends. Values < 1 are OK
+    - `fail` can be `hard` or `soft` (default if omitted). Hard will abort the test run (future)
+    - `before` array provides strings to send before the test - will not be analyzed
+    - `after` array provides strings to send after the test - will not be analyzed
+
+
+  - `r` contains the elements to check in all r{} responses:
+    - If `r` is present, test all keys for exact match, e.g. xvm:12000
+    - Use `status` to match the status in the footer
+    - Use `count` to match the count in the footer (3rd element)
+
+
+  - `sr` contains the elements to check in the status reports:
+    - If `sr` is present, test all keys for exact match, e.g. stat:3
+
+
+  - `er` contains the elements to check in any exception reports
     - Any ERs thrown will be displayed
-    - ERs will be displayed by default unless disabled by "display":false
+    - ERs will be displayed by default unless disabled by `display:false`
     - No elements are actually matched
 
 As new test functionality is added it will appear here<br>
@@ -91,14 +99,19 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
          "fail":"soft"}
 
 ### Before and After Tests
-JSON objects can be provided that will run before and after tests:
+These additional JSON objects can be provided in a file and will run before / after tests. The JSON format is the same as the `t` object, but only the listed tags are recognized. These before / after objects run prior to any local `before` or `after` tags in a given test. See `/data/001-smoke/smoke-001.json` for examples.
 
  - `before_all_tests` will run before all tests in a file
- - `after_all_tests` will run after all tests in a file
- - `before_each_test` will run before each test in a file
- - `after_each_test` will run after each test in a file
+ - `after_all_tests` will run after all tests in a file; tags recognized:
+  - `label` will display the label in the output
+  - `send` array of strings to send
+  - `delay` optional delay in seconds
 
-The format is the same as the `t` object. The `send` data is sent. `Label` is displayed for before_all and after_all, but ignored for before_each and after_each. See `/data/001-smoke/smoke-001.json` for examples.
+
+ - `before_each_test` will run before each test in a file
+ - `after_each_test` will run after each test in a file; tags recognized:
+   - `send` array of strings to send
+   - `delay` optional delay in seconds
 
 ### Running Tests
    - Tests are run in the order listed in `/data/test-master.cfg`

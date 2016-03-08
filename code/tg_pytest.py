@@ -135,7 +135,7 @@ def analyze_er(t_data, r_datae, out_fd):
 #   Before and afters 
 #
 
-def send_stuff(key, data):
+def send_stuff_before(key, data):
 
     if key not in data:  # silent return is OK
         return;
@@ -147,7 +147,26 @@ def send_stuff(key, data):
     # Send the setup string(s)
     send = [x.encode("utf8") for x in data[key]["send"]]   
     for line in send:
-        print("  sending: {0}".format(line))
+        print("  before: {0}".format(line))
+        tg.write(line+"\n")
+        time.sleep(delay)
+    
+    responses = tg.readlines()       # collect all output before returning
+    return
+
+def send_stuff_after(key, data):
+
+    if key not in data:  # silent return is OK
+        return;
+
+    delay = 0
+    if "delay" in data[key]:
+        delay = data[key]["delay"]
+    
+    # Send the setup string(s)
+    send = [x.encode("utf8") for x in data[key]["send"]]   
+    for line in send:
+        print("  after: {0}".format(line))
         tg.write(line+"\n")
         time.sleep(delay)
     
@@ -158,27 +177,27 @@ def send_stuff(key, data):
 def before_all_tests(key, data):
     if "label" in data[key]:
         print
-        print("BEFORE: {0}".format(data[key]["label"]))
+        print("BEFORE ALL TESTS: {0}".format(data[key]["label"]))
 
     tg.write("M2\n")                        # end any motion
     tg.write("{clear:null}\n")              # clear any alarms
-    send_stuff(key, data)
+    send_stuff_before(key, data)
     return
 
 def after_all_tests(key, data):
     if "label" in data[key]:
         print
-        print("AFTER: {0}".format(data[key]["label"]))
+        print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
 
-    send_stuff(key, data)
+    send_stuff_after(key, data)
     return
 
-def before_each_test(key, data):
-    send_stuff(key, data)
+def before_each_test(key, data):    # commands are inlined with no label
+    send_stuff_before(key, data)
     return
     
 def after_each_test(key, data):
-    send_stuff(key, data)
+    send_stuff_after(key, data)
     return
 
 
@@ -201,10 +220,19 @@ def run_test(t_data, bet_data, aet_data, out_fd):
     if "delay" in t_data["t"]:
         delay = t_data["t"]["delay"]
 
-    # Send prep strings
+    # Run 'before_each` strings
     before_each_test("before_each_test", bet_data)
 
-    ### Send the test string(s)
+    # Run local 'before' strings
+    if "before" in t_data["t"]:
+        send = [x.encode("utf8") for x in t_data["t"]["before"]]   
+        for line in send:
+            print("  before:  {0}".format(line))
+            tg.write(line+"\n")
+            time.sleep(delay)
+        responses = tg.readlines()       # collect all output before returning
+
+    # Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
     for line in send:
@@ -232,7 +260,19 @@ def run_test(t_data, bet_data, aet_data, out_fd):
     analyze_sr(t_data, r_datae, out_fd)
     analyze_er(t_data, r_datae, out_fd)
 
+    # Run 'after_each' strings
     after_each_test("after_each_test", aet_data)
+
+    # Run local 'after' strings
+    if "after" in t_data["t"]:
+        send = [x.encode("utf8") for x in t_data["t"]["after"]]   
+        for line in send:
+            print("  after:  {0}".format(line))
+            tg.write(line+"\n")
+            time.sleep(delay)
+        responses = tg.readlines()       # collect all output before returning
+    
+    return
 
 
 ################################## MAIN PROGRAM BODY ###########################
@@ -240,6 +280,7 @@ def run_test(t_data, bet_data, aet_data, out_fd):
 #   Main
 #
 global tg
+
 tg = TinyG()    # Create the TinyG Object
 
 def main():

@@ -41,8 +41,6 @@ class TinyG(object):
         Open port or die trying
         Does not yet handle multiple connected devices
         """
-      
-        
         ports =self.get_serial_ports()
         if len(ports) == 0:
             print ("No serial port found, Exiting")
