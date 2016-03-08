@@ -29,7 +29,7 @@
 {
   "before_all_tests":{
     "label":"Setup for probe tests",
-    "send":["G21 G90 G94",
+    "before":["G21 G90 G94",
               "G10 L20 P2 X0 Y0 Z0",
               "G55",
               "G28.1",
@@ -40,13 +40,13 @@
 {
   "after_all_tests":{
     "label":"Return to home",
-    "send":["{clear:n}","G28"]
+    "after":["{clear:n}","G28"]
   }
 }
 # before each test: clear alarms and return to home
 {
   "before_each_test":{
-    "before":["{clear:n}","{zsn:4}","G28"],
+    "before":["{clear:n}","{zsn:4}","F2000","G28"],
     "delay":0.100
   }
 }
@@ -71,6 +71,7 @@
   "r":{"status":0}
 }
 # FAILURES: PROBE CONFIGURATION AND CALLING FAILURES
+# SKIP
 {
   "t":{"label":"PROBE TEST - missing probe switch - 0.97 flavor",
        "before":["{zsn:0}"],

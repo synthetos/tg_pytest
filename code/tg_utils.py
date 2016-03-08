@@ -5,6 +5,7 @@ Utility class to clean up the logic for alden :)
 
 """
 import sys, serial, glob
+import json
 
 
 class TinyG(object):
@@ -92,4 +93,51 @@ class TinyG(object):
                 result.append(port)
             except (OSError, serial.SerialException):
                 pass
-        return result  
+        return result
+    
+    
+
+def split_json_file(fd):
+    """
+    Accepts a file descriptor for a JSON test file
+    Returns a list of decoded (loaded) JSON objects
+    Test file contains 1 or more independent JSON objects that must be separated 
+      by 1 or more comment lines
+    Comments are any line starting with "#" and must not contain open curlies "{"
+    """
+    try:
+        file_text = fd.read()
+    except:
+        print("Cannot read JSON file")
+
+    skip = False
+    
+    chunks = file_text.split('#')
+    chunks = [x.strip() for x in chunks]
+
+    data = []
+    for chunk in chunks:
+        if len(chunk) == 0:                 # skip blank lines
+            continue
+
+        if "EOF" in chunk:                  # look for end-of-file marker
+            return data
+
+        if "SKIP" in chunk:                 # look to skip the next object
+            skip = True
+
+        if "{" not in chunk:                # skip comment
+            continue
+
+        line = chunk[chunk.index("{"):]     # discard leading comment from previous line
+
+        if not skip:
+            try:
+                data.append(json.loads(line))
+            except:
+                print("{0} FAILED JSON PARSE, QUITTING".format(line))
+                return "fail"
+        else:
+            skip = False
+
+    return data

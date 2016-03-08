@@ -34,7 +34,7 @@ import inspect
 import pprint
 from inspect import getmembers
 from tg_utils import TinyG          # Serial ports and board initialization
-
+from tg_utils import split_json_file
 
 
 ################################################################################
@@ -158,7 +158,7 @@ def send_before_after(key, data, delay):
     if key == "after" and "after" in data:
         send = [x.encode("utf8") for x in data["after"]]   
         for line in send:
-            print("  after: {0}".format(line))
+            print("  after:  {0}".format(line))
             tg.write(line+"\n")
             time.sleep(delay)
     
@@ -168,8 +168,9 @@ def send_before_after(key, data, delay):
 def all_before_after(key, data):
     """
     key == "before_all_tests" or "after_all_tests"
-    data == dictionary nested under the key
+    data == dictionary nested under the above key
     """
+    
     if key not in data:             # silent return is OK
         return;
 
@@ -177,17 +178,16 @@ def all_before_after(key, data):
     if "delay" in data[key]:
         delay = data[key]["delay"]
         
-    if "before" in data[key]:
+    if key == "before_all_tests" and "before" in data[key]:
         if "label" in data[key]:
             print
             print("BEFORE ALL TESTS: {0}".format(data[key]["label"]))
 
-        tg.write("M2\n")                        # end any motion
-        tg.write("{clear:null}\n")              # clear any alarms
+        tg.write("M2\n")            # end any motion and clear any alarms
+#        tg.write("{clear:null}\n")              # clear any alarms
         send_before_after("before", data["before_all_tests"], delay)
-        return
     
-    if "after" in data[key]:
+    if key == "after_all_tests" and "after" in data[key]:
         if "label" in data[key]:
             print
             print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
@@ -197,8 +197,11 @@ def all_before_after(key, data):
 def each_before_after(key, data):
     """
     key == "before_each_test" or "after_each_test"
-    data == dictionary nested under the key
+    data == dictionary nested under the above key
     """
+#    print key
+#    print data
+
     if key not in data:             # silent return is OK
         return;
 
@@ -206,13 +209,13 @@ def each_before_after(key, data):
     if "delay" in data[key]:
         delay = data[key]["delay"]
 
-    if "before" in data[key]:
+    if key == "before_each_test" and "before" in data[key]:
         send_before_after("before", data["before_each_test"], delay)
-        return
 
-    if "after" in data[key]:
+    if key == "after_each_test" and "after" in data[key]:
         send_before_after("after", data["after_each_test"], delay)
 
+    return
 
 ################################################################################
 #
@@ -392,66 +395,6 @@ def main():
         pass
     print
     print("Quit TinyG Tester")
-
-
-################################## UTILITIES ###################################
-
-def split_json_file(fd):
-    """
-    Accepts a file descriptor for a JSON test file
-    Returns a list of decoded (loaded) JSON objects
-    Test file contains 1 or more independent JSON objects that must be separated 
-      by 1 or more comment lines
-    Comments are any line starting with "#" and must not contain open curlies "{"
-    """
-    try:
-        file_text = fd.read()
-    except:
-        print("Cannot read JSON file")
-
-    chunks = file_text.split('#')
-    chunks = [x.strip() for x in chunks]
-
-    data = []
-    for chunk in chunks:
-        if len(chunk) == 0:                 # skip blank lines
-            continue
-
-        if "EOF" in chunk:                  # look for end-of-file marker
-            return data
-
-        if "{" not in chunk:                # skip comment
-            continue
-
-        line = chunk[chunk.index("{"):]     # discard leading comment from previous line
-
-        try:
-            data.append(json.loads(line))
-        except:
-            print("{0} FAILED JSON PARSE, QUITTING".format(line))
-            return "fail"
-
-    return data
-
-#
-#  Lame, unfinished attempt to display JSON structs without those annoying 'u' characters all over.
-#  Would also like to get rid of the spaces and make it more compact, ideally a single line if not too long
-#
-# json.dumps(struct, sort_keys=True, indent=4, separators=(',', ': '))
-# json.dumps(structure)
-# json.dumps(struct, separators=(',',':'))
-#    print(json.dumps(r_data, indent=4, separators=(',', ': ')))
-
-def print_dict(dictionary):
-    print(utf2str(dictionary))
-
-# http://stackoverflow.com/questions/1254454/fastest-way-to-convert-a-dicts-keys-values-from-unicode-to-str
-def utf2str(dictionary):
-    """Recursively converts dictionary keys to strings."""
-    if not isinstance(dictionary, dict):
-        return dictionary
-    return dict((str(k), utf2str(v)) 
-                for k, v in dictionary.items())
 
 
 # DO NOT DELETE
