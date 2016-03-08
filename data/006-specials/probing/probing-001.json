@@ -30,10 +30,10 @@
   "before_all_tests":{
     "label":"Setup for probe tests",
     "send":["G21 G90 G94",
-            "G10 L20 P2 X0 Y0 Z0",
-            "G55",
-            "G28.1",
-            "F2000" ]
+              "G10 L20 P2 X0 Y0 Z0",
+              "G55",
+              "G28.1",
+              "F2000" ]
   }
 }
 #
@@ -46,7 +46,7 @@
 # before each test: clear alarms and return to home
 {
   "before_each_test":{
-    "send":["{clear:n}","{zsn:4}","G28"],
+    "before":["{clear:n}","{zsn:4}","G28"],
     "delay":0.100
   }
 }
@@ -58,7 +58,6 @@
        "send":["G38.2 F400 Z-40"]},
   "r":{"status":0}
 }
-#
 # Probe after arc. See if a full planner buffer is handled correctly going into a probe
 {
   "t":{"label":"PROBE TEST - probe after an arc",
@@ -80,7 +79,7 @@
        "delay":0.100},
   "r":{"status":252}
 }
-# EOF
+#
 {
   "t":{"label":"PROBE TEST - zero feed rate",
        "send":["G38.2 F0 Z-40"]},

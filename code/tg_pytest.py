@@ -134,71 +134,84 @@ def analyze_er(t_data, r_datae, out_fd):
 #
 #   Before and afters 
 #
+#   send_before_after() - helper that actually sends the strings
+#   all_before_after()  - for all tests: extract delay, send label, send strings
+#   each_before_after() - for each test: extract delay, send string (no label)
+#
 
-def send_stuff_before(key, data):
-
-    if key not in data:  # silent return is OK
+def send_before_after(key, data, delay):
+    """
+    key == "before" or "after"
+    data == flat dictionary containing key (or not)
+    """
+    if key not in data:             # silent return is OK
         return;
 
-    delay = 0
-    if "delay" in data[key]:
-        delay = data[key]["delay"]
-    
-    # Send the setup string(s)
-    send = [x.encode("utf8") for x in data[key]["send"]]   
-    for line in send:
-        print("  before: {0}".format(line))
-        tg.write(line+"\n")
-        time.sleep(delay)
+    # Send the before/after strings
+    if key == "before" and "before" in data:
+        send = [x.encode("utf8") for x in data["before"]]   
+        for line in send:
+            print("  before: {0}".format(line))
+            tg.write(line+"\n")
+            time.sleep(delay)
+
+    if key == "after" and "after" in data:
+        send = [x.encode("utf8") for x in data["after"]]   
+        for line in send:
+            print("  after: {0}".format(line))
+            tg.write(line+"\n")
+            time.sleep(delay)
     
     responses = tg.readlines()       # collect all output before returning
-    return
 
-def send_stuff_after(key, data):
 
-    if key not in data:  # silent return is OK
+def all_before_after(key, data):
+    """
+    key == "before_all_tests" or "after_all_tests"
+    data == dictionary nested under the key
+    """
+    if key not in data:             # silent return is OK
         return;
 
-    delay = 0
+    delay = 0                       # extract the 'delay' tag
     if "delay" in data[key]:
         delay = data[key]["delay"]
+        
+    if "before" in data[key]:
+        if "label" in data[key]:
+            print
+            print("BEFORE ALL TESTS: {0}".format(data[key]["label"]))
+
+        tg.write("M2\n")                        # end any motion
+        tg.write("{clear:null}\n")              # clear any alarms
+        send_before_after("before", data["before_all_tests"], delay)
+        return
     
-    # Send the setup string(s)
-    send = [x.encode("utf8") for x in data[key]["send"]]   
-    for line in send:
-        print("  after: {0}".format(line))
-        tg.write(line+"\n")
-        time.sleep(delay)
+    if "after" in data[key]:
+        if "label" in data[key]:
+            print
+            print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
+            send_before_after("after", data["after_all_tests"], delay)
+
     
-    responses = tg.readlines()       # collect all output before returning
-    return
+def each_before_after(key, data):
+    """
+    key == "before_each_test" or "after_each_test"
+    data == dictionary nested under the key
+    """
+    if key not in data:             # silent return is OK
+        return;
 
+    delay = 0                       # extract the 'delay' tag
+    if "delay" in data[key]:
+        delay = data[key]["delay"]
 
-def before_all_tests(key, data):
-    if "label" in data[key]:
-        print
-        print("BEFORE ALL TESTS: {0}".format(data[key]["label"]))
+    if "before" in data[key]:
+        send_before_after("before", data["before_each_test"], delay)
+        return
 
-    tg.write("M2\n")                        # end any motion
-    tg.write("{clear:null}\n")              # clear any alarms
-    send_stuff_before(key, data)
-    return
-
-def after_all_tests(key, data):
-    if "label" in data[key]:
-        print
-        print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
-
-    send_stuff_after(key, data)
-    return
-
-def before_each_test(key, data):    # commands are inlined with no label
-    send_stuff_before(key, data)
-    return
-    
-def after_each_test(key, data):
-    send_stuff_after(key, data)
-    return
+    if "after" in data[key]:
+        send_before_after("after", data["after_each_test"], delay)
 
 
 ################################################################################
@@ -220,17 +233,9 @@ def run_test(t_data, bet_data, aet_data, out_fd):
     if "delay" in t_data["t"]:
         delay = t_data["t"]["delay"]
 
-    # Run 'before_each` strings
-    before_each_test("before_each_test", bet_data)
-
-    # Run local 'before' strings
-    if "before" in t_data["t"]:
-        send = [x.encode("utf8") for x in t_data["t"]["before"]]   
-        for line in send:
-            print("  before:  {0}".format(line))
-            tg.write(line+"\n")
-            time.sleep(delay)
-        responses = tg.readlines()       # collect all output before returning
+    # Run "before" strings
+    each_before_after("before_each_test", bet_data)
+    send_before_after("before", t_data["t"], delay)       # local before's
 
     # Send the test string(s)
     # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
@@ -260,18 +265,10 @@ def run_test(t_data, bet_data, aet_data, out_fd):
     analyze_sr(t_data, r_datae, out_fd)
     analyze_er(t_data, r_datae, out_fd)
 
-    # Run 'after_each' strings
-    after_each_test("after_each_test", aet_data)
+    # Run "after" strings
+    each_before_after("after_each_test", aet_data)
+    send_before_after("after", t_data["t"], delay)      # local after's
 
-    # Run local 'after' strings
-    if "after" in t_data["t"]:
-        send = [x.encode("utf8") for x in t_data["t"]["after"]]   
-        for line in send:
-            print("  after:  {0}".format(line))
-            tg.write(line+"\n")
-            time.sleep(delay)
-        responses = tg.readlines()       # collect all output before returning
-    
     return
 
 
@@ -324,7 +321,6 @@ def main():
 
     # Iterate through the master file list to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
-#    before_all_tests(bat_data)
 
     for test_file in test_files:
 
@@ -373,7 +369,7 @@ def main():
                 after_each_data = obj
                 
         # Run tests
-        before_all_tests("before_all_tests", before_all_data)
+        all_before_after("before_all_tests", before_all_data)
         
         for t_data in tests:
             if "t" in t_data:
@@ -381,7 +377,7 @@ def main():
                 if (status == "quit"):
                     break;
 
-        after_all_tests("after_all_tests", after_all_data)
+        all_before_after("after_all_tests", after_all_data)
 
     # Close files USB port and exit
     tg.serial_close()
