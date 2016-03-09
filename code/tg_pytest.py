@@ -42,12 +42,12 @@ from tg_utils import split_json_file
 #   Analyzers
 #
 
-def analyze_r(t_data, r_datae, out_fd):
+def analyze_r(t_data, r_datae, params):
     """
     Analyze response objects in response list
     t_data is the test specification, which contains analysis data
     r_datae is a list of decoded JSON responses from the test run
-    out_fd is None if output file is not enabled
+    params contains output and display instructions and handles
     """
     if "r" not in t_data:           # are we analyzing r's in this test?
         return
@@ -85,7 +85,7 @@ def analyze_r(t_data, r_datae, out_fd):
                 print("  MISSING: \"{0}\" is missing from response {1}".format(k, r_data["response"]))
 
 
-def analyze_sr(t_data, r_datae, out_fd):
+def analyze_sr(t_data, r_datae, params):
     """
     Analyze last status report for completion conditions
     """
@@ -114,7 +114,7 @@ def analyze_sr(t_data, r_datae, out_fd):
             print("  MISSING: \"{0}\" is missing from response, {1}".format(k, last_sr["response"]))
 
 
-def analyze_er(t_data, r_datae, out_fd):
+def analyze_er(t_data, r_datae, params):
     """
     Analyze exception reports
     Disable using "display":false
@@ -164,7 +164,7 @@ def send_before_after(key, data, delay):
     responses = tg.readlines()       # collect all output before returning
 
 
-def do_before_after(key, data):
+def do_before_after(key, data, params):
     """
     key == "before_all", "after_all", "before_each" or "after_each"
     data == dictionary nested under the above key
@@ -204,7 +204,7 @@ def do_before_after(key, data):
 #   Run a test from a file
 #
 
-def run_test(t_data, before_data, after_data, out_fd):
+def run_test(t_data, before_data, after_data, params):
 
     if "t" not in t_data:
         print("ERROR: No test data provided")
@@ -219,7 +219,7 @@ def run_test(t_data, before_data, after_data, out_fd):
         delay = t_data["t"]["delay"]
 
     # Run "before" strings
-    do_before_after("before_each", before_data)
+    do_before_after("before_each", before_data, params)
     send_before_after("before", t_data["t"], delay)       # local before's second
 
     # Send the test string(s)
@@ -230,6 +230,7 @@ def run_test(t_data, before_data, after_data, out_fd):
         tg.write(line+"\n")
         time.sleep(delay)
 
+    # Collect the response objects
     r_datae = []
     for line in tg.readlines():
         line = line.strip()
@@ -245,14 +246,14 @@ def run_test(t_data, before_data, after_data, out_fd):
             r_datae[-1]["r"]["status"] = r_datae[-1]['f'][1]  # extract status code from footer              
             r_datae[-1]["r"]["count"] = r_datae[-1]['f'][2]   # extract byte/line count from footer
 
-    # Run analyzers 
-    analyze_r(t_data, r_datae, out_fd)
-    analyze_sr(t_data, r_datae, out_fd)
-    analyze_er(t_data, r_datae, out_fd)
+    # Run analyzers on the response object list
+    analyze_r(t_data, r_datae, params)
+    analyze_sr(t_data, r_datae, params)
+    analyze_er(t_data, r_datae, params)
 
     # Run "after" strings
     send_before_after("after", t_data["t"], delay)      # local after's first
-    do_before_after("after_each", after_data)
+    do_before_after("after_each", after_data, params)
 
 
 ################################## MAIN PROGRAM BODY ###########################
@@ -328,11 +329,12 @@ def main():
         print
         print("FILE: {0}".format(test_file))
 
-        # Extract before/after data objects (it's OK if they don't exist)
+        # Extract defaults and before/after data objects (it's OK if they don't exist)
         before_all = ""
         before_each = ""
         after_all = ""
         after_each = ""
+        params = ""
         
         for obj in tests:
 
@@ -351,16 +353,19 @@ def main():
             if "after_each" in obj:
                 after_each = obj
                 
+            if "defaults" in obj:
+                params = obj
+
         # Run tests
-        do_before_after("before_all", before_all)
+        do_before_after("before_all", before_all, params)
         
         for t_data in tests:
             if "t" in t_data:
-                status = run_test(t_data, before_each, after_each, out_fd)
+                status = run_test(t_data, before_each, after_each, params)
                 if (status == "quit"):
                     break;
 
-        do_before_after("after_all", after_all)
+        do_before_after("after_all", after_all, params)
 
     # Close files USB port and exit
     tg.serial_close()

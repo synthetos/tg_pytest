@@ -27,7 +27,13 @@
 #   (Uses 100 ms delay to allow G10 persistence for Xmega)
 #
 {
-  "before_all_tests":{
+  "defaults":{
+    "fail":"soft"
+  }
+}
+#
+{
+  "before_all":{
     "label":"Setup for probe tests",
     "before":["G21 G90 G94",
               "G10 L20 P2 X0 Y0 Z0",
@@ -38,14 +44,14 @@
 }
 #
 {
-  "after_all_tests":{
+  "after_all":{
     "label":"Return to home",
     "after":["{clear:n}","G28"]
   }
 }
 # before each test: clear alarms and return to home
 {
-  "before_each_test":{
+  "before_each":{
     "before":["{clear:n}","{zsn:4}","F2000","G28"],
     "delay":0.100
   }

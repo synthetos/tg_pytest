@@ -98,24 +98,24 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
 ### Before and After
 Additional JSON objects can be provided in a file that will run before / after tests. The JSON format is the same as the `t` object, but only the listed tags are recognized. These before / after objects run prior to any local `before` or `after` tags in a given test object. See `smoke-001.json`
 
- - `before_all_tests` will run once before all tests in a file. Tags:
+ - `before_all` will run once before all tests in a file. Tags:
    - `label` display the label in the output
    - `before` array of strings to send at start of file
    - `delay` optional delay in seconds
 
 
- - `after_all_tests` will run once after all tests in a file. Tags:
+ - `after_all` will run once after all tests in a file. Tags:
   - `label` display the label in the output
   - `after` array of strings to send after file is complete
   - `delay` optional delay in seconds
 
 
- - `before_each_test` will be run before each test object in a file. Tags:
+ - `before_each` will be run before each test object in a file. Tags:
    - `before` array of strings to send before each test and before local `before`
    - `delay` optional delay in seconds
 
 
- - `after_each_test` will be run after each test object in a file; tags recognized:
+ - `after_each` will be run after each test object in a file; tags recognized:
    - `after` array of strings to send after each test but before local `after`
    - `delay` optional delay in seconds
 
@@ -126,8 +126,8 @@ Additional JSON objects can be provided in a file that will run before / after t
    - Tests can be designed to run on a naked board (board and motors) or on a machine. If the test is run on the machine some guidance should be provided for the initial conditions. It's common practice to run a test from the middle of travel - i.e. 1/2 way between limits on X, Y and Z. See arc tests for examples.
 
 ### Known Limitations and Open Issues:
-  - There is no buffer management on the `before`, `send`, or `after` strings. For any given test the send string array should be limited to 254 characters (v8 streaming mode), or 24 lines (v8 line mode), or 3000 characters (g2)
-  - Only exact-match checking is supported. This should be enough for now.
+  - There is no TX serial buffer management when transmitting the `before`, `send`, or `after` string arrays. For any of these tags the total byte count to be sent in the string array should be limited to 254 characters (v8 streaming mode), or 24 lines (v8 line mode), or 3000 characters (g2)
+  - The analyzers only support exact-match checking of results. This should be enough for now.
 
 ### Changes
 - As of 3/1/16 the USB port finder now works on OSX and Windows. It should also work on Linux but has not been tested.
