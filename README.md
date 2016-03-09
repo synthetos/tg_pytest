@@ -52,7 +52,7 @@ ongoing results. It's a batch tester, not streaming.
   - Blank lines are also OK, but do not act as test separators
 
 ### Tests / Test JSON:
-  - A test (`t`) runs all the `send` lines, collects all the response lines `r{}`, `sr{}`, `er{}` then analyzes according to the analyzers: JSON tags `r`, `sr`, `er`
+  - A test `t` runs all the `send` lines, collects all the response lines `r{}`, `sr{}`, `er{}` then analyzes according to the analyzers: JSON tags `r`, `sr`, `er`
   - JSON Elements are listed below, and are not order dependent. Arrays are order dependent.
   - Each JSON test must be a parsable JSON object or the test will fail to execute. If in doubt, lint it.
     - It's useful to edit JSON files in an editor with a built-in JSON linter like Atom (use json-linter package).
@@ -95,6 +95,8 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
          "send":["{x:n}"]}
     }
 
+Another trick is to "comment out" a line in a JSON file just invalidate the tag by putting an X or some other character (but not #) in front of it. The tag/value will be ignored by the tester.
+
 ### Before and After
 Additional JSON objects can be provided in a file that will run before / after tests. The JSON format is the same as the `t` object, but only the listed tags are recognized. These before / after objects run prior to any local `before` or `after` tags in a given test object. See `smoke-001.json`
 
@@ -118,6 +120,11 @@ Additional JSON objects can be provided in a file that will run before / after t
  - `after_each` will be run after each test object in a file; tags recognized:
    - `after` array of strings to send after each test but before local `after`
    - `delay` optional delay in seconds
+
+### Defaults
+A `defaults` JSON object can be included in a test file. Defaults are read and applied in the location they are found in the file, so it's good to list these first, or sometimes after the before_all. The default settings will be applied to all subsequent tests. Local, per-test settings for the same variables will override the defaults. Values supported include:
+- `fail` set as `soft` or `hard`. Hard fail will stop tests immediately on a failure
+- `delay` delay in seconds between sends. Values < 1 are OK
 
 ### Running Tests
    - Tests are run in the order listed in `/data/test-master.cfg`

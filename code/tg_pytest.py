@@ -48,11 +48,12 @@ def analyze_r(t_data, r_datae, params):
     t_data is the test specification, which contains analysis data
     r_datae is a list of decoded JSON responses from the test run
     params contains output and display instructions and handles
+    return 0 if all tests passed, a negative number if failed
     """
     if "r" not in t_data:           # are we analyzing r's in this test?
-        return
+        return 0
 
-
+    result = 0
     for r_data in r_datae:
         if "r" not in r_data:       # this list element is not an 'r' response line
             continue
@@ -81,8 +82,11 @@ def analyze_r(t_data, r_datae, params):
                     print("  passed: {0}: {1} {2}".format(k, r_data["r"][k], r_data["response"]))
                 else:
                     print("  FAILED: {0}: {1} should be {2} {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
+                    result -= 1
             else:
                 print("  MISSING: \"{0}\" is missing from response {1}".format(k, r_data["response"]))
+
+    return result
 
 
 def analyze_sr(t_data, r_datae, params):
@@ -90,8 +94,9 @@ def analyze_sr(t_data, r_datae, params):
     Analyze last status report for completion conditions
     """
     if "sr" not in t_data:          # are we analyzing sr's in this test?
-        return
+        return 0
 
+    result = 0
     build_sr = {}                   # build a synthetic SR to reconstruct filtered SRs
     last_sr = None                  # record the last SR
     for r_data in r_datae:
@@ -110,8 +115,11 @@ def analyze_sr(t_data, r_datae, params):
                 print("  passed: {0}: {1}, {2}".format(k, build_sr[k], last_sr["response"]))
             else:
                 print("  FAILED: {0}: {1} should be {2}, {3}".format(k, build_sr[k], t_data["sr"][k], last_sr["response"]))
+                result -= 1
         else:
             print("  MISSING: \"{0}\" is missing from response, {1}".format(k, last_sr["response"]))
+
+    return result
 
 
 def analyze_er(t_data, r_datae, params):
@@ -128,6 +136,8 @@ def analyze_er(t_data, r_datae, params):
     for r_data in r_datae:
         if "er" in r_data:
             print("  EXCEPTION: {0}".format(r_data["response"]))
+
+    return 0
 
 
 ################################################################################
@@ -215,15 +225,21 @@ def run_test(t_data, before_data, after_data, params):
         print("TEST: {0}".format(t_data["t"]["label"]))
 
     delay = 0
-    if "delay" in t_data["t"]:
+    if "delay" in t_data["t"]:          # local setting takes precdence over
         delay = t_data["t"]["delay"]
-
+    elif "delay" in params:             #...default setting
+        delay = params["delay"]
+                
     # Run "before" strings
     do_before_after("before_each", before_data, params)
     send_before_after("before", t_data["t"], delay)       # local before's second
 
     # Send the test string(s)
     # WARNING: Won't handle more than 24 lines or 254 chars w/o flow control working (RTS/CTS)
+    if "send" not in t_data["t"]:
+        print("!!! TEST HAS NO SEND DATA: {0}".format(t_data["t"]["label"]))
+        return
+    
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
     for line in send:
         print("  sending: {0}".format(line))
@@ -247,9 +263,20 @@ def run_test(t_data, before_data, after_data, params):
             r_datae[-1]["r"]["count"] = r_datae[-1]['f'][2]   # extract byte/line count from footer
 
     # Run analyzers on the response object list
-    analyze_r(t_data, r_datae, params)
-    analyze_sr(t_data, r_datae, params)
-    analyze_er(t_data, r_datae, params)
+    results = 0
+    results += analyze_r(t_data, r_datae, params)
+    results += analyze_sr(t_data, r_datae, params)
+    results += analyze_er(t_data, r_datae, params)
+
+    if results < 0:
+        fail = None
+        if "fail" in t_data["t"]:           # local fail setting takes precedence over
+            fail = t_data["t"]["fail"]
+        elif "fail" in params:              # ...default setting
+            fail = params["fail"]
+        if fail == "hard":
+            print("FAIL HARD: Exiting immediately {0}".format(line))
+            sys.exit(1)
 
     # Run "after" strings
     send_before_after("after", t_data["t"], delay)      # local after's first
@@ -314,21 +341,6 @@ def main():
         if tests == "fail":
             break;
 
-        # Open an output file if enabled
-        if OUTFILE_ENABLED:
-            out_file = test_file.split('.')[0]   # remove file ext from filename
-            out_file = normpath(join(out_file + "-out-" + timestamp + ".txt"))
-            try:
-                out_fd = open(out_file, 'w')
-            except:
-                print("Could not open output file {0}".format(out_file))
-        else:
-            out_fd = None
-
-        # Run the test or tests found in the file
-        print
-        print("FILE: {0}".format(test_file))
-
         # Extract defaults and before/after data objects (it's OK if they don't exist)
         before_all = ""
         before_each = ""
@@ -354,9 +366,23 @@ def main():
                 after_each = obj
                 
             if "defaults" in obj:
-                params = obj
+                params = obj["defaults"]
 
-        # Run tests
+        # Open an output file if enabled
+        if OUTFILE_ENABLED:
+            out_file = test_file.split('.')[0]   # remove file ext from filename
+            out_file = normpath(join(out_file + "-out-" + timestamp + ".txt"))
+            try:
+                out_fd = open(out_file, 'w')
+            except:
+                print("Could not open output file {0}".format(out_file))
+        else:
+            out_fd = None
+
+        # Run the test or tests found in the file
+        print
+        print("FILE: {0}".format(test_file))
+
         do_before_after("before_all", before_all, params)
         
         for t_data in tests:
