@@ -28,7 +28,7 @@
 #
 {
   "defaults":{
-    "Xfail":"hard"
+    "XXX_fail":"hard"
   }
 }
 #
@@ -77,8 +77,9 @@
        "send":["G38.2 F400 Z-20"]},
   "r":{"status":0}
 }
+#
 # FAILURES: PROBE CONFIGURATION AND CALLING FAILURES
-# SKIP
+#
 {
   "t":{"label":"PROBE TEST - missing probe switch - 0.97 flavor",
        "before":["{zsn:0}"],
