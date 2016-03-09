@@ -4,22 +4,23 @@
 #
 #   Setup for disconnected tests (i.e. no machine)
 #
-
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
 #
 {
     "t":{"label":"Set configs for no-machine tests",
          "send":["{js:1}","{jv:5}","{tv:1}","{qv:0}","{sv:2}","{si:100}"],
-         "delay":0.100,
-         "fail":"hard"},
-         "verbosity":2,
+         "delay":0.100},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Set status report for no-machine tests",
-         "send":["{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}"],
-         "fail":"hard"},
-         "verbosity":2,
+         "send":["{sr:f}","{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}"],
+         "delay":0.100},
     "r":{"status":0}
 }
 #
@@ -33,15 +34,13 @@
                  "G10 L2 P5 X0 Y0 Z0",
                  "G10 L2 P6 X0 Y0 Z0",
                  "G54"
-               ],
-         "fail":"hard"},
+               ]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Force home position for no-machine tests",
-         "send":["g28.3 x0 y0 z0"],
-         "fail":"hard"},
+         "send":["g28.3 x0 y0 z0"]},
     "r":{"status":0}
 }
 #
