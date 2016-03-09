@@ -6,9 +6,9 @@
 #   See README.md for instruction on formatting and usage
 #
 {
-  "before_all_tests":{
+  "before_all":{
     "label":"Setup for smoke tests",
-    "send":["G21 G90 G94",
+    "before":["G21 G90 G94",
             "G10 L20 P2 X0 Y0 Z0",
             "G55",
             "G28.1",
@@ -17,15 +17,16 @@
 }
 #
 {
-  "after_all_tests":{
-    "label":"Return to home",
-    "send":["{clear:n}","G28"]
+  "before_each":{
+    "before":["{clear:n}","G28"]
   }
 }
 #
+
 {
-  "before_each_test":{
-    "send":["{clear:n}","G28"]
+  "after_all":{
+    "label":"Return to home",
+    "after":["{clear:n}","G28"]
   }
 }
 #
@@ -53,9 +54,9 @@
 {
     "t":{"label":"Bad Gcode command",
          "send":["G7x34.23"],
-         "fail":"soft"},
+         "after":["{clear:n}"]},
     "r":{"status":131},
-    "sr":{"stat":3}
+    "sr":{"stat":2}
 }
 #EOF
 # Example of how to stop the file

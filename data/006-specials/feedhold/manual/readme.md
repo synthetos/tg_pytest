@@ -40,8 +40,6 @@ Tests hold decelerations that span multiple Gcode blocks. XJM and YJM should be 
 Command and _expected result_:
 
 1. Send file `001-feedhold-multi-line.nc` _Moves about 20mm then stops_
-
-
 1. Send `!` _HOLD with deceleration_
 1. Send `~` _Resume motion_
 1. Send `!` _Hold again_

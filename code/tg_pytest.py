@@ -134,9 +134,8 @@ def analyze_er(t_data, r_datae, out_fd):
 #
 #   Before and afters 
 #
-#   send_before_after() - helper that actually sends the strings
-#   all_before_after()  - for all tests: extract delay, send label, send strings
-#   each_before_after() - for each test: extract delay, send string (no label)
+#   send_before_after() - inner wrapper that actually sends before/after strings
+#   do_before_after()   - outer wrapper for before/after each/all
 #
 
 def send_before_after(key, data, delay):
@@ -165,9 +164,9 @@ def send_before_after(key, data, delay):
     responses = tg.readlines()       # collect all output before returning
 
 
-def all_before_after(key, data):
+def do_before_after(key, data):
     """
-    key == "before_all_tests" or "after_all_tests"
+    key == "before_all", "after_all", "before_each" or "after_each"
     data == dictionary nested under the above key
     """
     
@@ -177,52 +176,35 @@ def all_before_after(key, data):
     delay = 0                       # extract the 'delay' tag
     if "delay" in data[key]:
         delay = data[key]["delay"]
+
+    if key == "before_each" and "before" in data[key]:
+        send_before_after("before", data["before_each"], delay)
+
+    if key == "after_each" and "after" in data[key]:
+        send_before_after("after", data["after_each"], delay)
         
-    if key == "before_all_tests" and "before" in data[key]:
+    if key == "before_all" and "before" in data[key]:
         if "label" in data[key]:
             print
             print("BEFORE ALL TESTS: {0}".format(data[key]["label"]))
 
         tg.write("M2\n")            # end any motion and clear any alarms
-#        tg.write("{clear:null}\n")              # clear any alarms
-        send_before_after("before", data["before_all_tests"], delay)
+        tg.write("{clear:null}\n")  # clear any alarms
+        send_before_after("before", data["before_all"], delay)
     
-    if key == "after_all_tests" and "after" in data[key]:
+    if key == "after_all" and "after" in data[key]:
         if "label" in data[key]:
             print
             print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
-            send_before_after("after", data["after_all_tests"], delay)
+            send_before_after("after", data["after_all"], delay)
 
-    
-def each_before_after(key, data):
-    """
-    key == "before_each_test" or "after_each_test"
-    data == dictionary nested under the above key
-    """
-#    print key
-#    print data
-
-    if key not in data:             # silent return is OK
-        return;
-
-    delay = 0                       # extract the 'delay' tag
-    if "delay" in data[key]:
-        delay = data[key]["delay"]
-
-    if key == "before_each_test" and "before" in data[key]:
-        send_before_after("before", data["before_each_test"], delay)
-
-    if key == "after_each_test" and "after" in data[key]:
-        send_before_after("after", data["after_each_test"], delay)
-
-    return
 
 ################################################################################
 #
 #   Run a test from a file
 #
 
-def run_test(t_data, bet_data, aet_data, out_fd):
+def run_test(t_data, before_data, after_data, out_fd):
 
     if "t" not in t_data:
         print("ERROR: No test data provided")
@@ -237,11 +219,11 @@ def run_test(t_data, bet_data, aet_data, out_fd):
         delay = t_data["t"]["delay"]
 
     # Run "before" strings
-    each_before_after("before_each_test", bet_data)
-    send_before_after("before", t_data["t"], delay)       # local before's
+    do_before_after("before_each", before_data)
+    send_before_after("before", t_data["t"], delay)       # local before's second
 
     # Send the test string(s)
-    # Can't handle more than 24 lines or 254 chars. Put a sender in or test limits
+    # WARNING: Won't handle more than 24 lines or 254 chars w/o flow control working (RTS/CTS)
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
     for line in send:
         print("  sending: {0}".format(line))
@@ -269,10 +251,8 @@ def run_test(t_data, bet_data, aet_data, out_fd):
     analyze_er(t_data, r_datae, out_fd)
 
     # Run "after" strings
-    each_before_after("after_each_test", aet_data)
-    send_before_after("after", t_data["t"], delay)      # local after's
-
-    return
+    send_before_after("after", t_data["t"], delay)      # local after's first
+    do_before_after("after_each", after_data)
 
 
 ################################## MAIN PROGRAM BODY ###########################
@@ -349,38 +329,38 @@ def main():
         print("FILE: {0}".format(test_file))
 
         # Extract before/after data objects (it's OK if they don't exist)
-        before_all_data = ""
-        before_each_data = ""
-        after_all_data = ""
-        after_each_data = ""
+        before_all = ""
+        before_each = ""
+        after_all = ""
+        after_each = ""
         
         for obj in tests:
 
-            if "before_all_tests" in obj:
-                before_all_data = obj
+            if "before_all" in obj:
+                before_all = obj
                 continue
 
-            if "before_each_test" in obj:
-                before_each_data = obj
+            if "before_each" in obj:
+                before_each = obj
                 continue
 
-            if "after_all_tests" in obj:
-                after_all_data = obj
+            if "after_all" in obj:
+                after_all = obj
                 continue
 
-            if "after_each_test" in obj:
-                after_each_data = obj
+            if "after_each" in obj:
+                after_each = obj
                 
         # Run tests
-        all_before_after("before_all_tests", before_all_data)
+        do_before_after("before_all", before_all)
         
         for t_data in tests:
             if "t" in t_data:
-                status = run_test(t_data, before_each_data, after_each_data, out_fd)
+                status = run_test(t_data, before_each, after_each, out_fd)
                 if (status == "quit"):
                     break;
 
-        all_before_after("after_all_tests", after_all_data)
+        do_before_after("after_all", after_all)
 
     # Close files USB port and exit
     tg.serial_close()
