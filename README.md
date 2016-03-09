@@ -95,7 +95,7 @@ Note that strings in embedded JSON do not need to be escaped, as TinyG will alwa
          "send":["{x:n}"]}
     }
 
-Another trick is to "comment out" a line in a JSON file just invalidate the tag by putting an X or some other character (but not #) in front of it. The tag/value will be ignored by the tester.
+Another trick is to "comment out" a line in a JSON file just invalidate the tag by putting `XXX_` or some other characters (but not #) in front of it. The tag/value will be ignored by the tester.
 
 ### Before and After
 Additional JSON objects can be provided in a file that will run before / after tests. The JSON format is the same as the `t` object, but only the listed tags are recognized. These before / after objects run prior to any local `before` or `after` tags in a given test object. See `smoke-001.json`

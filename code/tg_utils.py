@@ -44,27 +44,28 @@ class TinyG(object):
         """
         ports =self.get_serial_ports()
         if len(ports) == 0:
-            print ("No serial port found, Exiting")
+            print ("No serial port found or could not open serial port")
+            print ("Maybe already open in another program like Coolterm")
+            print ("Exiting")
             sys.exit(1)
     
         port = ports[0]
         
         for port in ports:
-            if port.find("Bluetooth") == -1: #We are excluding the built in bluetooth ports on osx here
-                try:
-                    s = serial.Serial(port, 115200, rtscts=1, timeout=self.SERIAL_TIMEOUT)
-                except:
-                    print("Could not open serial port %s " % port)
-                    print("Maybe already open in another program like Coolterm")
-                    print("Quit TinyG Tester")
-                    sys.exit(1)
-            
-                if not s.isOpen :
-                    print("Could not open serial port: {0}".format(s.name))
-                    sys.exit(1)
-                else:
-                    print("Serial port opened:    {0}".format(s.name))
-                return s    
+            try:
+                s = serial.Serial(port, 115200, rtscts=1, timeout=self.SERIAL_TIMEOUT)
+            except:
+                print("Could not open serial port %s " % port)
+                print("Maybe already open in another program like Coolterm")
+                print("Exiting")
+                sys.exit(1)
+        
+            if not s.isOpen :
+                print("Could not open serial port: {0}".format(s.name))
+                sys.exit(1)
+            else:
+                print("Serial port opened:    {0}".format(s.name))
+            return s    
     
     def get_serial_ports(self):
         """ Lists serial port names
@@ -86,7 +87,8 @@ class TinyG(object):
     
         result = []
         for port in ports:
-           
+            if port.find("Bluetooth") != -1: # Exclude built-in bluetooth ports on OSX
+                continue
             try:
                 s = serial.Serial(port)
                 s.close()
@@ -95,7 +97,8 @@ class TinyG(object):
                 pass
         return result
     
-    
+
+########################################################################################    
 
 def split_json_file(fd):
     """
