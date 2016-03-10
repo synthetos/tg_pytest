@@ -35,6 +35,7 @@ class TinyG(object):
         
         # ENQ style - board must support ENQ protocol, otherwise use old style
         count = 0
+        response = { "ack":False }
         while count < 4:
             self.write("\x05")      # send ENQ
             raw = self.s.readline()
@@ -43,13 +44,14 @@ class TinyG(object):
             except:
                 pass
 
-            if response["ack"] == True:
+            if "ack" in response and response["ack"] == True:
                 break;
             
-            count += count
+            count = count+1
             if count > 3:
-                print("Serial port connected but board not responding to ENQuiry (0x05)")
-                return
+                print ("Serial port connected but board not responding to ENQuiry (0x05)")
+                print ("Exiting")
+                sys.exit(1)
  
         print("Serial port connected: {0}".format(raw))            
 
