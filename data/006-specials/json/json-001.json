@@ -2,13 +2,38 @@
 #
 #   json-001.json - JSON tests
 #
+#  It's best to run these tests with nor setup file, as setup is handled here
+#
+#
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+# SKIP
+{
+    "t":{"label":"Set configs for JSON tests",
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "delay":0.100},
+    "r":{"status":0}
+}
+#
+# JSON TESTS BEGIN HERE
+#
 # SUCCESS CASES
+# SKIP
 {
     "t":{"label":"Simple JSON read request",
          "send":["{fb:n}"]},
         "r":{"status":0}
 }
 #
+{
+    "t":{"label":"Test leading space padding",
+         "send":["{ fb:n}"]},
+        "r":{"status":0}
+}
+# EOF
 {
     "t":{"label":"Group JSON read request",
          "send":["{x:n}"]},
@@ -23,7 +48,7 @@
 #
 {
     "t":{"label":"JSON exceeds maximum pad characters",
-         "send":["                {x:n}"]},
+         "send":["{ x:n}"]},
         "r":{"status":111}
 }
 #
@@ -31,4 +56,11 @@
     "t":{"label":"JSON exceeds maximum name characters",
          "send":["{nameistoolong:n}"]},
         "r":{"status":107}
+}
+# EOF
+{
+    "t":{"label":"Set status report for no-machine tests",
+         "send":["{sr:f}","{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"],
+         "delay":0.500},
+    "r":{"status":0}
 }

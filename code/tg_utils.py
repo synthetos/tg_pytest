@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+########################################################################################    
+
 """
 Utility class to clean up the logic for alden :)
 
@@ -11,9 +13,9 @@ import json
 class TinyG(object):
 
     def __init__(self):
+        print("Starting TinyG Tester")
         self.SERIAL_TIMEOUT = 1          # in seconds
         self.s = self.open_serial_port()
-        print("Opened the port")
         
     def write(self, data):
         self.s.write(data)
@@ -27,15 +29,40 @@ class TinyG(object):
     def init_tinyg(self):
         """
         Initialize TinyG - send something to ensure board is responding and set JSON mode
+        The first write sometimes returns garbage, so senq ENQ to see if it's responding
+        Supposed to send back {"ack":true}
         """
-        self.write("{\"fb\":null}\n")      # The first write often returns garbage
+        
+        # ENQ style - board must support ENQ protocol, otherwise use old style
+        count = 0
+        while count < 4:
+            self.write("\x05")      # send ENQ
+            raw = self.s.readline()
+            try:
+                response = json.loads(raw)
+            except:
+                pass
+
+            if response["ack"] == True:
+                break;
+            
+            count += count
+            if count > 3:
+                print("Serial port connected but board not responding to ENQuiry (0x05)")
+                return
+ 
+        print("Serial port connected: {0}".format(raw))            
+
+        """
+        # Old style - left in for branches not yet supporting ENQ protocol
+        self.write("{\"fb\":null}\n")      # The first write sometimes returns garbage
         r = self.s.readline()
         self.write("{\"fb\":null}\n")      # So do it again
         r = self.s.readline()
-        self.write("{\"sr\":null}\n")      # So do it again
+        self.write("{\"fb\":null}\n")      # And again
         r = self.s.readline()
-        print("Serial port connected: {0}".format(r))    
-        
+        print("Serial port connected: {0}".format(r))            
+        """
 
     def open_serial_port(self): 
         """
@@ -138,7 +165,11 @@ def split_json_file(fd):
             try:
                 data.append(json.loads(line))
             except:
-                print("{0} FAILED JSON PARSE, QUITTING".format(line))
+                print ("{0}".format(line))
+                print ("FAILED JSON PARSE, QUITTING")
+                print ("Look for missing or extra comma in JSON object,")
+                print ("or more then one JSON object without '#' separators.")
+                print ("When in doubt, lint it: http://jsonlint.com/")
                 return "fail"
         else:
             skip = False

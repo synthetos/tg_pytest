@@ -12,15 +12,15 @@
 #
 {
     "t":{"label":"Set configs for no-machine tests",
-         "send":["{js:1}","{jv:5}","{tv:1}","{qv:0}","{sv:2}","{si:100}"],
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
          "delay":0.100},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Set status report for no-machine tests",
-         "send":["{sr:f}","{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}"],
-         "delay":0.100},
+         "send":["{sr:f}","{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"],
+         "delay":0.500},
     "r":{"status":0}
 }
 #

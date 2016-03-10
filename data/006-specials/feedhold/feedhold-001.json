@@ -63,43 +63,15 @@
 #
 {
   "t":{"label":"FEEDHOLD TEST - hold, resume, hold, flush, return to zero",
-       "send":["G1 F200 X50","!","~","!","%","G0 X0"],
+       "send":["G1 F200 X50", "!", "~", "!~", "!", "%", "G0 X0"],
        "delay":0.75},
   "r":{"status":0}
 }
+
 # EOF
-# Probe after arc. See if a full planner buffer is handled correctly going into a probe
 {
-  "t":{"label":"PROBE TEST - probe after an arc",
-       "send":["G2 F2000 I25 X25 Y25","G38.2 F400 Z-40"]},
+  "t":{"label":"test mode status report",
+       "send":["{txt:\"?\"}"]},
   "r":{"status":0}
 }
-#
-{
-  "t":{"label":"PROBE TEST - fails to contact - should report success",
-       "send":["G38.2 F400 Z-20"]},
-  "r":{"status":0}
-}
-#
-# FAILURES: PROBE CONFIGURATION AND CALLING FAILURES
-#
-{
-  "t":{"label":"PROBE TEST - missing probe switch - 0.97 flavor",
-       "before":["{zsn:0}"],
-       "send":["G38.2 F400 Z-40"],
-       "after":["{zsn:4}"],
-       "delay":0.100},
-  "r":{"status":252}
-}
-#
-{
-  "t":{"label":"PROBE TEST - zero feed rate",
-       "send":["G38.2 F0 Z-40"]},
-  "r":{"status":142}
-}
-#
-{
-  "t":{"label":"PROBE TEST - travel too short",
-       "send":["G38.2 F400 Z-0.250"]},
-  "r":{"status":251}
-}
+# EOF

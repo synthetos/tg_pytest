@@ -39,6 +39,21 @@ from tg_utils import split_json_file
 
 ################################################################################
 #
+#   Helpers
+#
+
+def fail_hard(t_data, params, line):
+    if "fail" in t_data["t"]:           # local fail setting takes precedence over
+        fail = t_data["t"]["fail"]
+    elif "fail" in params:              # ...default setting
+        fail = params["fail"]
+    if fail == "hard":
+        print("FAIL HARD: Exiting immediately: {0}".format(line))
+        sys.exit(1)
+    return
+
+################################################################################
+#
 #   Analyzers
 #
 
@@ -142,7 +157,7 @@ def analyze_er(t_data, r_datae, params):
 
 ################################################################################
 #
-#   Before and afters 
+#   Before and After
 #
 #   send_before_after() - inner wrapper that actually sends before/after strings
 #   do_before_after()   - outer wrapper for before/after each/all
@@ -253,7 +268,8 @@ def run_test(t_data, before_data, after_data, params):
         try:
             r_datae.append(json.loads(line))
         except:
-            print("  FAILED: Unable to decode response from TinyG {0}".format(line))
+            print("  FAILED: Response doesn't parse: {0}".format(line))
+            fail_hard(t_data, params, line)
             return
 
         r_datae[-1]["response"] = line      # Add the response line to the dictionary
@@ -262,6 +278,10 @@ def run_test(t_data, before_data, after_data, params):
             r_datae[-1]["r"]["status"] = r_datae[-1]['f'][1]  # extract status code from footer              
             r_datae[-1]["r"]["count"] = r_datae[-1]['f'][2]   # extract byte/line count from footer
 
+    if len(r_datae) == 0:
+        print ("  FAILED: No response from board: {0}".format(line))
+        fail_hard(t_data, params, line)
+
     # Run analyzers on the response object list
     results = 0
     results += analyze_r(t_data, r_datae, params)
@@ -269,14 +289,7 @@ def run_test(t_data, before_data, after_data, params):
     results += analyze_er(t_data, r_datae, params)
 
     if results < 0:
-        fail = None
-        if "fail" in t_data["t"]:           # local fail setting takes precedence over
-            fail = t_data["t"]["fail"]
-        elif "fail" in params:              # ...default setting
-            fail = params["fail"]
-        if fail == "hard":
-            print("FAIL HARD: Exiting immediately {0}".format(line))
-            sys.exit(1)
+        fail_hard(t_data, params, line)
 
     # Run "after" strings
     send_before_after("after", t_data["t"], delay)      # local after's first
@@ -292,11 +305,8 @@ global tg
 tg = TinyG()    # Create the TinyG Object
 
 def main():
-
-    t_data = { "status":0 }
     
     # Open and initialize TinyG port
-    print("Starting TinyG Tester")
     tg.init_tinyg()          # Initialize the TinyG connection.
                              # We are open and ready to rock the kitty time
 
@@ -332,6 +342,8 @@ def main():
 
     # Iterate through the master file list to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
+
+    t_data = { "status":0 }
 
     for test_file in test_files:
 
@@ -380,7 +392,6 @@ def main():
             out_fd = None
 
         # Run the test or tests found in the file
-        print
         print("FILE: {0}".format(test_file))
 
         do_before_after("before_all", before_all, params)
