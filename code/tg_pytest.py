@@ -256,6 +256,8 @@ def run_test(t_data, before_data, after_data, params):
         return
     
     send = [x.encode("utf8") for x in t_data["t"]["send"]]   
+    first_line = send[0]
+#    print first_line
     for line in send:
         print("  sending: {0}".format(line))
         tg.write(line+"\n")
@@ -279,7 +281,7 @@ def run_test(t_data, before_data, after_data, params):
             r_datae[-1]["r"]["count"] = r_datae[-1]['f'][2]   # extract byte/line count from footer
 
     if len(r_datae) == 0:
-        print ("  FAILED: No response from board: {0}".format(line))
+        print ("  FAILED: No response from board: {0}".format(first_line))
         fail_hard(t_data, params, line)
 
     # Run analyzers on the response object list

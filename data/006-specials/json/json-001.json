@@ -27,10 +27,29 @@
          "send":["{fb:n}"]},
         "r":{"status":0}
 }
+# __normalize_json_string() testers are ALL CAPS for better inspection during debug
+# SKIP
+{
+    "t":{"label":"Test _normalize_json_string() for white space padding cases - relaxed",
+         "send":["  {FB:N}","{ FB:N}","{FB :N}","{FB: N}","{FB:N }","{FB:N}   ", "  { FB : N }  "]},
+        "r":{"status":0}
+}
+# SKIP
+{
+    "t":{"label":"Test _normalize_json_string() for white space padding cases - strict",
+         "send":["  {\"FB\":N}","{\" FB\":N}","{\"FB \":N}","{\"FB\": N}","{\"FB\":N }","{\"FB\":N}   ", "  { FB : N }  "]},
+        "r":{"status":0}
+}
+# SKIP
+{
+    "t":{"label":"Test _normalize_json_string() for multi-element cases",
+        "send":["{fb:n,fv:n}","{posx:n,posy:n,posz:n}"]},
+        "r":{"status":0}
+}
 #
 {
-    "t":{"label":"Test leading space padding",
-         "send":["{ fb:n}"]},
+    "t":{"label":"Test _normalize_json_string() for multi-level cases",
+         "send":["{X:{VM:NULL}}"]},
         "r":{"status":0}
 }
 # EOF
