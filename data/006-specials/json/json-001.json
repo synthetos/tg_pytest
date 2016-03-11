@@ -21,13 +21,70 @@
 # JSON TESTS BEGIN HERE
 #
 # SUCCESS CASES
-# SKIP
+#
 {
-    "t":{"label":"Simple JSON read request",
+    "t":{"label":"Simple read with null",
          "send":["{fb:n}"]},
         "r":{"status":0}
 }
-# __normalize_json_string() testers are ALL CAPS for better inspection during debug
+#
+{
+    "t":{"label":"Simple read with double quotes (null string)",
+         "send":["{fb:\"\"}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Simple write with floating point number",
+         "send":["{g59c:100.0}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Simple write with integer point number",
+         "send":["{tid:12345678}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Simple write with boolean true",
+         "send":["{1po:t}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Simple write with boolean false",
+         "send":["{1po:f}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Simple write with string value",
+         "send":["{str:\"string\"}"]},
+        "r":{"status":0}
+}
+# EOF
+{
+    "t":{"label":"Nested JSON read request",
+        "send":["{x:{vm:n,fr:n}}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Nested JSON write request",
+        "send":["{x:{vm:1000,fr:1000}}"],
+        "after":["{x:{vm:1500,fr:1500}}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Nested JSON mixed read / write request",
+        "send":["{x:{vm:2000,fr:n}}"],
+        "after":["{x:{vm:1500,fr:1500}}"]},
+        "r":{"status":0}
+}
+#
+# _normalize_json_string() testers. In ALL CAPS for better inspection during debug
 # SKIP
 {
     "t":{"label":"Test _normalize_json_string() for white space padding cases - relaxed",
