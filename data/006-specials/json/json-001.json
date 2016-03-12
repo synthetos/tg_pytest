@@ -20,10 +20,23 @@
 #
 # JSON TESTS BEGIN HERE
 #
+# {x:{vm:n,fr:n}}
+# {"X":{"VM":N,"FR":123,"Str":"String\"ESC\""}}
+# {  fb :   n}
+# {FB:N}
+# {FB:""}   // treated as a NULL
+# {FB:" "}  // treated as a string with a space in it
+# {"str":"string \"ESCAPED\" test"}
+#
 # SUCCESS CASES
+{
+    "t":{"label":"Simple read with null - strict mode",
+         "send":["{\"fb\":n}"]},
+        "r":{"status":0}
+}
 #
 {
-    "t":{"label":"Simple read with null",
+    "t":{"label":"Simple read with null - relaxed mode",
          "send":["{fb:n}"]},
         "r":{"status":0}
 }
@@ -63,9 +76,15 @@
          "send":["{str:\"string\"}"]},
         "r":{"status":0}
 }
-# EOF
+# This one is convoluted
 {
-    "t":{"label":"Nested JSON read request",
+    "t":{"label":"Simple write with string value with escaped quotes",
+         "send":["{str:\"string\\\"embedded\\\"\"}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Nested read request",
         "send":["{x:{vm:n,fr:n}}"]},
         "r":{"status":0}
 }
