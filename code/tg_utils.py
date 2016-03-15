@@ -170,7 +170,8 @@ def split_json_file(fd):
                 print ("{0}".format(line))
                 print ("FAILED JSON PARSE, QUITTING")
                 print ("Look for missing or extra comma in JSON object,")
-                print ("or more then one JSON object without '#' separators.")
+                print ("or more then one JSON object without '#' separators,")
+                print ("or curlies in a comment (which are not allowed).")
                 print ("When in doubt, lint it: http://jsonlint.com/")
                 return "fail"
         else:

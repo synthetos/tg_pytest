@@ -1,0 +1,41 @@
+################################################################################
+#
+#   json-txt-001.json - JSON TXT container tests
+#
+#  It's best to run these tests with no setup file, as setup is handled here
+#
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+# SKIP
+{
+    "t":{"label":"Set configs for JSON tests",
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "delay":0.100},
+    "r":{"status":0}
+}
+#
+# TESTS BEGIN HERE
+#
+# SUCCESS CASES
+#
+{
+    "t":{"label":"Simple TXT container with single line response",
+        "send":["{txt:\"$xvm\"}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"TXT container with multi-line response",
+        "send":["{txt:\"$x\"}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"TXT container with JSON command (recursive JSON parser call)",
+        "send":["{txt:\"{xvm:n}\"}"]},
+        "r":{"status":0}
+}
+# EOF
