@@ -3,7 +3,6 @@
 #   json-exceptions-001.json - JSON exception tests
 #
 #  It's best to run these tests with no setup file, as setup is handled here
-#
 {
   "defaults":{
     "fail":"hard"
@@ -17,45 +16,162 @@
     "r":{"status":0}
 }
 #
-# JSON TESTS BEGIN HERE
+# JSON EXCEPTION TESTS BEGIN HERE
 #
-# exponentiated number
-# test for maxumim marshalling recursion depth
-# test for maximum name size
-# test for maximum string size
-# test JSON has too many pairs for NV list
-#
-# EXCEPTION TESTS
+# test of value provided is wrong type for key
 #
 {
-    "t":{"label":"JSON of excessive length > 128 bytes",
+    "t":{"label":"Key is missing",
+         "send":["{:null}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Key is blank",
+         "send":["{   :null}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Value is missing",
+         "send":["{key:}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Value is blank",
+         "send":["{key:     }"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Missing key and value",
+         "send":["{:}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Blank key and value",
+         "send":["{   :   }"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Nonsense float value",
+         "send":["{xvm:xx12qq.x}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Float value followed by nonsense",
+         "send":["{xvm:12qq.x}"]},
+        "r":{"status":102}
+}
+#
+{
+    "t":{"label":"Boolean value not t or f",
+         "send":["{1po:xxx}"]},
+        "r":{"status":111}
+}
+#
+{
+    "t":{"label":"Boolean value numeric range error -1",
+         "send":["{1po:-1}"]},
+        "r":{"status":110}
+}
+#
+{
+    "t":{"label":"Boolean value numeric range error 2",
+         "send":["{1po:2}"]},
+        "r":{"status":110}
+}
+#
+{
+    "t":{"label":"Boolean value is float 0.0",
+         "send":["{1po:0.0}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"Boolean value is float 1.0",
+         "send":["{1po:1.0}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"Boolean value is fractional 0.5",
+         "send":["{1po:0.5}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"Boolean value is fractional 0.99999999999",
+         "send":["{1po:0.99999999999}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"Boolean value is string",
+         "send":["{1po:\"true\"}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"JSON syntax error - string value is wrong type for key",
+         "send":["{xvm:\"FUBAR\"}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"JSON syntax error - boolean value is wrong type for key",
+         "send":["{xvm:true}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"JSON syntax error - numeric value is wrong type for key",
+         "send":["{msg:12345}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"JSON syntax error - boolean value is wrong type for key",
+         "send":["{msg:true}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"JSON syntax error - string value is wrong type for key",
+         "send":["{1po:\"WTF\"}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"JSON syntax error - numeric value is wrong type for key",
+         "send":["{1po:12345.678}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"Input is excessive length > 128 bytes",
          "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130\"}"]},
         "r":{"status":107}
 }
 #
 {
-    "t":{"label":"JSON exceeds maximum pad characters",
-         "send":["{ x:n}"]},
-        "r":{"status":111}
-}
-#
-{
-    "t":{"label":"JSON exceeds maximum name characters",
+    "t":{"label":"Name exceeds maximum name characters",
          "send":["{nameistoolong:n}"]},
         "r":{"status":107}
 }
-# EOF
+#
 {
-    "t":{"label":"Set status report for no-machine tests",
-         "send":["{sr:f}","{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"],
-         "delay":0.500},
-    "r":{"status":0}
+    "t":{"label":"Query exceeds maximum recursion depth",
+         "send":["{x:{x:{x:{x:{x:n}}}}}"]},
+        "r":{"status":115}
 }
-# EOF
-# {x:{vm:n,fr:n}}
-# {"X":{"VM":N,"FR":123,"Str":"String\"ESC\""}}
-# {  fb :   n}
-# {FB:N}
-# {FB:""}   // treated as a NULL
-# {FB:" "}  // treated as a string with a space in it
-# {"str":"string \"ESCAPED\" test"}
+#
+{
+    "t":{"label":"Expanded result exceeds maximum NV pairs",
+         "send":["{x:n,y:n,z:n}"]},
+        "r":{"status":112}
+}

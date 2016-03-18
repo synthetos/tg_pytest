@@ -20,37 +20,37 @@
 # JSON TESTS BEGIN HERE
 # SKIP
 {
-    "t":{"label":"Read a float - strict JSON mode",
+    "t":{"label":"Simple read a float - strict JSON mode",
          "send":["{\"fb\":null}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Read an integer - relaxed JSON mode",
+    "t":{"label":"Simple read an integer - relaxed JSON mode",
          "send":["{1mi:null}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Read a float - relaxed JSON mode",
+    "t":{"label":"Simple read a float - relaxed JSON mode",
          "send":["{fb:n}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Read a float - strict JSON mode - CAPITALS",
+    "t":{"label":"Simple read a float - strict JSON mode - CAPITALS",
          "send":["{\"FB\":N}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Read a float - relaxed JSON mode - CAPITALS",
+    "t":{"label":"Simple read a float - relaxed JSON mode - CAPITALS",
          "send":["{FB:N}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Read a float with double quotes (null string)",
+    "t":{"label":"Simple read a float with double quotes (null string)",
          "send":["{fb:\"\"}"]},
         "r":{"status":0}
 }
@@ -62,55 +62,43 @@
 }
 #
 {
-    "t":{"label":"Write with floating point number",
+    "t":{"label":"Single write with floating point number",
          "send":["{g59c:100.1}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Write with floating point exponentiated",
+    "t":{"label":"Single write with floating point exponentiated",
          "send":["{xjm:1.0e+6}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Write with integer number",
+    "t":{"label":"Single write with integer number",
          "send":["{tid:12345678}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Write with boolean true",
+    "t":{"label":"Single write with boolean true",
          "send":["{1po:true}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Write with boolean false",
+    "t":{"label":"Single write with boolean false",
          "send":["{1po:false}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Write with boolean true using '1'",
-         "send":["{1po:1}"]},
-        "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Write with boolean false using '0'",
-         "send":["{1po:0}"]},
-        "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Write with string value",
+    "t":{"label":"Single write with string value",
          "send":["{msg:\"string\"}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Write with string value with escaped quotes",
+    "t":{"label":"Single write with string value with escaped quotes",
          "send":["{msg:\"string\\\"embedded\\\"\"}"]},
         "r":{"status":0}
 }

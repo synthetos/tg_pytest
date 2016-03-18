@@ -17,6 +17,9 @@
     "r":{"status":0}
 }
 #
+# TXT mixed with TIDs
+# Stuff other than TXT on a line
+#
 # TESTS BEGIN HERE
 #
 # SUCCESS CASES

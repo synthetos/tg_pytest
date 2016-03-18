@@ -43,6 +43,7 @@ from tg_utils import split_json_file
 #
 
 def fail_hard(t_data, params, line):
+    fail = "soft"
     if "fail" in t_data["t"]:           # local fail setting takes precedence over
         fail = t_data["t"]["fail"]
     elif "fail" in params:              # ...default setting
@@ -340,7 +341,6 @@ def main():
             print("  {0}".format(file))
         except:
             print("  {0} cannot be opened, not added".format(file))
-    print
 
     # Iterate through the master file list to run the tests
     timestamp = time.strftime("%Y-%m%d-%H%M", time.localtime()) # e.g. 2016-0111-1414
@@ -394,6 +394,8 @@ def main():
             out_fd = None
 
         # Run the test or tests found in the file
+        print
+        print("===============================================")
         print("FILE: {0}".format(test_file))
 
         do_before_after("before_all", before_all, params)
@@ -419,7 +421,7 @@ def main():
         pass
     print
     print("Quit TinyG Tester")
-
+#    print('\a')
 
 # DO NOT DELETE
 if __name__ == "__main__":

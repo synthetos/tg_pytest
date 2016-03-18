@@ -1,0 +1,79 @@
+################################################################################
+#
+#   json-random-001.json - Random JSON tests
+#
+#  It's best to run these tests with no setup file, as setup is handled here
+#
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+#
+{
+    "t":{"label":"Set configs for JSON tests",
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "delay":0.100},
+    "r":{"status":0}
+}
+#
+# HELP SCREENS
+#
+{
+    "t":{"label":"Invoke JSON help message various ways",
+        "send":["{help:n}","{h:n}","{help:0}","{help:1}"]},
+        "r":{"status":0}
+}
+#
+# DEFAULTS
+#
+{
+    "t":{"label":"Reset default settings w/true",
+        "send":["{defa:true}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Reset default settings w/1",
+        "send":["{defa:1}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Default settings help",
+        "send":["{defa:n}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Reset default settings type error",
+        "send":["{defa:\"true\"}"]},
+        "r":{"status":116}
+}
+#
+# EOF
+# USER DATA TESTS
+#
+{
+    "t":{"label":"Read initial USER DATA groups",
+        "send":["{uda:n}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set USER DATA item",
+        "send":["{uda1:0x1}"]},
+        "r":{"status":0,"uda1":"0x1"}
+}
+#
+{
+    "t":{"label":"Read USER DATA set by previous test",
+        "send":["{uda1:n}"]},
+        "r":{"status":0,"uda1":"0x1"}
+}
+#
+{
+    "t":{"label":"Set USER DATA as a group",
+        "send":["{uda:{0:0x12345678,1:0x001,2:0x002,3:0x003}}"]},
+        "r":{"status":0}
+}
