@@ -8,7 +8,7 @@
     "fail":"hard"
   }
 }
-#
+# SKIP
 {
     "t":{"label":"Set configs for Status Report tests",
          "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
@@ -18,98 +18,134 @@
 #
 # STATUS REPORT TESTS BEGIN HERE
 #
+
+# SKIP
+# __DEFA_TEST
 {
-    "t":{"label":"Reset status reports using $defa=1",
+    "t":{"label":"DEFA TEST: Reset status reports using $defa=1",
          "send":["{defa:1}"]},
         "r":{"status":0, "defa":1}
 }
 #
 {
-    "t":{"label":"Request default SR - must have posx, posy, posz, posa for these tests",
+    "t":{"label":"DEFA TEST: SR should return posx, posy, posz, posa",
+         "send":["{sr:n}"]},
+         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0}}
+}
+# EOF
+{
+    "t":{"label":"DEFA TEST: SR should return posx, posy, posz, posa",
+         "send":["{sr:n}"]},
+         "r":{"sr":{"posx":0.000}}
+}
+#
+{
+    "t":{"label":"DEFA TEST: SRS should return posx, posy, posz, posa",
+         "send":["{srs:n}"]},
+         "r":{"status":0}
+}
+# END __DEFA_TEST
+
+
+# __SRS_CLEAR_TEST
+{
+    "t":{"label":"DEFA TEST: Clear all status reports w/SRS",
+         "send":["{srs:{clear:t}}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"DEFA TEST: SR should be empty",
          "send":["{sr:n}"]},
          "r":{"status":0}
 }
-#
+# END __SRS_CLEAR_TEST
+
+
+# __SRS_RESTORE_TEST
 {
-    "t":{"label":"Remove all status reports",
-         "send":["{sr:f}"]},
+    "t":{"label":"RESTORE DEFA: restore defaults using SRS",
+         "send":["{srs:{defa:t}}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Restore all status reports",
-         "send":["{sr:t}"]},
-        "r":{"status":0}
+    "t":{"label":"RESTORE DEFA: SR should return posx, posy, posz, posa",
+         "send":["{sr:n}"]},
+         "r":{"status":0}
 }
-#
+# END __SRS_RESTORE_TEST
+
 {
     "t":{"label":"Remove 'posa' from status report",
-         "send":["{sr:{posa:f}}","{sr:n}"]},
+         "send":["{srs:{set:{posa:f}}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
 {
     "t":{"label":"Add 'posa' to status report using 't'",
-         "send":["{sr:{posa:t}}","{sr:n}"]},
+         "send":["{srs:{set:{posa:t}}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
 {
     "t":{"label":"Add 'posa' to status report using 'true'",
-         "send":["{sr:{posa:true}}","{sr:n}"]},
+         "send":["{srs:{set:{posa:true}}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
 {
     "t":{"label":"Remove 'posx', 'posy', 'posz' from status report",
-         "send":["{sr:{posx:f,posy:f,posz:f}}","{sr:n}"]},
+         "send":["{srs:{set:{posx:f,posy:f,posz:f}}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
 {
     "t":{"label":"Add 'posx' and remove 'posy'",
-         "send":["{sr:{posx:t,posy:f}}","{sr:n}"]},
+         "send":["{srs:{set:{posx:t,posy:f}}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
 {
     "t":{"label":"Add 'posx', 'posy', 'posz' to status report",
-         "send":["{sr:{posx:t,posy:t,posz:t}}","{sr:n}"]},
+         "send":["{srs:{set:{posx:t,posy:t,posz:t}}}","{sr:n}"]},
         "r":{"status":0}
 }
 #
 {
     "t":{"label":"Setup full status report",
-      "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,admo:t,frmo:t,momo:t,stat:t}}"]},
+      "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,admo:t,frmo:t,momo:t,stat:t}}}"]},
          "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Try to add a bad token to status report - single token",
-         "send":["{sr:{BOGUS:t}}"]},
-        "r":{"status":100}
-}
-#
-{
-    "t":{"label":"Try to add a bad token to status report - list of tokens",
-         "send":["{sr:{posx:t,BOGUS:t,posz:t}}"]},
-        "r":{"status":100}
-}
-#
-{
-    "t":{"label":"Try to add token with string format",
-         "send":["{sr:{posx:\"ON\"}}"]},
-        "r":{"status":103}
-}
-#
-{
     "t":{"label":"Try to add token with int format",
-         "send":["{sr:{posx:42}}"]},
-        "r":{"status":103}
+         "send":["{srs:{set:{posx:42}}}"]},
+        "r":{"status":0}
+}
+#
+# EXCEPTION CASES
+#
+{
+    "t":{"label":"EXCEPTION: Add a bad token to status report - single token",
+         "send":["{srs:{set:{BOGUS:t}}}"]},
+        "r":{"status":100}
 }
 #
 {
-    "t":{"label":"Try to add token with float format",
-         "send":["{sr:{posx:42.42}}"]},
-        "r":{"status":103}
+    "t":{"label":"EXCEPTION: Add a bad token to status report - list of tokens",
+         "send":["{srs:{set:{posx:t,BOGUS:t,posz:t}}}"]},
+        "r":{"status":100}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Add token with float format",
+         "send":["{srs:{set:{posx:42.42}}}"]},
+        "r":{"status":116}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Add token with string format",
+         "send":["{srs:{set:{posx:\"ON\"}}}"]},
+        "r":{"status":116}
 }

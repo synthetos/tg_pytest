@@ -2,7 +2,12 @@
 #
 #   exceptionReports-001.json
 #
-
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+#
 {
     "t":{"label":"Invoke bogus exception report",
          "send":["{er:n}"]},
@@ -11,7 +16,8 @@
 #
 {
     "t":{"label":"Write during move to see rejected write",
-         "send":["g0 x10 f200", "{xvm:1000}"],
-         "delay":0.200},
+         "before":["g1 x10 f200"],
+         "send":["{xvm:1000}"],
+         "delay":0.500},
         "r":{"status":106}
 }

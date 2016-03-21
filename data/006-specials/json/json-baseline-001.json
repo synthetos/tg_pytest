@@ -9,7 +9,7 @@
     "fail":"hard"
   }
 }
-# SKIP
+#
 {
     "t":{"label":"Set configs for JSON tests",
          "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
@@ -18,13 +18,6 @@
 }
 #
 # JSON TESTS BEGIN HERE
-#
-{
-    "t":{"label":"Nested write - 4 children",
-        "send":["{x:{vm:1000,fr:1000,tn:0,tm:200}}"],
-        "after":["{x:{vm:1500,fr:1500}}"]},
-        "r":{"status":0}
-}
 #
 {
     "t":{"label":"Read a float - strict JSON mode",

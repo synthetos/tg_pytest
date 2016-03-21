@@ -27,6 +27,8 @@ from os.path import exists
 import time
 from time import sleep
 
+import types
+
 from serial.tools.list_ports import comports
 
 # debugging assistants
@@ -58,6 +60,14 @@ def fail_hard(t_data, params, line):
 #   Analyzers
 #
 
+def display_r(key, test_val, resp_val, response_string):
+    if test_val == resp_val:
+        print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
+        return (0)
+    else:
+        print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
+        return (-1)
+    
 def analyze_r(t_data, r_datae, params):
     """
     Analyze response objects in response list
@@ -77,30 +87,28 @@ def analyze_r(t_data, r_datae, params):
         if "response" in t_data["r"]:  # suppress the response
             if t_data["r"]["response"] == False:
                 r_data["response"] = ""
-        """
-        for k in t_data["r"]:
-            if k in r_data["r"]:
-                if t_data["r"][k] == r_data["r"][k]:
-                    if display:
-                        print("  passed: {0}: {1}, {2}".format(k, r_data["r"][k], r_data["response"]))
-                    else:
-                        print("  passed: {0}: {1}".format(k, r_data["r"][k]))
-                else:
-                    if display:
-                        print("  FAILED: {0}: {1} should be {2}, {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
-                    else:
-                        print("  FAILED: {0}: {1} should be {2}".format(k, r_data["r"][k], t_data["r"][k]))
-        """
+                
+        for key in t_data["r"]:
+            if key in r_data["r"]:
 
-        for k in t_data["r"]:
-            if k in r_data["r"]:
-                if t_data["r"][k] == r_data["r"][k]:
-                    print("  passed: {0}: {1} {2}".format(k, r_data["r"][k], r_data["response"]))
-                else:
-                    print("  FAILED: {0}: {1} should be {2} {3}".format(k, r_data["r"][k], t_data["r"][k], r_data["response"]))
-                    result -= 1
+                test_val = t_data["r"][key]    # data value to check from test data
+                resp_val = r_data["r"][key]    # data value returned for this key from response
+                
+                # display nested responses
+                if isinstance(test_val, dict):
+                    for child in test_val:
+                        if child in resp_val:
+                            result -= display_r(child, test_val[child], resp_val[child], None)
+                        else:
+                            print("  MISSING: \"{0}\" is missing from response".format(child))
+                            result -= 1
+                    continue
+                
+                # display non-nested responses
+                result -= display_r(key, test_val, resp_val, r_data["response"])
             else:
-                print("  MISSING: \"{0}\" is missing from response {1}".format(k, r_data["response"]))
+                print("  MISSING: \"{0}\" is missing from response {1}".format(key, r_data["response"]))
+                result -= 1
 
     return result
 
@@ -420,8 +428,9 @@ def main():
     except:
         pass
     print
+    print("TESTS COMPLETE")
     print("Quit TinyG Tester")
-#    print('\a')
+    print('\a')
 
 # DO NOT DELETE
 if __name__ == "__main__":
