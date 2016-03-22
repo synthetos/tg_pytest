@@ -55,10 +55,6 @@ def fail_hard(t_data, params, line):
         sys.exit(1)
     return
 
-################################################################################
-#
-#   Analyzers
-#
 
 def display_r(key, test_val, resp_val, response_string):
     if test_val == resp_val:
@@ -66,7 +62,13 @@ def display_r(key, test_val, resp_val, response_string):
         return (0)
     else:
         print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
-        return (-1)
+        return (1)
+
+
+################################################################################
+#
+#   Analyzers
+#
     
 def analyze_r(t_data, r_datae, params):
     """
@@ -98,7 +100,8 @@ def analyze_r(t_data, r_datae, params):
                 if isinstance(test_val, dict):
                     for child in test_val:
                         if child in resp_val:
-                            result -= display_r(child, test_val[child], resp_val[child], None)
+                            child_display = key + ":{ " + child
+                            result -= display_r(child_display, test_val[child], resp_val[child], "}")
                         else:
                             print("  MISSING: \"{0}\" is missing from response".format(child))
                             result -= 1
@@ -109,7 +112,7 @@ def analyze_r(t_data, r_datae, params):
             else:
                 print("  MISSING: \"{0}\" is missing from response {1}".format(key, r_data["response"]))
                 result -= 1
-
+                
     return result
 
 

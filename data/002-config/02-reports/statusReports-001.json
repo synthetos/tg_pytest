@@ -8,19 +8,16 @@
     "fail":"hard"
   }
 }
-# SKIP
+#
 {
     "t":{"label":"Set configs for Status Report tests",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
-         "delay":0.100},
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}", "g28.3 x0 y0 z0 a0"],
+         "delay":0.05},
     "r":{"status":0}
 }
 #
 # STATUS REPORT TESTS BEGIN HERE
 #
-
-# SKIP
-# __DEFA_TEST
 {
     "t":{"label":"DEFA TEST: Reset status reports using $defa=1",
          "send":["{defa:1}"]},
@@ -30,38 +27,27 @@
 {
     "t":{"label":"DEFA TEST: SR should return posx, posy, posz, posa",
          "send":["{sr:n}"]},
-         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0}}
-}
-# EOF
-{
-    "t":{"label":"DEFA TEST: SR should return posx, posy, posz, posa",
-         "send":["{sr:n}"]},
-         "r":{"sr":{"posx":0.000}}
+         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
 }
 #
 {
     "t":{"label":"DEFA TEST: SRS should return posx, posy, posz, posa",
          "send":["{srs:n}"]},
-         "r":{"status":0}
+         "r":{"status":0, "srs":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
 }
-# END __DEFA_TEST
-
-
 # __SRS_CLEAR_TEST
 {
-    "t":{"label":"DEFA TEST: Clear all status reports w/SRS",
+    "t":{"label":"CLEAR TEST: Clear all status reports w/SRS",
          "send":["{srs:{clear:t}}"]},
         "r":{"status":0}
 }
 #
 {
-    "t":{"label":"DEFA TEST: SR should be empty",
+    "t":{"label":"CLEAR TEST: SR should be empty",
          "send":["{sr:n}"]},
          "r":{"status":0}
 }
 # END __SRS_CLEAR_TEST
-
-
 # __SRS_RESTORE_TEST
 {
     "t":{"label":"RESTORE DEFA: restore defaults using SRS",
@@ -70,9 +56,9 @@
 }
 #
 {
-    "t":{"label":"RESTORE DEFA: SR should return posx, posy, posz, posa",
+    "t":{"label":"RESTORE DEAF: should return posx, posy, posz, posa",
          "send":["{sr:n}"]},
-         "r":{"status":0}
+         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
 }
 # END __SRS_RESTORE_TEST
 
@@ -119,7 +105,7 @@
 }
 #
 {
-    "t":{"label":"Try to add token with int format",
+    "t":{"label":"Add token with integer format",
          "send":["{srs:{set:{posx:42}}}"]},
         "r":{"status":0}
 }
