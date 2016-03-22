@@ -13,6 +13,7 @@
 #     Probes from the following positions should contact the probe surface:
 #       (0,0,0)
 #       (25,25,0)
+#     On the Othermachine homing followd bu g0 x50 y50 z-40 works well
 #
 # TEST SETUP
 #   Selects:
