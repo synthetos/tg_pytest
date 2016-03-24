@@ -329,12 +329,12 @@ def main():
     try:
         master_fd = open(TEST_MASTER_FILE, 'r')
     except:
-        print("Failed to open test master file {0}".format(TEST_MASTER_FILE))
+        print("Failed to open test master FILE: {0}".format(TEST_MASTER_FILE))
         s.close()
         sys.exit(1)
 
     # Build a list of input files and test each one for existence
-    print("MASTER: Building test set from master file")
+    print("Building test set from FILE: {0}".format(TEST_MASTER_FILE))
     temp_files = [x.strip() for x in master_fd.readlines()]     # raw file list
     test_files = []                                             # processed list
 

@@ -1,0 +1,148 @@
+################################################################################
+#
+#  g28-goto-001.json - test g28, g30 go-to-home
+#
+#  Do not run any preamble before this file
+#
+#  MACHINE SETUP
+#   Prior to running this file:
+#     Position tool tip in left half of work volume with clearances:
+#       clearance to (60,30,30 in the positve direction
+#       clearance to (-30,-30,-30) in the negatve direction
+#
+#  TEST SETUP
+#   Selects:
+#     mm mode (G21)
+#     absolute distance mode (G90)
+#     units-per-minute feedrate mode (G94)
+#
+#   Sets centered point to be (0,0,0) in G54 coordinate system
+#   Selects G55 coordinate system
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+# SETUP ROUTINES
+{
+    "t":{"label":"Restore default settings",
+         "send":["{defa:1}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set configs for tests",
+         "send":["{jv:5}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "delay":0.100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Clear status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
+         "send":["{srs:{clear:t}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set status report - RUN AFTER CLEAR STATUS REPORT",
+         "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set gcode defaults",
+         "send":["G21 G94 G90 G91.1",
+                 "G10 L2 P1 X0 Y0 Z0",
+                 "G10 L2 P2 X0 Y0 Z0",
+                 "G10 L2 P3 X0 Y0 Z0",
+                 "G10 L2 P4 X0 Y0 Z0",
+                 "G10 L2 P5 X0 Y0 Z0",
+                 "G10 L2 P6 X0 Y0 Z0",
+                 "G54"
+               ]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Home Othermachine",
+         "send":["g28.2 x0 y0 z0"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Go to starting position",
+         "send":["g0 x50 y50 z-30"]},
+    "r":{"status":0}
+}
+# EOF
+{
+  "t":{"label":"Set to G55 coordinates and record starting position",
+       "send":["G21 G90 G94",
+               "G10 L20 P2 X0 Y0 Z0",
+               "G55",
+               "G28.1"]},
+      "r":{"status":0}
+}
+#
+# PROBE TESTS START HERE
+#
+{
+  "t":{"label":"PROBE TEST - simple Z probe - should be successful",
+       "XXX_before":["{clear:n}","F2000","G28"],
+       "send":["G38.2 F400 Z-40"],
+       "XXX_after":["{clear:n}","G28 M30"],
+       "after":["G28"]},
+  "r":{"status":0}
+}
+# EOF
+# Probe after arc. See if a full planner buffer is handled correctly going into a probe
+{
+  "t":{"label":"PROBE TEST - probe after an arc",
+       "send":["G2 F2000 I25 X25 Y25","G38.2 F400 Z-40"]},
+  "r":{"status":0}
+}
+#
+{
+  "t":{"label":"PROBE TEST - fails to contact - should report success",
+       "send":["G38.2 F400 Z-20"]},
+  "r":{"status":0}
+}
+#
+# FAILURES: PROBE CONFIGURATION AND CALLING FAILURES
+#
+{
+  "t":{"label":"PROBE TEST - missing probe switch - 0.97 flavor",
+       "before":["{zsn:0}"],
+       "send":["G38.2 F400 Z-40"],
+       "after":["{zsn:4}"],
+       "delay":0.100},
+  "r":{"status":252}
+}
+#
+{
+  "t":{"label":"PROBE TEST - zero feed rate",
+       "send":["G38.2 F0 Z-40"]},
+  "r":{"status":142}
+}
+#
+{
+  "t":{"label":"PROBE TEST - travel too short",
+       "send":["G38.2 F400 Z-0.250"]},
+  "r":{"status":251}
+}
+# EOF
+# Note: before_each label will not actually be displayed - it's here for reference only
+{
+  "before_each":{
+    "label":"clear alarms and return to home",
+    "before":["{clear:n}","F2000","G28"],
+    "delay":0.100
+  }
+}
+#
+{
+  "after_all":{
+    "label":"Return to home",
+    "after":["{clear:n}","{srs:{defa:t}}","M30"]
+  }
+}

@@ -2,7 +2,9 @@
 #
 #   statusReports-001.json
 #
-#  It's best to run these tests with no setup file, as setup is handled here
+# It's best to run these tests with no setup file, as setup is handled locally
+#
+# Note: These tests require that the default SR have posx, posy,posz, posa to work correctly
 {
   "defaults":{
     "fail":"hard"
@@ -56,7 +58,7 @@
 }
 #
 {
-    "t":{"label":"RESTORE DEAF: should return posx, posy, posz, posa",
+    "t":{"label":"RESTORE DEFA: should return posx, posy, posz, posa",
          "send":["{sr:n}"]},
          "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
 }

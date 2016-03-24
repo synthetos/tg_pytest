@@ -21,91 +21,91 @@
 # test of value provided is wrong type for key
 #
 {
-    "t":{"label":"Key is missing",
+    "t":{"label":"EXCEPTION: Key is missing",
          "send":["{:null}"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Key is blank",
+    "t":{"label":"EXCEPTION: Key is blank",
          "send":["{   :null}"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Value is missing",
+    "t":{"label":"EXCEPTION: Value is missing",
          "send":["{key:}"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Value is blank",
+    "t":{"label":"EXCEPTION: Value is blank",
          "send":["{key:     }"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Missing key and value",
+    "t":{"label":"EXCEPTION: Missing key and value",
          "send":["{:}"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Blank key and value",
+    "t":{"label":"EXCEPTION: Blank key and value",
          "send":["{   :   }"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Nonsense float value",
+    "t":{"label":"EXCEPTION: Nonsense float value",
          "send":["{xvm:xx12qq.x}"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Float value followed by nonsense",
+    "t":{"label":"EXCEPTION: Float value followed by nonsense",
          "send":["{xvm:12qq.x}"]},
         "r":{"status":102}
 }
 #
 {
-    "t":{"label":"Boolean value not t or f",
+    "t":{"label":"EXCEPTION: Boolean value not t or f",
          "send":["{1po:xxx}"]},
         "r":{"status":111}
 }
 #
 {
-    "t":{"label":"Boolean value numeric range error -1",
+    "t":{"label":"EXCEPTION: Boolean value numeric range error -1",
          "send":["{1po:-1}"]},
         "r":{"status":110}
 }
 #
 {
-    "t":{"label":"Boolean value numeric range error 2",
+    "t":{"label":"EXCEPTION: Boolean value numeric range error 2",
          "send":["{1po:2}"]},
         "r":{"status":110}
 }
 #
 {
-    "t":{"label":"Input is excessive length > 128 bytes",
+    "t":{"label":"EXCEPTION: Input is excessive length > 128 bytes",
          "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130\"}"]},
         "r":{"status":107}
 }
 #
 {
-    "t":{"label":"Name exceeds maximum name characters",
+    "t":{"label":"EXCEPTION: Name exceeds maximum name characters",
          "send":["{nameistoolong:n}"]},
         "r":{"status":107}
 }
 #
 {
-    "t":{"label":"Query exceeds maximum recursion depth",
+    "t":{"label":"EXCEPTION: Query exceeds maximum recursion depth",
          "send":["{x:{x:{x:{x:{x:n}}}}}"]},
         "r":{"status":115}
 }
 #
 {
-    "t":{"label":"Expanded result exceeds maximum NV pairs",
+    "t":{"label":"EXCEPTION: Expanded result exceeds maximum NV pairs",
          "send":["{x:n,y:n,z:n}"]},
         "r":{"status":112}
 }
