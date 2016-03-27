@@ -129,7 +129,7 @@ class TinyG(object):
 
 ########################################################################################    
 
-def split_json_file(fd):
+def split_json_file(fd, data):
     """
     Accepts a file descriptor for a JSON test file
     Returns a list of decoded (loaded) JSON objects
@@ -147,18 +147,37 @@ def split_json_file(fd):
     chunks = file_text.split('#')
     chunks = [x.strip() for x in chunks]
 
-    data = []
     for chunk in chunks:
+
         if len(chunk) == 0:                 # skip blank lines
             continue
 
         if "EOF" in chunk:                  # look for end-of-file marker
             return data
 
+        if "eof" in chunk:                  # look for end-of-file marker
+            return data
+
         if "SKIP" in chunk:                 # look to skip the next object
             skip = True
 
-        if "{" not in chunk:                # skip comment
+        if "skip" in chunk:                 # look to skip the next object
+            skip = True
+
+        if "include" in chunk:              # recursive include files
+            file = chunk.split("include")[1].strip()
+            try:
+                in_fd = open(file, 'r')     
+                print ("  {0}".format(file))
+            except:
+                print ("  FAIL: Unable to open include file: {0}".format(file))
+                return None
+            data = split_json_file(in_fd, data) # recursively call json importer
+            if data == None:
+                print ("  FAIL: Failed to include file: {0}".format(file))
+                return None
+
+        if "{" not in chunk:                # skip comment (must be last test)
             continue
 
         line = chunk[chunk.index("{"):]     # discard leading comment from previous line

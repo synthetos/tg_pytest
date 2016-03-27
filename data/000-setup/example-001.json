@@ -94,10 +94,10 @@
         }
 }
 #
+# include 000-setup/example-incl-001.json
 #
 {
-    "t":{"label":"SR should return posx, posy, posz, posa",
+    "t":{"label":"SR should return posx",
          "send":["{sr:n}"]},
-         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
+         "r":{"status":0, "sr":{"posx":0.0}}
 }
-#

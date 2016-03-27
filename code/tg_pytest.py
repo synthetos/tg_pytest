@@ -364,10 +364,11 @@ def main():
     t_data = { "status":0 }
 
     for test_file in test_files:
-
+        
         # Open input file, read the file and split into 1 or more JSON objects
-        in_fd = open(test_file, "r")       
-        tests = split_json_file(in_fd)
+        in_fd = open(test_file, 'r')       
+        tests = []
+        tests = split_json_file(in_fd, tests)
         if tests == None:
             break;
 
@@ -412,7 +413,7 @@ def main():
         # Run the test or tests found in the file
         print
         print("===============================================")
-        print("FILE: {0}".format(test_file))
+        print("RUN FILE: {0}".format(test_file))
 
         do_before_after("before_all", before_all, params)
         

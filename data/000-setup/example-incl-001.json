@@ -1,0 +1,9 @@
+################################################################################
+#
+#   example-incl-001.json - Example of in-clude file (can't use "that word")
+#
+{
+    "t":{"label":"Included Tail wag",
+         "send":["g0 x4 y4", "g0 x0 y0"]
+        }
+}
