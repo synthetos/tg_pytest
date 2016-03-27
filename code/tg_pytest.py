@@ -45,7 +45,7 @@ from tg_utils import split_json_file
 #
 
 def fail_hard(t_data, params, line):
-    fail = "soft"
+    fail = "hard"                       # default to hard fail
     if "fail" in t_data["t"]:           # local fail setting takes precedence over
         fail = t_data["t"]["fail"]
     elif "fail" in params:              # ...default setting
@@ -252,14 +252,19 @@ def run_test(t_data, before_data, after_data, params):
         print("TEST: {0}".format(t_data["t"]["label"]))
 
     delay = 0
-    if "delay" in t_data["t"]:          # local setting takes precdence over
+    if "delay" in t_data["t"]:          # local setting takes precedence over
         delay = t_data["t"]["delay"]
     elif "delay" in params:             #...default setting
         delay = params["delay"]
-                
-    # Run "before" strings
-    do_before_after("before_each", before_data, params)
-    send_before_after("before", t_data["t"], delay)       # local before's second
+
+    setup = False
+    if "setup" in t_data["t"]:          # check if this is a setup "test"
+        setup = True
+
+    # Run "before" strings if this is not a setup "test"
+    if not setup:
+        do_before_after("before_each", before_data, params)
+        send_before_after("before", t_data["t"], delay)       # local before's second
 
     # Send the test string(s)
     # WARNING: Won't handle more than 24 lines or 254 chars w/o flow control working (RTS/CTS)
@@ -267,9 +272,8 @@ def run_test(t_data, before_data, after_data, params):
         print("!!! TEST HAS NO SEND DATA: {0}".format(t_data["t"]["label"]))
         return
     
-    send = [x.encode("utf8") for x in t_data["t"]["send"]]   
-    first_line = send[0]
-#    print first_line
+    send = [x.encode("utf8") for x in t_data["t"]["send"]]
+    first_line = send[0]                # used later in no-response cases    
     for line in send:
         print("  sending: {0}".format(line))
         tg.write(line+"\n")
@@ -305,9 +309,10 @@ def run_test(t_data, before_data, after_data, params):
     if results < 0:
         fail_hard(t_data, params, line)
 
-    # Run "after" strings
-    send_before_after("after", t_data["t"], delay)      # local after's first
-    do_before_after("after_each", after_data, params)
+    # Run "after" strings if this is not a setup "test"
+    if not setup:
+        send_before_after("after", t_data["t"], delay)      # local after's first
+        do_before_after("after_each", after_data, params)
 
 
 ################################## MAIN PROGRAM BODY ###########################
@@ -363,7 +368,7 @@ def main():
         # Open input file, read the file and split into 1 or more JSON objects
         in_fd = open(test_file, "r")       
         tests = split_json_file(in_fd)
-        if tests == "fail":
+        if tests == None:
             break;
 
         # Extract defaults and before/after data objects (it's OK if they don't exist)

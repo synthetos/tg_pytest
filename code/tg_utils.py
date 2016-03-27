@@ -175,7 +175,7 @@ def split_json_file(fd):
                 print ("  - missing # separator between JSON objects")
                 print ("  - curlies in a comment (these are not allowed)")
                 print ("When in doubt, lint it: http://jsonlint.com/")
-                return "fail"
+                return None
         else:
             skip = False
 

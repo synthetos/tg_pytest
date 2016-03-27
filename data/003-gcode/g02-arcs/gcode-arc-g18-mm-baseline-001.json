@@ -114,7 +114,7 @@
 #
 {
     "t":{"label":"CCW 540 degree circle - 1.5 rotations",
-      	 "send":["G28","G3 I2 X40 P1"]},
+      	 "send":["G28","G3 I20 X40 P1"]},
     "sr":{"posx": 40, "posz": 0},
     "r":{"status":0}
 }

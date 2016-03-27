@@ -27,13 +27,13 @@
 }
 #
 {
-    "t":{"label":"DEFA TEST: SR should return posx, posy, posz, posa",
+    "t":{"label":"SR should return posx, posy, posz, posa",
          "send":["{sr:n}"]},
          "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
 }
 #
 {
-    "t":{"label":"DEFA TEST: SRS should return posx, posy, posz, posa",
+    "t":{"label":"SRS should return posx, posy, posz, posa",
          "send":["{srs:n}"]},
          "r":{"status":0, "srs":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
 }

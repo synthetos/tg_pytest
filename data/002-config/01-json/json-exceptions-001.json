@@ -95,13 +95,13 @@
 {
     "t":{"label":"EXCEPTION: Name exceeds maximum name characters",
          "send":["{nameistoolong:n}"]},
-        "r":{"status":107}
+        "r":{"status":115}
 }
 #
 {
     "t":{"label":"EXCEPTION: Query exceeds maximum recursion depth",
          "send":["{x:{x:{x:{x:{x:n}}}}}"]},
-        "r":{"status":115}
+        "r":{"status":114}
 }
 #
 {

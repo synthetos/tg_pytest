@@ -18,7 +18,7 @@
 #
 {
   "before_each":{
-    "before":["{clear:n}","G28"]
+    "XXX_before":["{clear:n}","G28"]
   }
 }
 #
@@ -40,7 +40,7 @@
     "r":{"status":0},
     "sr":{"stat":3}
 }
-
+# 
 # Test 2 - Feed
 {
     "t":{"label":"G1 movement",

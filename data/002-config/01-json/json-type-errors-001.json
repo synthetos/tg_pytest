@@ -21,65 +21,65 @@
 {
     "t":{"label":"TYPE ERROR: Boolean value is float 0.0",
          "send":["{1po:0.0}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: Boolean value is float 1.0",
          "send":["{1po:1.0}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: Boolean value is fractional 0.5",
          "send":["{1po:0.5}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: Boolean value is fractional 0.99999999999",
          "send":["{1po:0.99999999999}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TTYPE ERROR: Boolean value is string",
          "send":["{1po:\"true\"}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: string value is wrong type for key",
          "send":["{xvm:\"FUBAR\"}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: boolean value is wrong type for key",
          "send":["{xvm:true}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: numeric value is wrong type for key",
          "send":["{msg:12345}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: boolean value is wrong type for key",
          "send":["{msg:true}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: string value is wrong type for key",
          "send":["{1po:\"WTF\"}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }
 #
 {
     "t":{"label":"TYPE ERROR: numeric value is wrong type for key",
          "send":["{1po:12345.678}"]},
-        "r":{"status":116}
+        "r":{"status":117}
 }

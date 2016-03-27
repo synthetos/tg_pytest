@@ -129,6 +129,6 @@
 {
     "t":{"label":"Return to home",
       	 "send":["G28"]},
-         "sr":{"posx": 100, "posy": 100, "posz": 0},
+         "sr":{"posx": 50, "posy": 50, "posz": -30},
          "r":{"status":0}
 }
