@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   example-incl-001.json - Example of in-clude file (can't use "that word")
+#   example-incl-001.json - Example of include file
 #
 {
     "t":{"label":"Included Tail wag",

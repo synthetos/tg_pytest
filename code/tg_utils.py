@@ -165,9 +165,12 @@ def split_json_file(fd, data):
             skip = True
 
         if "include" in chunk:              # recursive include files
-            file = chunk.split("include")[1].strip()
+            parts = chunk.split("include")
+            if parts[0].strip() != "":      # skip over embedded "include"
+                continue;
+            file = parts[1].strip() 
             try:
-                in_fd = open(file, 'r')     
+                in_fd = open(file, 'r')
                 print ("  {0}".format(file))
             except:
                 print ("  FAIL: Unable to open include file: {0}".format(file))
@@ -176,7 +179,7 @@ def split_json_file(fd, data):
             if data == None:
                 print ("  FAIL: Failed to include file: {0}".format(file))
                 return None
-
+        
         if "{" not in chunk:                # skip comment (must be last test)
             continue
 

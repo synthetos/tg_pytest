@@ -11,6 +11,10 @@
     "delay":0.05
   }
 }
+#
+# include 000-setup/example-incl-001.json
+
+# EOF
 # BEFORE AND AFTERS
 {
   "before_all":{
@@ -94,7 +98,7 @@
         }
 }
 #
-# include 000-setup/example-incl-001.json
+include 000-setup/example-incl-001.json
 #
 {
     "t":{"label":"SR should return posx",
