@@ -19,7 +19,7 @@
 {
   "before_all":{
     "label":"Reset default settings - Always run this one by itself",
-    "after":["{defa:t}"]
+    "before":["{defa:t}"]
   }
 }
 #

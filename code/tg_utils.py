@@ -129,7 +129,7 @@ class TinyG(object):
 
 ########################################################################################    
 
-def split_json_file(fd, data):
+def split_json_file(fd, data, indent):
     """
     Accepts a file descriptor for a JSON test file
     Returns a list of decoded (loaded) JSON objects
@@ -141,6 +141,8 @@ def split_json_file(fd, data):
         file_text = fd.read()
     except:
         print("Cannot read JSON file")
+
+    print ("{0}{1}".format(indent, fd.name))
 
     skip = False
     
@@ -171,11 +173,10 @@ def split_json_file(fd, data):
             file = parts[1].strip() 
             try:
                 in_fd = open(file, 'r')
-                print ("  {0}".format(file))
             except:
                 print ("  FAIL: Unable to open include file: {0}".format(file))
                 return None
-            data = split_json_file(in_fd, data) # recursively call json importer
+            data = split_json_file(in_fd, data, indent+"  ") # recursively call json importer
             if data == None:
                 print ("  FAIL: Failed to include file: {0}".format(file))
                 return None
@@ -183,13 +184,13 @@ def split_json_file(fd, data):
         if "{" not in chunk:                # skip comment (must be last test)
             continue
 
-        line = chunk[chunk.index("{"):]     # discard leading comment from previous line
+        json_text = chunk[chunk.index("{"):]     # discard leading comment from previous line
 
         if not skip:
             try:
-                data.append(json.loads(line))
+                data.append(json.loads(json_text))
             except:
-                print ("{0}".format(line))
+                print ("{0}".format(json_text))
                 print ("FAILED JSON PARSE, QUITTING")
                 print ("Look for:")
                 print ("  - missing or extra comma in JSON object")

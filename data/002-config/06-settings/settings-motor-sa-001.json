@@ -1,0 +1,76 @@
+################################################################################
+#
+#   settings-motor-sa-001.json - Test motor Step Angle settings
+#
+#  Run these tests with no setup file
+#
+{
+  "defaults":{
+    "fail":"hard",
+    "delay":0.100
+  }
+}
+#
+{
+  "before_all":{
+    "label":"Reset default settings",
+    "before":["{defa:t}"]
+  }
+}
+#
+{
+  "after_all":{
+    "label":"Reset default settings",
+    "after":["{defa:t}"]
+  }
+}
+# SETUP
+{
+    "t":{"label":"Set configs for settings tests",
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
+    "r":{"status":0}
+}
+#
+# SA - Step Angle tests
+#
+{
+    "t":{"label":"Read 2sa - flat",
+         "send":["{2sa:null}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Read 2sa - nested",
+         "send":["{2:{sa:null}}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Write 2sa - reasonable value",
+         "send":["{2sa:0.9}"]},
+        "r":{"status":0, "2sa":0.9}
+}
+#
+{
+    "t":{"label":"Write 2sa - ridiculous value - should still pass",
+         "send":["{2sa:499.99}"]},
+        "r":{"status":0, "2sa":499.99}
+}
+#
+{
+    "t":{"label":"Write 2sa - zero value - should still pass",
+         "send":["{2sa:0}"]},
+        "r":{"status":0, "2sa":0}
+}
+#
+{
+    "t":{"label":"Write 2sa - negative value - should still pass",
+         "send":["{2sa:-1.8}"]},
+        "r":{"status":0, "2sa":-1.8}
+}
+#
+{
+    "t":{"label":"write 2sa with boolean - exception",
+         "send":["{2sa:t}"]},
+        "r":{"status":117}
+}

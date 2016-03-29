@@ -135,16 +135,18 @@ def analyze_sr(t_data, r_datae, params):
     if last_sr == None:             # return if there were no SRs in the response set
         return
 
+    print last_sr["response"]       # print response just once for all SR tests
+
     # test if keys are present and match t_data           
     for k in t_data["sr"]:
         if k in build_sr:
             if t_data["sr"][k] == build_sr[k]:
-                print("  passed: {0}: {1}, {2}".format(k, build_sr[k], last_sr["response"]))
+                print("  passed: {0}: {1}".format(k, build_sr[k]))
             else:
-                print("  FAILED: {0}: {1} should be {2}, {3}".format(k, build_sr[k], t_data["sr"][k], last_sr["response"]))
+                print("  FAILED: {0}: {1} should be {2}".format(k, build_sr[k], t_data["sr"][k]))
                 result -= 1
         else:
-            print("  MISSING: \"{0}\" is missing from response, {1}".format(k, last_sr["response"]))
+            print("  MISSING: \"{0}\" is missing from response".format(k))
 
     return result
 
@@ -354,7 +356,6 @@ def main():
         try:
             exists(file)
             test_files.append(file)
-            print("  {0}".format(file))
         except:
             print("  {0} cannot be opened, not added".format(file))
 
@@ -368,7 +369,7 @@ def main():
         # Open input file, read the file and split into 1 or more JSON objects
         in_fd = open(test_file, 'r')       
         tests = []
-        tests = split_json_file(in_fd, tests)
+        tests = split_json_file(in_fd, tests, "  ")
         if tests == None:
             break;
 

@@ -156,5 +156,9 @@ A `defaults` JSON object can be included in a test file. Defaults are read and a
 ### Changes
 - As of 3/1/16 the USB port finder now works on OSX and Windows. It should also work on Linux but has not been tested.
 - Added before, after and SKIP behaviors 3/8/16
+- Added file include function 3/26/16
 
 ### TODO list
+- document file include (or perhaps import)
+- make include work only as from first non-space character
+- make JSON file importer smart enough to find break between JSON objects
