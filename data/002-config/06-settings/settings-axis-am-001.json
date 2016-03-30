@@ -1,0 +1,83 @@
+################################################################################
+#
+#   settings-axis-am-001.json - Test axis settings Axis Mode
+#
+# include 002-config/06-settings/settings-setup-001.json
+#
+{
+    "t":{"label":"Read xam",
+         "send":["{xam:null}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_DISABLED",
+         "send":["{xam:0}"]},
+        "r":{"status":0, "xam":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_STANDARD",
+         "send":["{xam:1}"]},
+        "r":{"status":0, "xam":1}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_INHIBITED",
+         "send":["{xam:2}"]},
+        "r":{"status":0, "xam":2}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_RADIUS - EXCEPTION",
+        "send":["{xam:3}"]},
+        "r":{"status":100, "xam":2}
+}
+#
+{
+    "t":{"label":"Write aam - AXIS_RADIUS - OK",
+        "send":["{aam:3}"]},
+        "r":{"status":0, "aam":3}
+}
+# AM Axis Mode function tests
+{
+    "t":{"label":"Write xam - AXIS_DISABLED",
+        "send":["{xam:0}"]},
+        "r":{"status":0, "xam":0}
+}
+#
+{
+    "t":{"label":"Move X axis while disabled",
+        "send":["g0 x10"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":0, "posy":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_STANDARD",
+         "send":["{xam:1}"]},
+        "r":{"status":0, "xam":1}
+}
+#
+{
+    "t":{"label":"Move X axis",
+        "send":["g0 x10"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":10, "posy":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_INHBITED",
+         "send":["{xam:2}"]},
+        "r":{"status":0, "xam":2}
+}
+#
+{
+    "t":{"label":"Move X axis",
+        "send":["g0 x10"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":0, "posy":0}
+}

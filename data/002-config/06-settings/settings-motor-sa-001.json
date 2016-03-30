@@ -2,36 +2,7 @@
 #
 #   settings-motor-sa-001.json - Test motor Step Angle settings
 #
-#  Run these tests with no setup file
-#
-{
-  "defaults":{
-    "fail":"hard",
-    "delay":0.100
-  }
-}
-#
-{
-  "before_all":{
-    "label":"Reset default settings",
-    "before":["{defa:t}"]
-  }
-}
-#
-{
-  "after_all":{
-    "label":"Reset default settings",
-    "after":["{defa:t}"]
-  }
-}
-# SETUP
-{
-    "t":{"label":"Set configs for settings tests",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
-    "r":{"status":0}
-}
-#
-# SA - Step Angle tests
+# include 002-config/06-settings/settings-setup-001.json
 #
 {
     "t":{"label":"Read 2sa - flat",
@@ -64,13 +35,13 @@
 }
 #
 {
-    "t":{"label":"Write 2sa - negative value - should still pass",
+    "t":{"label":"Write 2sa - negative value - EXCEPTION",
          "send":["{2sa:-1.8}"]},
-        "r":{"status":0, "2sa":-1.8}
+        "r":{"status":108}
 }
 #
 {
-    "t":{"label":"write 2sa with boolean - exception",
+    "t":{"label":"write 2sa with boolean - EXCEPTION",
          "send":["{2sa:t}"]},
         "r":{"status":117}
 }

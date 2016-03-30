@@ -2,42 +2,7 @@
 #
 #   settings-motor-tr-001.json - Test motor Travel per Revolution settings
 #
-#  Run these tests with no setup file
-#
-{
-  "defaults":{
-    "fail":"hard",
-    "delay":0.100
-  }
-}
-#
-{
-  "before_all":{
-    "label":"Reset default settings",
-    "before":["{defa:t}"]
-  }
-}
-#
-{
-  "after_all":{
-    "label":"Reset default settings",
-    "after":["{defa:t}"]
-  }
-}
-# SETUP
-{
-    "t":{"label":"Set configs for settings tests",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Set to MM",
-         "send":["G21"]},
-    "r":{"status":0}
-}
-#
-# TR - Travel per Revolution tests
+# include 002-config/06-settings/settings-setup-001.json
 #
 {
     "t":{"label":"Write 3tr - reasonable value",
@@ -74,6 +39,12 @@
          "send":["{3tr:-1.8}"]},
         "r":{"status":0, "3tr":-1.8}
 }
+#
+{
+    "t":{"label":"Write 3tr - reasonable value (again)",
+         "send":["{3tr:5.08}"]},
+        "r":{"status":0, "3tr":5.08}
+}
 # SKIP
 {
     "t":{"label":"Set to Inches",
@@ -83,13 +54,19 @@
 #
 {
     "t":{"label":"Read 3tr in Inches",
-         "send":["G20", "{3tr:null}"]},
-        "r":{"status":0}
+         "before":["G20"],
+         "send":["{3tr:null}"]},
+         "r":{"status":0, "3tr":0.20}
 }
-
 # EXCEPTIONS
 {
     "t":{"label":"write 3tr with boolean - exception",
          "send":["{3tr:t}"]},
+        "r":{"status":117}
+}
+#
+{
+    "t":{"label":"write 3tr with string - exception",
+         "send":["{3tr:\"5.08\"}"]},
         "r":{"status":117}
 }

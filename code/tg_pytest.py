@@ -366,6 +366,11 @@ def main():
 
     for test_file in test_files:
         
+        # Display filename so opening or parsing errors are obvious
+        print
+        print("===========================================================")
+        print("RUN: {0}".format(test_file))
+        
         # Open input file, read the file and split into 1 or more JSON objects
         in_fd = open(test_file, 'r')       
         tests = []
@@ -412,10 +417,6 @@ def main():
             out_fd = None
 
         # Run the test or tests found in the file
-        print
-        print("===============================================")
-        print("RUN FILE: {0}".format(test_file))
-
         do_before_after("before_all", before_all, params)
         
         for t_data in tests:

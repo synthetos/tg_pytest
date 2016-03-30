@@ -1,0 +1,35 @@
+################################################################################
+#
+#   settings-axis-am-001.json - Test axis settings Velocity Max and Feedrate
+#
+# include 002-config/06-settings/settings-setup-001.json
+#
+{
+    "t":{"label":"Read yvm",
+         "send":["{yam:null}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Write yvm - reasonable value",
+         "send":["{yvm:1000}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Write yvm - negative value - EXCEPTION",
+         "send":["{yvm:1}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"write yvm with boolean - EXCEPTION",
+         "send":["{yvm:t}"]},
+        "r":{"status":117}
+}
+#
+{
+    "t":{"label":"write yvm with string - EXCEPTION",
+         "send":["{yvm:\"1000.5\"}"]},
+        "r":{"status":117}
+}
