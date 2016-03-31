@@ -369,10 +369,15 @@ def main():
         # Display filename so opening or parsing errors are obvious
         print
         print("===========================================================")
-        print("RUN: {0}".format(test_file))
         
         # Open input file, read the file and split into 1 or more JSON objects
-        in_fd = open(test_file, 'r')       
+        try:
+            in_fd = open(test_file, 'r')
+        except:
+            print("CANNOT OPEN: {0}".format(test_file))
+            exit(1)
+            
+        print("RUN: {0}".format(test_file))
         tests = []
         tests = split_json_file(in_fd, tests, "  ")
         if tests == None:
