@@ -2,16 +2,18 @@
 #
 #   json-exceptions-001.json - JSON exception tests
 #
-#  It's best to run these tests with no setup file, as setup is handled here
+# include 000-setup/setup-settings-001.json
+# SKIP
 {
   "defaults":{
     "fail":"hard"
   }
 }
+#
 # SKIP
 {
     "t":{"label":"Set configs for JSON tests",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"],
          "delay":0.100},
     "r":{"status":0}
 }
@@ -30,6 +32,18 @@
     "t":{"label":"EXCEPTION: Key is blank",
          "send":["{   :null}"]},
         "r":{"status":111}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Read invalid key (token)",
+         "send":["{CRAP:null}"]},
+        "r":{"status":100}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write invalid key (token)",
+         "send":["{CRAP:42}"]},
+        "r":{"status":100}
 }
 #
 {
@@ -57,7 +71,7 @@
 }
 #
 {
-    "t":{"label":"EXCEPTION: Nonsense float value",
+    "t":{"label":"EXCEPTION: Nonsense float value - treated as JSON syntax error",
          "send":["{xvm:xx12qq.x}"]},
         "r":{"status":111}
 }
@@ -65,19 +79,19 @@
 {
     "t":{"label":"EXCEPTION: Float value followed by nonsense",
          "send":["{xvm:12qq.x}"]},
-        "r":{"status":102}
+        "r":{"status":102, "xvm":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Boolean value not t or f",
          "send":["{1po:xxx}"]},
-        "r":{"status":111}
+        "r":{"status":111, "1po":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Boolean value numeric range error -1",
          "send":["{1po:-1}"]},
-        "r":{"status":110}
+        "r":{"status":110, "xvm":null}
 }
 #
 {
