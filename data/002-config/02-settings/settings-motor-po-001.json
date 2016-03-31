@@ -2,7 +2,7 @@
 #
 #   settings-motor-po-001.json - Test motor Polarity settings
 #
-# include 002-config/06-settings/settings-setup-001.json
+# include 000-setup/setup-settings-001.json
 #
 {
     "t":{"label":"Write 1po - write with 0/1",

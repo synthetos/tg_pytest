@@ -2,7 +2,7 @@
 #
 #   settings-motor-pm-001.json - Test motor Power Management settings
 #
-# include 002-config/06-settings/settings-setup-001.json
+# include 000-setup/setup-settings-001.json
 #
 {
     "t":{"label":"Read 2pm - default value",

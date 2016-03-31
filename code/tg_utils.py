@@ -55,8 +55,8 @@ class TinyG(object):
  
         print("Serial port connected: {0}".format(raw))            
 
-        """
-        # Old style - left in for branches not yet supporting ENQ protocol
+
+    def init_tinyg_legacy(self):
         self.write("{\"fb\":null}\n")      # The first write sometimes returns garbage
         r = self.s.readline()
         self.write("{\"fb\":null}\n")      # So do it again
@@ -64,7 +64,6 @@ class TinyG(object):
         self.write("{\"fb\":null}\n")      # And again
         r = self.s.readline()
         print("Serial port connected: {0}".format(r))            
-        """
 
     def open_serial_port(self): 
         """

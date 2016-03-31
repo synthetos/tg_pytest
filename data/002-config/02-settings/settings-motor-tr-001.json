@@ -2,7 +2,7 @@
 #
 #   settings-motor-tr-001.json - Test motor Travel per Revolution settings
 #
-# include 002-config/06-settings/settings-setup-001.json
+# include 000-setup/setup-settings-001.json
 #
 {
     "t":{"label":"Write 3tr - reasonable value",

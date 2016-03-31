@@ -1,8 +1,8 @@
 ################################################################################
 #
-#   settings-axis-am-001.json - Test axis settings Velocity Max and Feedrate
+#   settings-axis-vm-001.json - Test axis settings Velocity Max and Feedrate
 #
-# include 002-config/06-settings/settings-setup-001.json
+# include 000-setup/setup-settings-001.json
 #
 {
     "t":{"label":"Read yvm",

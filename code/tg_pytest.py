@@ -326,9 +326,10 @@ global tg
 tg = TinyG()    # Create the TinyG Object
 
 def main():
-    
+
     # Open and initialize TinyG port
-    tg.init_tinyg()          # Initialize the TinyG connection.
+#    tg.init_tinyg()          # Initialize the TinyG connection.
+    tg.init_tinyg_legacy()   # Legacy initialization code
                              # We are open and ready to rock the kitty time
 
     # Open master input file - contains a list of JSON files to process
