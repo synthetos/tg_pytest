@@ -5,15 +5,15 @@
 # include 000-setup/setup-settings-001.json
 #
 {
-    "t":{"label":"Read 2pm - default value",
-         "send":["{2pm:null}"]},
-         "r":{"status":0, "2pm":2}
-}
-#
-{
     "t":{"label":"Write 2pm - MOTOR_DISABLED",
          "send":["{2pm:0}"]},
         "r":{"status":0, "2pm":0}
+}
+#
+{
+    "t":{"label":"Read 2pm - default value",
+         "send":["{2pm:null}"]},
+         "r":{"status":0, "2pm":0}
 }
 #
 {
@@ -34,34 +34,32 @@
         "r":{"status":0, "2pm":3}
 }
 # EXCEPTIONS
-# Note: test returns illegal value, as if it was changed. Should return previous value
-# SKIP
 {
     "t":{"label":"Write 2pm - unsupported value - EXCEPTION",
          "send":["{2pm:4}"]},
-        "r":{"status":110, "2pm":3}
+        "r":{"status":110, "2pm":null}
 }
 #
 {
     "t":{"label":"Write 2pm - float value - EXCEPTION",
          "send":["{2pm:4.1}"]},
-        "r":{"status":117}
+        "r":{"status":117, "2pm":null}
 }
 # NOTE: SHould return 108, value under range.
 {
     "t":{"label":"Write 2pm - negative value - EXCEPTION",
          "send":["{2pm:-2}"]},
-        "r":{"status":110}
+        "r":{"status":110, "2pm":null}
 }
 #
 {
     "t":{"label":"write 2pm with boolean - EXCEPTION",
          "send":["{2pm:t}"]},
-        "r":{"status":117}
+        "r":{"status":117, "2pm":null}
 }
 #
 {
     "t":{"label":"write 2pm with string - EXCEPTION",
          "send":["{2pm:\"2\"}"]},
-        "r":{"status":117}
+        "r":{"status":117, "2pm":null}
 }

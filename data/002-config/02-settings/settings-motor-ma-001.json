@@ -5,27 +5,27 @@
 # include 000-setup/setup-settings-001.json
 #
 {
+    "t":{"label":"Write 1ma - with valid value",
+         "send":["{1ma:4}"]},
+        "r":{"status":0, "1ma":4}
+}
+#
+{
     "t":{"label":"Read 1ma - flat",
          "send":["{1ma:null}"]},
-        "r":{"status":0}
+        "r":{"status":0, "1ma":4}
 }
 #
 {
     "t":{"label":"Read 1ma - nested",
          "send":["{1:{ma:null}}"]},
-        "r":{"status":0}
+        "r":{"status":0, "1":{"ma":4}}
 }
 #
 {
     "t":{"label":"Read 2ma",
          "send":["{2ma:null}"]},
-        "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Write 2ma - with valid value",
-         "send":["{2ma:4}"]},
-        "r":{"status":0, "2ma":4}
+        "r":{"status":0, "2ma":"*"}
 }
 #
 {

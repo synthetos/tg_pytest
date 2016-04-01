@@ -23,43 +23,37 @@
 }
 #
 {
-    "t":{"label":"Read 4mi - unsupported value",
+    "t":{"label":"Read 4mi - tread the previous unsupported value",
          "send":["{4mi:null}"]},
          "r":{"status":0, "4mi":10}
-}
-# SKIP
-{
-    "t":{"label":"Write 4mi - illegal value (should return previous value)",
-         "send":["{4mi:1000000}"]},
-        "r":{"status":0, "4mi":10}
 }
 # EXCEPTIONS
 {
     "t":{"label":"Write 4mi - float value - EXCEPTION",
          "send":["{4mi:4.1}"]},
-        "r":{"status":117}
+        "r":{"status":117, "4mi":null}
 }
 #
 {
     "t":{"label":"Write 4mi - zero value - EXCEPTION",
          "send":["{4mi:0}"]},
-        "r":{"status":0}
+        "r":{"status":108, "4mi":null}
 }
 #
 {
     "t":{"label":"Write 4mi - negative value - EXCEPTION",
          "send":["{4mi:-2}"]},
-        "r":{"status":0}
+        "r":{"status":108, "4mi":null}
 }
 #
 {
     "t":{"label":"write 4mi with boolean - EXCEPTION",
          "send":["{4mi:t}"]},
-        "r":{"status":117}
+        "r":{"status":117, "4mi":null}
 }
 #
 {
     "t":{"label":"write 4mi with string - EXCEPTION",
          "send":["{4mi:\"5.08\"}"]},
-        "r":{"status":117}
+        "r":{"status":117, "4mi":null}
 }

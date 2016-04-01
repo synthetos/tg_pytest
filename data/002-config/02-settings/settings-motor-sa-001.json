@@ -5,21 +5,21 @@
 # include 000-setup/setup-settings-001.json
 #
 {
+    "t":{"label":"Write 2sa - reasonable value",
+         "send":["{2sa:0.9}"]},
+        "r":{"status":0, "2sa":0.9}
+}
+#
+{
     "t":{"label":"Read 2sa - flat",
          "send":["{2sa:null}"]},
-        "r":{"status":0}
+        "r":{"status":0, "2sa":0.9}
 }
 #
 {
     "t":{"label":"Read 2sa - nested",
          "send":["{2:{sa:null}}"]},
-        "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Write 2sa - reasonable value",
-         "send":["{2sa:0.9}"]},
-        "r":{"status":0, "2sa":0.9}
+        "r":{"status":0, "2":{"sa":0.9}}
 }
 #
 {
@@ -29,19 +29,19 @@
 }
 #
 {
-    "t":{"label":"Write 2sa - zero value - should still pass",
+    "t":{"label":"Write 2sa - zero value - EXCEPTION",
          "send":["{2sa:0}"]},
-        "r":{"status":0, "2sa":0}
+        "r":{"status":108, "2sa":null}
 }
 #
 {
     "t":{"label":"Write 2sa - negative value - EXCEPTION",
          "send":["{2sa:-1.8}"]},
-        "r":{"status":108}
+        "r":{"status":108, "2sa":null}
 }
 #
 {
     "t":{"label":"write 2sa with boolean - EXCEPTION",
          "send":["{2sa:t}"]},
-        "r":{"status":117}
+        "r":{"status":117, "2sa":null}
 }

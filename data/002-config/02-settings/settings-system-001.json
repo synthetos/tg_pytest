@@ -1,0 +1,101 @@
+################################################################################
+#
+#  settings-system-001.json - Test system settings (this is a long one)
+#
+# include 000-setup/setup-settings-001.json
+#
+{
+    "t":{"label":"Read fb",
+         "send":["{\"fb\":null}"]},
+        "r":{"status":0, "fb":"*"}
+}
+#
+{
+    "t":{"label":"Write fb - fails 104",
+         "send":["{\"fb\":999.01}"]},
+        "r":{"status":104, "fb":null}
+}
+#
+{
+    "t":{"label":"Read fv",
+         "send":["{fv:n}"]},
+        "r":{"status":0, "fv":"*"}
+}
+#
+{
+    "t":{"label":"Write fv - fails 104",
+         "send":["{fv:99999999999.01}"]},
+        "r":{"status":104, "fv":null}
+}
+#
+{
+    "t":{"label":"Write hp",
+         "send":["{hp:2}"]},
+        "r":{"status":0, "hp":2}
+}
+#
+{
+    "t":{"label":"Read hp",
+         "send":["{hp:n}"]},
+        "r":{"status":0, "hp":2}
+}
+#
+{
+    "t":{"label":"Write hv",
+         "send":["{hv:8}"]},
+        "r":{"status":0, "hv":8}
+}
+#
+{
+    "t":{"label":"Read hv",
+         "send":["{hv:n}"]},
+        "r":{"status":0, "hv":8}
+}
+#
+{
+    "t":{"label":"Read board id",
+         "send":["{id:n}"]},
+        "r":{"status":0, "id":"*"}
+}
+#
+{
+    "t":{"label":"Write board id",
+         "send":["{id:\"Rogerwilco\"}"]},
+        "r":{"status":104, "id":null}
+}
+#
+{
+    "t":{"label":"Read sys group",
+         "send":["{sys:n}"]},
+        "r":{"status":0, "sys":"*"}
+}
+#
+{
+    "t":{"label":"Read mpo group",
+         "send":["{mpo:n}"]},
+        "r":{"status":0, "mpo":"*"}
+}
+#
+{
+    "t":{"label":"Read pos group",
+         "send":["{pos:n}"]},
+        "r":{"status":0, "pos":"*"}
+}
+#
+{
+    "t":{"label":"Read ofs group",
+         "send":["{ofs:n}"]},
+        "r":{"status":0, "ofs":"*"}
+}
+#
+{
+    "t":{"label":"Read hom group",
+         "send":["{hom:n}"]},
+        "r":{"status":0, "hom":"*"}
+}
+#
+{
+    "t":{"label":"Read prb group",
+         "send":["{prb:n}"]},
+        "r":{"status":0, "prb":"*"}
+}
