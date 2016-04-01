@@ -2,84 +2,71 @@
 #
 #   json-type-errors-001.json - JSON exception tests
 #
-#  It's best to run these tests with no setup file, as setup is handled here
-{
-  "defaults":{
-    "fail":"hard"
-  }
-}
-# SKIP
-{
-    "t":{"label":"Set configs for JSON tests",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
-         "delay":0.100},
-    "r":{"status":0}
-}
+# include 000-setup/setup-settings-001.json
 #
-# TYPE ERROR TESTS BEGIN HERE
-#
+# JSON TYPE ERRORS
 {
     "t":{"label":"TYPE ERROR: Boolean value is float 0.0",
-         "send":["{1po:0.0}"]},
-        "r":{"status":117}
+         "send":["{sl:0.0}"]},
+        "r":{"status":117, "sl":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: Boolean value is float 1.0",
-         "send":["{1po:1.0}"]},
-        "r":{"status":117}
+         "send":["{sl:1.0}"]},
+        "r":{"status":117, "sl":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: Boolean value is fractional 0.5",
-         "send":["{1po:0.5}"]},
-        "r":{"status":117}
+         "send":["{sl:0.5}"]},
+        "r":{"status":117, "sl":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: Boolean value is fractional 0.99999999999",
-         "send":["{1po:0.99999999999}"]},
-        "r":{"status":117}
+         "send":["{sl:0.99999999999}"]},
+        "r":{"status":117, "sl":null}
 }
 #
 {
-    "t":{"label":"TTYPE ERROR: Boolean value is string",
-         "send":["{1po:\"true\"}"]},
-        "r":{"status":117}
+    "t":{"label":"TYPE ERROR: Boolean value is string",
+         "send":["{sl:\"true\"}"]},
+        "r":{"status":117, "sl":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: string value is wrong type for key",
          "send":["{xvm:\"FUBAR\"}"]},
-        "r":{"status":117}
+        "r":{"status":117, "xvm":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: boolean value is wrong type for key",
          "send":["{xvm:true}"]},
-        "r":{"status":117}
+        "r":{"status":117, "xvm":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: numeric value is wrong type for key",
          "send":["{msg:12345}"]},
-        "r":{"status":117}
+        "r":{"status":117, "msg":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: boolean value is wrong type for key",
          "send":["{msg:true}"]},
-        "r":{"status":117}
+        "r":{"status":117, "msg":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: string value is wrong type for key",
-         "send":["{1po:\"WTF\"}"]},
-        "r":{"status":117}
+         "send":["{sl:\"WTF\"}"]},
+        "r":{"status":117, "sl":null}
 }
 #
 {
     "t":{"label":"TYPE ERROR: numeric value is wrong type for key",
-         "send":["{1po:12345.678}"]},
-        "r":{"status":117}
+         "send":["{sl:12345.678}"]},
+        "r":{"status":117, "sl":null}
 }

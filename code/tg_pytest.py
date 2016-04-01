@@ -57,7 +57,7 @@ def fail_hard(t_data, params, line):
 
 
 def display_r(key, test_val, resp_val, response_string):
-    if test_val == resp_val:
+    if test_val == resp_val or test_val == "*":
         print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
         return (0)
     else:

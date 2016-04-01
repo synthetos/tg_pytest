@@ -75,7 +75,8 @@ ongoing results. It's a batch tester, not streaming.
 
 
   - `r` analyzer contains the elements to check in all r{} responses:
-    - If `r` is present, test all keys for exact match, e.g. xvm:12000
+    - If `r` is present, test all listed keys for exact match, e.g. `xvm:12000`
+      - The value can be ``"*"``, (quotes required) to match any value
     - Use `status` to match the status in the footer
     - Use `count` to match the count in the footer (3rd element)
     - Nested keys can also be tested, example:

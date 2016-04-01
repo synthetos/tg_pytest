@@ -31,13 +31,13 @@
 {
     "t":{"label":"Write 2ma - with invalid value - EXCEPTION",
          "send":["{2ma:10}"]},
-        "r":{"status":110, "2ma":4}
+        "r":{"status":110, "2ma":null}
 }
 #
 {
     "t":{"label":"Write 2ma - with negative value - EXCEPTION",
          "send":["{2ma:-1}"]},
-        "r":{"status":110, "2ma":4}
+        "r":{"status":110, "2ma":null}
 }
 #
 {
@@ -49,17 +49,17 @@
 {
     "t":{"label":"write 3ma with boolean - EXCEPTION",
          "send":["{3ma:t}"]},
-        "r":{"status":117}
+        "r":{"status":117, "3ma":null}
 }
 #
 {
     "t":{"label":"write 3ma with float - EXCEPTION",
          "send":["{3ma:4.1}"]},
-        "r":{"status":117}
+        "r":{"status":117, "3ma":null}
 }
 #
 {
     "t":{"label":"write 3ma with string - EXCEPTION",
          "send":["{3ma:\"3\"}"]},
-        "r":{"status":117}
+        "r":{"status":117, "3ma":null}
 }
