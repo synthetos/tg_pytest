@@ -1,0 +1,133 @@
+################################################################################
+#
+#   settings-axis-homing-0.97.json
+#
+# include 000-setup/setup-settings-001.json
+#
+# Switches
+#
+{
+    "t":{"label":"Set minimum switch",
+         "send":["{yvm:1000}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Read yvm",
+         "send":["{yvm:null}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Write yvm - negative value - EXCEPTION",
+         "send":["{yvm:-1}"]},
+        "r":{"status":108, "yvm":null}
+}
+#
+{
+    "t":{"label":"write yvm with boolean - EXCEPTION",
+         "send":["{yvm:t}"]},
+        "r":{"status":117, "yvm":null}
+}
+#
+{
+    "t":{"label":"write yvm with string - EXCEPTION",
+         "send":["{yvm:\"1000.5\"}"]},
+        "r":{"status":117, "yvm":null}
+}
+#
+# Feed Rate
+#
+{
+    "t":{"label":"Write yfr - reasonable value",
+         "send":["{yfr:1000}"]},
+        "r":{"status":0, "yfr":1000}
+}
+#
+{
+    "t":{"label":"Read yfr",
+         "send":["{yfr:null}"]},
+        "r":{"status":0, "yfr":1000}
+}
+#
+{
+    "t":{"label":"Write yfr - negative value - EXCEPTION",
+         "send":["{yfr:-1}"]},
+        "r":{"status":108, "yfr":null}
+}
+#
+{
+    "t":{"label":"write yfr with boolean - EXCEPTION",
+         "send":["{yfr:t}"]},
+        "r":{"status":117, "yfr":null}
+}
+#
+{
+    "t":{"label":"write yfr with string - EXCEPTION",
+         "send":["{yfr:\"1000.5\"}"]},
+        "r":{"status":117, "yfr":null}
+}
+#
+# Travel Minumum
+#
+{
+    "t":{"label":"Write ytn - reasonable value",
+         "send":["{ytn:0}"]},
+        "r":{"status":0, "ytn":0}
+}
+#
+{
+    "t":{"label":"Read ytn",
+         "send":["{ytn:null}"]},
+        "r":{"status":0, "ytn":0}
+}
+#
+{
+    "t":{"label":"Write ytn - negative value - OK",
+         "send":["{ytn:-100}"]},
+        "r":{"status":0, "ytn":-100}
+}
+#
+{
+    "t":{"label":"write ytn with boolean - EXCEPTION",
+         "send":["{ytn:t}"]},
+        "r":{"status":117, "ytn":null}
+}
+#
+{
+    "t":{"label":"write ytn with string - EXCEPTION",
+         "send":["{ytn:\"1000.5\"}"]},
+        "r":{"status":117, "ytn":null}
+}
+#
+# Travel Maximum
+#
+{
+    "t":{"label":"Write ytm - reasonable value",
+         "send":["{ytm:400}"]},
+        "r":{"status":0, "ytm":400}
+}
+#
+{
+    "t":{"label":"Read ytm",
+         "send":["{ytm:null}"]},
+        "r":{"status":0, "ytm":400}
+}
+#
+{
+    "t":{"label":"Write ytm - negative value - OK",
+         "send":["{ytm:-100}"]},
+        "r":{"status":0, "ytm":-100}
+}
+#
+{
+    "t":{"label":"write ytm with boolean - EXCEPTION",
+         "send":["{ytm:t}"]},
+        "r":{"status":117, "ytm":null}
+}
+#
+{
+    "t":{"label":"write ytm with string - EXCEPTION",
+         "send":["{ytm:\"1000.5\"}"]},
+        "r":{"status":117, "ytm":null}
+}

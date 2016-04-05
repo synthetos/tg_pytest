@@ -1,0 +1,38 @@
+################################################################################
+#
+# include 000-setup/setup-settings-001.json
+#
+# Motor Timeout
+# SKIP
+{
+    "t":{"label":"Set motor timeout",
+         "send":["{mt:10.1}"]},
+        "r":{"status":0, "mt":10}
+}
+#
+{
+    "t":{"label":"Set motor timeout forced to minimum",
+         "send":["{mt:-10}"]},
+        "r":{"status":0, "mt":0.01}
+}
+#
+{
+    "t":{"label":"Set motor timeout forced to maximum",
+         "send":["{mt:4000000000}"]},
+        "r":{"status":0, "mt":4000000}
+}
+#
+{
+    "t":{"label":"Read motor timeout",
+         "send":["{mt:null}"]},
+        "r":{"status":0, "mt":4000000}
+}
+#
+{
+    "t":{"label":"Test various type errors",
+         "send":["{st:true}",
+                 "{st:false}",
+                 "{st:\"1\"}"
+                ]},
+        "r":{"status":117, "st":null}
+}

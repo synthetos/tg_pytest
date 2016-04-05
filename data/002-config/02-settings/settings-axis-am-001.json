@@ -5,6 +5,13 @@
 # include 000-setup/setup-settings-001.json
 #
 {
+    "t":{"label":"Zero X axis",
+         "send":["g28.3 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":0}
+}
+#
+{
     "t":{"label":"Write xam - AXIS_DISABLED",
          "send":["{xam:0}"]},
         "r":{"status":0, "xam":0}
@@ -53,11 +60,25 @@
 }
 #
 {
-    "t":{"label":"Move X axis while disabled",
+    "t":{"label":"Try to move X axis while disabled",
         "send":["g0 x10"],
         "after":["g0 x0"]},
         "r":{"status":0},
         "sr":{"posx":0, "posy":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_INHBITED",
+         "send":["{xam:2}"]},
+        "r":{"status":0, "xam":2}
+}
+#
+{
+    "t":{"label":"Try to move X axis while inhibited",
+        "send":["g0 x10"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":10, "posy":0}
 }
 #
 {
@@ -68,21 +89,7 @@
 #
 {
     "t":{"label":"Move X axis",
-        "send":["g0 x10"],
-        "after":["g0 x0"]},
-        "r":{"status":0},
-        "sr":{"posx":10, "posy":0}
-}
-#
-{
-    "t":{"label":"Write xam - AXIS_INHBITED",
-         "send":["{xam:2}"]},
-        "r":{"status":0, "xam":2}
-}
-#
-{
-    "t":{"label":"Move X axis",
-        "send":["g0 x10"],
+        "send":["g0 x0"],
         "after":["g0 x0"]},
         "r":{"status":0},
         "sr":{"posx":0, "posy":0}

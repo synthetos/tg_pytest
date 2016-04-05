@@ -1,0 +1,43 @@
+################################################################################
+#
+#  settings-groups-001.json - Test group displays & settings
+#
+# include 000-setup/setup-settings-001.json
+#
+
+# GROUPS
+{
+    "t":{"label":"Read sys group",
+         "send":["{sys:n}"]},
+        "r":{"status":0, "sys":"*"}
+}
+#
+{
+    "t":{"label":"Read mpo group",
+         "send":["{mpo:n}"]},
+        "r":{"status":0, "mpo":"*"}
+}
+#
+{
+    "t":{"label":"Read pos group",
+         "send":["{pos:n}"]},
+        "r":{"status":0, "pos":"*"}
+}
+#
+{
+    "t":{"label":"Read ofs group",
+         "send":["{ofs:n}"]},
+        "r":{"status":0, "ofs":"*"}
+}
+#
+{
+    "t":{"label":"Read hom group",
+         "send":["{hom:n}"]},
+        "r":{"status":0, "hom":"*"}
+}
+#
+{
+    "t":{"label":"Read prb group",
+         "send":["{prb:n}"]},
+        "r":{"status":0, "prb":"*"}
+}

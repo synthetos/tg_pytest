@@ -1,0 +1,91 @@
+################################################################################
+#
+#  settings-system-001.json - System settings used in 0.97 only
+#
+# include 000-setup/setup-settings-001.json
+#
+# Junction Acceleration
+{
+    "t":{"label":"Write junction acceleration in MM",
+         "send":["{ja:200001}"]},
+        "r":{"status":0, "ja":200001}
+}
+#
+{
+    "t":{"label":"Write junction acceleration zero - EXCEPTION",
+         "send":["{ja:0}"]},
+        "r":{"status":108, "ja":null}
+}
+#
+{
+    "t":{"label":"Write junction acceleration negative number - EXCEPTION",
+         "send":["{ja:-200001}"]},
+        "r":{"status":108, "ja":null}
+}
+#
+{
+    "t":{"label":"Read junction acceleration in MM",
+         "send":["{ja:n}"]},
+        "r":{"status":0, "ja":200001}
+}
+#
+{
+    "t":{"label":"Read junction acceleration in INCHES",
+         "before":["g20"],
+         "send":["{ja:n}"]},
+        "r":{"status":0, "ja":7874}
+}
+#
+{
+    "t":{"label":"Write junction acceleration in INCHES",
+         "before":["g20"],
+         "send":["{ja:10000}"]},
+        "r":{"status":0, "ja":10000}
+}
+#
+{
+    "t":{"label":"Read junction acceleration in INCHES",
+         "before":["g20"],
+         "send":["{ja:n}"]},
+        "r":{"status":0, "ja":10000}
+}
+# Global Switch Type (0.97 only)
+{
+    "t":{"label":"Set global switch type 0",
+         "send":["{st:0}"]},
+        "r":{"status":0, "st":0}
+}
+#
+{
+    "t":{"label":"Set global switch type 1",
+         "send":["{st:1}"]},
+        "r":{"status":0, "st":1}
+}
+#
+{
+    "t":{"label":"Read global switch type",
+         "send":["{st:null}"]},
+        "r":{"status":0, "st":1}
+}
+#
+{
+    "t":{"label":"Test various type errors",
+         "send":["{st:true}",
+                 "{st:false}",
+                 "{st:1.0}",
+                 "{st:\"1\"}"
+                ]},
+        "r":{"status":117, "st":null}
+}
+#
+{
+    "t":{"label":"Set global switch type to illegal value - EXCEPTION",
+         "send":["{st:2}"]},
+        "r":{"status":110, "st":null}
+}
+#
+{
+  "t":{"label":"Set global switch type to negative value - EXCEPTION",
+         "send":["{st:-1}"]},
+        "r":{"status":110, "st":null}
+}
