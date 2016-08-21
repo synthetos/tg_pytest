@@ -150,3 +150,16 @@
          "send":["  {\"FB\":N}","{\" FB\":N}","{\"FB \":N}","{\"FB\": N}","{\"FB\":N }","{\"FB\":N}   ", "  { FB : N }  "]},
         "r":{"status":0}
 }
+# The following exception tests only work in v8 paser, for now
+# So they are moved here insttead ofin the Exceptions regression file
+{
+    "t":{"label":"EXCEPTION: Expanded result exceeds maximum NV pairs",
+         "send":["{x:n,y:n,z:n}"]},
+        "r":{"status":112}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Query exceeds maximum recursion depth",
+         "send":["{x:{x:{x:{x:{x:n}}}}}"]},
+        "r":{"status":114}
+}

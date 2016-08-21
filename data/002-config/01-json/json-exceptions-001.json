@@ -71,7 +71,6 @@
         "r":{"status":102, "xvm":null}
 }
 #
-#
 {
     "t":{"label":"EXCEPTION: Boolean value numeric range error -1",
          "send":["{sl:-1}"]},
@@ -85,25 +84,13 @@
 }
 #
 {
-    "t":{"label":"EXCEPTION: Input is excessive length > 128 bytes",
-         "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130\"}"]},
+    "t":{"label":"EXCEPTION: Name exceeds maximum name characters",
+         "send":["{nameistoolong:n}"]},
         "r":{"status":107}
 }
 #
 {
-    "t":{"label":"EXCEPTION: Name exceeds maximum name characters",
-         "send":["{nameistoolong:n}"]},
-        "r":{"status":115}
-}
-#
-{
-    "t":{"label":"EXCEPTION: Query exceeds maximum recursion depth",
-         "send":["{x:{x:{x:{x:{x:n}}}}}"]},
-        "r":{"status":114}
-}
-#
-{
-    "t":{"label":"EXCEPTION: Expanded result exceeds maximum NV pairs",
-         "send":["{x:n,y:n,z:n}"]},
-        "r":{"status":112}
+    "t":{"label":"EXCEPTION: Input is excessive length > 128 bytes",
+         "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130\"}"]},
+        "r":{"status":107}
 }
