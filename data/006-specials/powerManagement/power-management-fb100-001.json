@@ -18,14 +18,15 @@
             "{1pm:2}, {2pm:2}, {3pm:2}, {4pm:2}",
             "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}, {4pl:0.4}",
             "{mt:0.5}",
-            "{md:0}" ]
+            "{md:0}",
+            "G21" ]
   }
 }
 #
 {
   "after_each":{
     "label":"Reset timeouts and disable motors",
-    "after":["{mt:0.5}","{md:0}"],
+    "after":["{mt:0.5}", "{md:0}", "G28.3 X0"],
     "delay":0.100
   }
 }
@@ -39,18 +40,51 @@
 #
 # TESTS BEGIN HERE
 #
-# Basic tests - check ME and MD can enable and disable
+# SKIP
 {
     "t":{"label":"Confirm that all motors are disabled",
         "send":["{sr:n}"]},
         "r":{"status":0, "sr":{"pwr1":0,"pwr2":0,"pwr3":0,"pwr4":0}}
 }
-#
+# SKIP
 {
     "t":{"label":"Enable all motors",
         "send":["{mt:5}, {me:0}"]},
         "r":{"status":0},
         "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+}
+# SKIP
+{
+    "t":{"label":"Disable all motors and make sure they stay that way",
+        "send":["{1pm:0}", "{2pm:0}", "{3pm:0}", "{4pm:0}",
+                "{me:0}"]},
+        "r":{"status":0},
+        "sr":{"pwr1":0,"pwr2":0,"pwr3":0,"pwr4":0}
+}
+# Test ALWAYS ON mode
+{
+    "t":{"label":"Test ALWAYS ON mode",
+        "before":["{mt:0.1}"],
+        "send":["{1pm:1}", "{2pm:1}", "{3pm:1}", "{4pm:1}",
+                "{md:0}"]},
+        "r":{"status":0},
+        "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+}
+# Test POWERED IN CYCLE mode
+{
+    "t":{"label":"Test POWERED IN CYCLE mode",
+        "send":["{1pm:2}", "{2pm:2}", "{3pm:2}", "{4pm:2}",
+                "G0 X10"]},
+        "r":{"status":0},
+        "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+}
+# Test POWERED WHEN MOVING mode
+{
+    "t":{"label":"Test POWERED WHEN MOVING mode",
+        "send":["{1pm:3}", "{2pm:3}", "{3pm:3}", "{4pm:3}",
+                "G0 X10"]},
+        "r":{"status":0},
+        "sr":{"pwr1":0.4,"pwr2":0,"pwr3":0,"pwr4":0}
 }
 # EOF
 
