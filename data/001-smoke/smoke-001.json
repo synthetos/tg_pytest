@@ -40,7 +40,7 @@
     "r":{"status":0},
     "sr":{"stat":3}
 }
-# 
+#
 # Test 2 - Feed
 {
     "t":{"label":"G1 movement",
@@ -56,7 +56,7 @@
          "send":["G7x34.23"],
          "after":["{clear:n}"]},
     "r":{"status":131},
-    "sr":{"stat":2}
+    "sr":{"stat":3}
 }
 #EOF
 # Example of how to stop the file

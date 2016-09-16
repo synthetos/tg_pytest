@@ -133,7 +133,7 @@ def analyze_sr(t_data, r_datae, params):
                 build_sr[k] = r_data["sr"][k]
 
     if last_sr == None:             # return if there were no SRs in the response set
-        return
+        return 0
 
     print last_sr["response"]       # print response just once for all SR tests
 

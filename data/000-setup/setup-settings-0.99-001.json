@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   settings-setup-001.json - Common setup for settings tests
+#   settings-setup-0.99-001.json - Common setup for settings-0.99 tests
 #
 {
   "defaults":{
@@ -25,7 +25,7 @@
 #
 {
     "t":{"label":"Set configs for settings tests",
-         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
+         "send":["{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
     "r":{"status":0}
 }
 #

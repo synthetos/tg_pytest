@@ -1,0 +1,96 @@
+################################################################################
+#
+#   json-exceptions-001.json - JSON exception tests
+#
+# include 000-setup/setup-settings-001.json
+#
+# JSON SYNTAX ERRORS
+{
+    "t":{"label":"Key is missing - JSON SYNTAX ERROR",
+         "send":["{:null}"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"Key is blank - JSON SYNTAX ERROR",
+         "send":["{   :null}"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"Value is missing - JSON SYNTAX ERROR",
+         "send":["{key:}"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"Value is blank - JSON SYNTAX ERROR",
+         "send":["{key:     }"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Missing key and value - JSON SYNTAX ERROR",
+         "send":["{:}"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Blank key and value - JSON SYNTAX ERROR",
+         "send":["{   :   }"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Nonsense float value - treated as JSON SYNTAX ERROR",
+         "send":["{xvm:xx12qq.x}"]},
+        "r":{"status":111, "err":"*"}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Boolean value not t or f - JSON SYNTAX ERROR",
+         "send":["{1po:xxx}"]},
+        "r":{"status":111, "err":"*"}
+}
+# OTHER JSON EXCEPTION CASES
+{
+    "t":{"label":"Read invalid key (token) - UNRECOGNIZED TOKEN",
+         "send":["{CRAP:null}"]},
+        "r":{"status":100, "crap":null}
+}
+#
+{
+    "t":{"label":"Write invalid key (token) - UNRECOGNIZED TOKEN",
+         "send":["{CRAP:42}"]},
+        "r":{"status":100, "crap":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Float value followed by nonsense - BAD NUMBER FORMAT",
+         "send":["{xvm:12qq.x}"]},
+        "r":{"status":102, "xvm":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Boolean value numeric range error -1",
+         "send":["{sl:-1}"]},
+        "r":{"status":110, "sl":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Boolean value numeric range error 2",
+         "send":["{sl:2}"]},
+        "r":{"status":110, "sl":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Name exceeds maximum name characters",
+         "send":["{nameistoolong:n}"]},
+        "r":{"status":107}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Input is excessive length > 512 bytes",
+         "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130_______140_______150_______160_______170_______180_______190________200_______210_______220_______230_______240_______250_______260_______270_______280_______290________300_______310_______320_______330_______340_______350_______360_______370_______380_______390________400_______410_______420_______430_______440_______450_______460_______470_______480_______490________500_______510_______520\"}"]},
+        "r":{"status":107}
+}

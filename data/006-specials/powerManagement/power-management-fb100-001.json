@@ -1,0 +1,137 @@
+################################################################################
+#
+#   power-management-fb100-001.json - Power Management functions
+#
+# Test assumptions:
+#   UUT has 4 motors
+#   motor mapping: 1=X, 2=Z, 3=Y, 4=A  (1=X, 2=Y, 3=Z, 4=A)
+#   motors can operate at 0.40 power level settings
+#   motors can idle at 0.15 power level settings (future)
+#
+# XXX_include 000-setup/setup-settings-001.json
+#
+{
+  "before_all":{
+    "label":"Setup for power management tests",
+    "before":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+            "{sr:{pwr1:t,pwr2:t,pwr3:t,pwr4:t}}",
+            "{1pm:2}, {2pm:2}, {3pm:2}, {4pm:2}",
+            "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}, {4pl:0.4}",
+            "{mt:0.5}",
+            "{md:0}" ]
+  }
+}
+#
+{
+  "after_each":{
+    "label":"Reset timeouts and disable motors",
+    "after":["{mt:0.5}","{md:0}"],
+    "delay":0.100
+  }
+}
+#
+{
+  "after_all":{
+    "label":"Restore default settings",
+    "after":["{defa:t}"]
+  }
+}
+#
+# TESTS BEGIN HERE
+#
+# Basic tests - check ME and MD can enable and disable
+{
+    "t":{"label":"Confirm that all motors are disabled",
+        "send":["{sr:n}"]},
+        "r":{"status":0, "sr":{"pwr1":0,"pwr2":0,"pwr3":0,"pwr4":0}}
+}
+#
+{
+    "t":{"label":"Enable all motors",
+        "send":["{mt:5}, {me:0}"]},
+        "r":{"status":0},
+        "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+}
+# EOF
+
+(msg Power Management test tests)
+(
+( ASSUMPTIONS
+(   Test machine has at least 40mm x 40mm XY travel
+(   Test machine has at least 75mm of X travel
+(
+( PRECONDITIONS (all tests)
+(   Zero set to: middle of XY table, Z ~25 mm down from max
+(   Starting position: 0,0,0
+(   Extents required: -20,-20,-50 to 20,20,0
+(   Motor 1 is mapped to X axis
+(   Motor 2 is mapped to Y axis
+(
+n1 g21 g17 g90 g54
+( Zero and set table or comment out to zero manually
+(n10 g28.2 x0 y0 z0
+(n11 g0 x150 y150 z-45
+(n12 g28.3 x0 y0 z0
+(
+(n20 x10 ( do a little dance to get your attention )
+(n21 x0
+(n22 g4 p2 ( pause to examine proper starting point )
+(
+f2000 ( Set feed rate for all tests unless overridden)
+
+(initial conditions for power management
+{1pm:2}
+{2pm:2}
+{3pm:2}
+{4pm:2}
+{mt:2}
+
+(******************************************************************
+(msg Test disabling X motor
+(
+( PERFORMS
+(   Disable X. Try to move in X
+(
+( PRECONDITIONS - See “before”
+(
+( RESULTS
+(   No movement should occur
+(
+{1pm:0}
+g0 x50
+g0 x0
+
+({1pm:2})
+(g0 x10 ( do a little dance at end)
+(g0 x0
+{
+    "t":{"label":"Read an integer - relaxed JSON mode",
+         "send":["{1mi:null}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Read a float - relaxed JSON mode",
+         "send":["{fb:n}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Read a float - strict JSON mode - CAPITALS",
+         "send":["{\"FB\":N}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Read a float - relaxed JSON mode - CAPITALS",
+         "send":["{FB:N}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Read a float with double quotes (null string)",
+         "send":["{fb:\"\"}"]},
+        "r":{"status":0}
+}
+#
+{
