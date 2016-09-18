@@ -73,6 +73,13 @@
 }
 #
 {
+    "t":{"label":"Disable all motors incorrectly, with a NULL",
+        "before":["{mt:5}"],
+        "send":["{md:n}"]},
+    "r":{"status":3}
+}
+#
+{
     "t":{"label":"Enable all motors then disable motor 1",
         "before":["{mt:5}"],
         "send":["{me:0}", "{md:1}"]},
