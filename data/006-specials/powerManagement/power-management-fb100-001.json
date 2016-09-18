@@ -3,10 +3,11 @@
 #   power-management-fb100-001.json - Power Management functions
 #
 # Test assumptions:
-#   UUT has 4 motors
-#   motor mapping: 1=X, 2=Z, 3=Y, 4=A  (1=X, 2=Y, 3=Z, 4=A)
+#   SERIAL_TIMEOUT is 1 second or more (tg_utils.py)
+#   UUT has 3 or more motors
+#   motor mapping: 1=X (Y and Z don;t matter)
 #   motors can operate at 0.40 power level settings
-#   motors can idle at 0.15 power level settings (future)
+#   motors can idle at 0.15 power level settings
 #
 # XXX_include 000-setup/setup-settings-001.json
 #
@@ -14,9 +15,9 @@
   "before_all":{
     "label":"Setup for power management tests",
     "before":["{ej:1}", "{jv:5}", "{qv:0}", "{sv:2}", "{si:200}",
-            "{sr:{pwr1:t, pwr2:t, pwr3:t, pwr4:t}}",
-            "{1pm:2}, {2pm:2}, {3pm:2}, {4pm:2}",
-            "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}, {4pl:0.4}",
+            "{sr:{pwr1:t, pwr2:t, pwr3:t}",
+            "{1pm:2}, {2pm:2}, {3pm:2}",
+            "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}",
             "{mt:0.5}",
             "{md:0}",
             "G21" ]
@@ -34,7 +35,7 @@
 {
   "after_each":{
     "label":"Reset timeouts and disable motors",
-    "after":["{mt:0.5}", "{md:0}"],
+    "after":["{mt:0.5}", "{md:0}", "g0x0y0"],
     "delay":0.100
   }
 }
@@ -52,7 +53,7 @@
 {
     "t":{"label":"Confirm that all motors are disabled",
         "send":["{sr:n}"]},
-    "r":{"status":0, "sr":{"pwr1":0,"pwr2":0,"pwr3":0,"pwr4":0}
+    "r":{"status":0, "sr":{"pwr1":0,"pwr2":0,"pwr3":0}
     }
 }
 #
@@ -61,35 +62,64 @@
         "before":["{mt:5}"],
         "send":["{me:0}"]},
     "r":{"status":0},
-    "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+    "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4}
+}
+#
+{
+    "t":{"label":"Enable all motors incorrectly, with a NULL",
+        "before":["{mt:5}"],
+        "send":["{me:n}"]},
+    "r":{"status":3}
+}
+#
+{
+    "t":{"label":"Enable all motors then disable motor 1",
+        "before":["{mt:5}"],
+        "send":["{me:0}", "{md:1}"]},
+    "r":{"status":0},
+    "sr":{"pwr1":0,"pwr2":0.4,"pwr3":0.4}
 }
 #
 {
     "t":{"label":"Disable all motors and make sure they stay that way",
-        "before":["{1pm:0}", "{2pm:0}", "{3pm:0}", "{4pm:0}"],
+        "before":["{1pm:0}", "{2pm:0}", "{3pm:0}"],
         "send":["{me:0}"]},
     "r":{"status":0},
-    "sr":{"pwr1":0,"pwr2":0,"pwr3":0,"pwr4":0}
+    "sr":{"pwr1":0,"pwr2":0,"pwr3":0}
 }
-# Test ALWAYS ON mode
+#
 {
     "t":{"label":"Test ALWAYS ON mode",
-        "before":["{1pm:1}", "{2pm:1}", "{3pm:1}", "{4pm:1}", "{mt:0.1}"],
+        "before":["{1pm:1}", "{2pm:1}", "{3pm:1}", "{mt:0.1}"],
         "send":["{md:0}"]},
     "r":{"status":0},
-    "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+    "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4}
 }
-# Test POWERED IN CYCLE mode
+#
 {
     "t":{"label":"Test POWERED IN CYCLE mode",
-        "before":["{1pm:2}", "{2pm:2}", "{3pm:2}", "{4pm:2}"],
+        "before":["{1pm:2}", "{2pm:2}", "{3pm:2}",
+                  "{mt:4}"],
         "send":["G0 X10", "{sr:n}"]},
-    "r":{"status":0}, "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4,"pwr4":0.4}
+    "r":{"status":0}, "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0.4}
 }
-# Test POWERED WHEN MOVING mode
+#
 {
     "t":{"label":"Test POWERED WHEN MOVING mode",
-        "before":["{1pm:3}", "{2pm:3}", "{3pm:3}", "{4pm:3}"],
-        "send":["G0 X10", "{sr:n}"]},
-    "r":{"status":0}, "sr":{"pwr1":0.4,"pwr2":0,"pwr3":0,"pwr4":0}
+        "before":["{1pm:3}", "{2pm:3}", "{3pm:3}",
+                  "{mt:4}"],
+        "send":["G0 X10", "G0 Y10", "{sr:n}"]},
+    "r":{"status":0}, "sr":{"pwr1":0.4,"pwr2":0.4,"pwr3":0}
 }
+#
+# This one is complicated. Move slowly in X with a relatively fast timeout,
+# then move slowly in Y allowing X to time out. Should work if the following hold:
+#   t(SERIAL_TIMEOUT) < t(motor timeout) < t(movement in X or Y)
+{
+    "t":{"label":"Test POWERED WHEN MOVING mode with an in-cycle disable",
+        "before":["{1pm:3}", "{2pm:3}", "{3pm:3}",
+                  "{mt:1.5}"],
+        "send":["G1 F500 X100", "G1 F500 Y100", "{sr:n}"]},
+    "r":{"status":0}, "sr":{"pwr1":0,"pwr2":0.4,"pwr3":0}
+}
+#

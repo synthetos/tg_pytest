@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+SERIAL_TIMEOUT = 1  # seconds
+
 ########################################################################################    
 
 """
@@ -14,7 +16,8 @@ class TinyG(object):
 
     def __init__(self):
         print("Starting TinyG Tester")
-        self.SERIAL_TIMEOUT = 1          # in seconds
+#        self.SERIAL_TIMEOUT = 1          # in seconds
+        self.SERIAL_TIMEOUT = SERIAL_TIMEOUT
         self.s = self.open_serial_port()
         
     def write(self, data):

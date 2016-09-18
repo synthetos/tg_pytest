@@ -2,7 +2,7 @@
 
 """
 __author__ = 'Alden Hart'
-__version__ = '$Revision: 0.1 $'[11:-2]
+__version__ = '$Revision: 0.2 $'[11:-2]
 __copyright__ = 'Copyright (c) 2016 Alden Hart'
 __license__ = 'Python'
 
