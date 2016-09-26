@@ -60,12 +60,6 @@
 }
 #
 {
-    "t":{"label":"Write with integer number",
-         "send":["{tid:12345678}"]},
-        "r":{"status":0, "tid":12345678}
-}
-#
-{
     "t":{"label":"Write with boolean true",
          "send":["{sl:true}"]},
         "r":{"status":0, "sl":true}
@@ -93,12 +87,6 @@
     "t":{"label":"Write with string value",
          "send":["{msg:\"string\"}"]},
         "r":{"status":0, "msg":"string"}
-}
-#
-{
-    "t":{"label":"Write with string value with escaped quotes",
-         "send":["{msg:\"string\\\"embedded\\\"\"}"]},
-        "r":{"status":0}
 }
 #
 {
@@ -149,17 +137,4 @@
     "t":{"label":"White space padding cases - strict - CAPITALS",
          "send":["  {\"FB\":N}","{\" FB\":N}","{\"FB \":N}","{\"FB\": N}","{\"FB\":N }","{\"FB\":N}   ", "  { FB : N }  "]},
         "r":{"status":0}
-}
-# The following exception tests only work in v8 paser, for now
-# So they are moved here insttead ofin the Exceptions regression file
-{
-    "t":{"label":"EXCEPTION: Expanded result exceeds maximum NV pairs",
-         "send":["{x:n,y:n,z:n}"]},
-        "r":{"status":112}
-}
-#
-{
-    "t":{"label":"EXCEPTION: Query exceeds maximum recursion depth",
-         "send":["{x:{x:{x:{x:{x:n}}}}}"]},
-        "r":{"status":114}
 }

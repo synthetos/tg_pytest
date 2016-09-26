@@ -1,0 +1,38 @@
+################################################################################
+#
+#   json-baseline-extended-001.json - JSON success tests
+#
+# include 000-setup/setup-settings-001.json
+#
+# JSON EXTENDED BASELINE TESTS
+#
+# The following tests only work in v8 parser, for now
+{
+    "t":{"label":"Test TID function",
+         "send":["{tid:12345678}"]},
+        "r":{"status":0, "tid":12345678}
+}
+#
+{
+    "t":{"label":"Write with string value with escaped quotes",
+         "send":["{msg:\"string\\\"embedded\\\"\"}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Expanded result exceeds maximum NV pairs",
+         "send":["{x:n,y:n,z:n}"]},
+        "r":{"status":112}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Query exceeds maximum recursion depth",
+         "send":["{x:{x:{x:{x:{x:n}}}}}"]},
+        "r":{"status":114}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Input is excessive length > 128 bytes",
+         "send":["{x:\"0_________10________20________30________40________50________60________70________80________90________100_______110_______120_______130\"}"]},
+        "r":{"status":107}
+}

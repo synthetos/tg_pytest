@@ -12,7 +12,7 @@
 #
 {
     "t":{"label":"Set configs for JSON tests",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
          "delay":0.100},
     "r":{"status":0}
 }
