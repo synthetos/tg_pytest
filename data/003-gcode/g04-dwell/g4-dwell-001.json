@@ -38,7 +38,7 @@
 # Test 1 - Traverse
 {
     "t":{"label":"G0 movement",
-         "send":["g0x10y10","g0x0y0"],
+         "send":["g0x10y10","g4 p0.5","g0x0y0"],
          "fail":"soft"},
     "r":{"status":0},
     "sr":{"stat":3}
@@ -47,11 +47,12 @@
 # Test 2 - Feed
 {
     "t":{"label":"G1 movement",
-         "send":["F1000", "g1x10y10","g1x0y0"],
+         "send":["F1000", "g1x10y10","g4 p0.5","g1x0y0"],
          "fail":"soft"},
     "r":{"status":0},
     "sr":{"stat":3}
 }
+# EOF
 
 # Test 3 - Bad command
 {
