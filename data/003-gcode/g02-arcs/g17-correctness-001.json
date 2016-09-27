@@ -27,6 +27,13 @@
 ##################
 
 {
+  "defaults":{
+    "fail":"hard",
+    "precision":0.01
+  }
+}
+#
+{
     "t":{"label":"Setup for G17 tests",
          "send":["G17 G21 G90 G91.1 G94",
                  "G10 L20 P2 X100 Y100 Z0",

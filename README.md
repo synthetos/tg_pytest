@@ -1,7 +1,7 @@
 
 # tg_pytest
 
-Python-based TinyG tester for v8 and g2 code bases.
+Python-based TinyG tester for v8 and g2core code bases.
 The tester runs JSON test files and reports results.
 This project is maintained in the WingIDE Python but can use any Python environment.
 
@@ -21,62 +21,63 @@ ongoing results. It's a batch tester, not streaming.
 
 ### Usage
 
-  - Make sure you have a TinyG v8 or g2 powered and plugged in and it's
-      not already connected to some other USB host (like Coolterm)
+  - Make sure you have a TinyG v8 or g2core powered and plugged in and it's
+      not already connected to some other USB host (like Coolterm or g2core-api)
   - Edit the /data/test-master.cfg file for the tests you want to run
   - Make sure each JSON test file is correct (see below)
   - Run tg_pytest from your Python environment
-  - _Note: The board must be in strict JSON mode or the Python JSON parser will fail_
+  - _Note: For v8, the board must be in strict JSON mode or the Python JSON parser will fail_
+  - _Note: For g2core, the board must be in {ej:1} or {ej:2} or the Python JSON parser will fail_
 
 #### Test Sequence - What should happen when RUN:
 
-  - Opens a tinyg port or fail trying
+  - Opens a g2core or TinyG port or fail trying (only one device may be connected)
   - Opens test-master.cfg file
-  - Creates a test date and time string as an ISO8601 string (future)
   - For each test in the master file:
     - Opens the JSON file for that test
-    - Creates an output file suffixed by the ISO8601 date/time string (future)
+    - Creates an output file suffixed by aN ISO8601 date/time string (future)
     - Iterates through the input file. For each test in file:
       - Send the `before` strings to the board
-      - Send the `send` string(s) to the tinyg and collect all responses
+      - Send the `send` string(s) to the board and collect all responses
       - Analyze responses according to `t` test data provided (see below)
-      - send the `after` strings
+      - Send the `after` strings
       - Note that only `send` strings are analyzed. `before` and `after` are not
 
 ### JSON test files:
   - A JSON test file contains one or more tests
   - Each test is defined by an independent JSON object
-  - JSON objects must be separated by at least one `#` comment line
+  - JSON objects must be separated by at least one comment line
+  - Comment lines start with `#`
+  - Open curlies `{` are not allowed in comments
   - Adding `SKIP` to a comment line will skip the next test
   - Adding `EOF` to a comment line will end the file
-
-#### Comments in JSON test files:
-  - Comments start with `#` (Python style). Currently only # is supported, not """
-  - Open curlies `{` are not allowed in comments
-  - Blank lines are also OK, but do not act as test separators
+  - Blank lines are permitted but do not act as separators between JSON objects
 
 ### Tests / Test JSON:
   - A test `t` runs all the `send` lines, collects all the response lines `r{}`, `sr{}`, `er{}` then analyzes according to the analyzers: JSON tags `r`, `sr`, `er`
-  - JSON Elements are listed below, and are not order dependent. Arrays are order dependent.
+  - Supported JSON elements are below, and are not order dependent. Arrays are order dependent.
   - Each JSON test must be a parseable JSON object or the test will fail to execute. If in doubt, lint it.
-    - It's useful to edit JSON files in an editor with a built-in JSON linter like Atom (use json-linter package).
+    - It's useful to use a linting editor like Atom to edit JSON files (use json-linter package)
     - It can also be useful to paste a JSON object into jsonlint.com for checking
     - JSON syntax errors in either the test JSON or the response JSON (for the board) will cause the test to fail with a message including the offending JSON.  
 
-**JSON Elements** _(See example-001.json for examples)_:
+**JSON Elements**
   - `t` is the test data object, consisting of: _(all are optional except `send`)_
     - `label` will be displayed when the test is run
     - `send` array of one or more strings to send for the test (MANDATORY)
     - `delay` delay in seconds between sends. Values < 1.0 are OK
+    - `precision` is the precision to match for numerical values
     - `fail` can be `hard` or `soft`. Hard (default) quits the test run if failure
     - `before` array of strings to send before the test - will not be analyzed
     - `after` array of strings to send after the test - will not be analyzed
     - `setup` used to prevent before's and after's from executing in a given test
 
 
-  - `r` analyzer contains the elements to check in all r{} responses:
-    - If `r` is present, test all listed keys for exact match, e.g. `xvm:12000`
-      - The value can be ``"*"``, (quotes required) to match any value
+  - `r` analyzer contains the elements to check in all `r{}` responses:
+    - If `r` is present, test all listed keys for a match. One of:
+      - Exact match
+      - Match to precision set by `precision`
+      - Wildcard match ``"*"`` will match any value (quotes are required)
     - Use `status` to match the status in the footer
     - Use `count` to match the count in the footer (3rd element)
     - Nested keys can also be tested, example:
@@ -85,7 +86,7 @@ ongoing results. It's a batch tester, not streaming.
 
 
   - `sr` analyzer contains the elements to check in the status reports:
-    - If `sr` is present, test all keys for exact match, e.g. `stat:3`
+    - If `sr` is present, test all keys for exact match or precision match, e.g. `stat:3`
 
 
   - `er` analyzer contains the elements to check in any exception reports
