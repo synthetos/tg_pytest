@@ -56,10 +56,25 @@ def fail_hard(t_data, params, line):
     return
 
 
-def display_r(key, test_val, resp_val, response_string):
-    if test_val == resp_val or test_val == "*":
+def compare_r(key, test_val, resp_val, response_string, params):
+    precision = params["use_precision"]
+
+    if test_val == "*":
         print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
         return (0)
+    
+    if test_val == None:
+        if resp_val == None:
+            print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
+            return (0)
+        else:
+            print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
+            return (1)
+            
+    if abs(test_val - resp_val) < precision:
+        print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
+        return (0)
+
     else:
         print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
         return (1)
@@ -96,19 +111,19 @@ def analyze_r(t_data, r_datae, params):
                 test_val = t_data["r"][key]    # data value to check from test data
                 resp_val = r_data["r"][key]    # data value returned for this key from response
                 
-                # display nested responses
+                # compare and display nested responses
                 if isinstance(test_val, dict):
                     for child in test_val:
                         if child in resp_val:
                             child_display = key + ":{ " + child
-                            result -= display_r(child_display, test_val[child], resp_val[child], "}")
+                            result -= compare_r(child_display, test_val[child], resp_val[child], "}", params)
                         else:
                             print("  MISSING: \"{0}\" is missing from response".format(child))
                             result -= 1
                     continue
                 
-                # display non-nested responses
-                result -= display_r(key, test_val, resp_val, r_data["response"])
+                # compare and display non-nested responses
+                result -= compare_r(key, test_val, resp_val, r_data["response"], params)
             else:
                 print("  MISSING: \"{0}\" is missing from response {1}".format(key, r_data["response"]))
                 result -= 1
@@ -253,14 +268,28 @@ def run_test(t_data, before_data, after_data, params):
         print
         print("TEST: {0}".format(t_data["t"]["label"]))
 
+    # Get a delay time from params or a local override
     delay = 0
-    if "delay" in t_data["t"]:          # local setting takes precedence over
+    if "delay" in t_data["t"]:          # local setting takes precedence
         delay = t_data["t"]["delay"]
     elif "delay" in params:             #...default setting
         delay = params["delay"]
 
+    # Get a precision for comparisons from params or a local override
+    # If a local precision was provided use the local
+    # If a default was provided but no local, use the default
+    # If neither default nor local were provided use 0 (exact match)
+
+    if "precision" in t_data["t"]:      # local setting takes precedence
+        params["use_precision"] = t_data["t"]["precision"]
+    elif "precision" in params:
+        params["use_precision"] = params["precision"]
+    else:
+        params["use_precision"] = 0
+
+    # Check if this is a setup "test"
     setup = False
-    if "setup" in t_data["t"]:          # check if this is a setup "test"
+    if "setup" in t_data["t"]:
         setup = True
 
     # Run "before" strings if this is not a setup "test"

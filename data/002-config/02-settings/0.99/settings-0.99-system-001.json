@@ -16,7 +16,7 @@
          "send":["{jt:0}"]},
         "r":{"status":108, "jt":null}
 }
-#
+# SKIP
 {
     "t":{"label":"Write junction integration time negative number - EXCEPTION",
          "send":["{jt:-1}"]},

@@ -5,7 +5,8 @@
 {
   "defaults":{
     "fail":"hard",
-    "delay":0.100
+    "delay":0.100,
+    "precision":0.00001
   }
 }
 #
