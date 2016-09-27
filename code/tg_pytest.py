@@ -58,27 +58,27 @@ def fail_hard(t_data, params, line):
 
 def compare_r(key, test_val, resp_val, response_string, params):
     precision = params["use_precision"]
+    test = False
 
-    if test_val == "*":
+    if test_val == "*":                 # Pass all wildcards
+        test = True
+    
+    elif test_val == None:              # Null values are not valid for numerical tests that follow
+        if resp_val == None:
+            test = True
+
+    else:                               # Test a numeric value against precision
+        if abs(test_val - resp_val) <= precision:
+            test = True
+
+    if test == True:
         print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
         return (0)
     
-    if test_val == None:
-        if resp_val == None:
-            print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
-            return (0)
-        else:
-            print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
-            return (1)
-            
-    if abs(test_val - resp_val) < precision:
-        print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
-        return (0)
-
     else:
         print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
         return (1)
-
+        
 
 ################################################################################
 #
@@ -357,8 +357,7 @@ tg = TinyG()    # Create the TinyG Object
 def main():
 
     # Open and initialize TinyG port
-    tg.init_tinyg()          # Initialize the TinyG connection.
-#    tg.init_tinyg_legacy()   # Legacy initialization code
+    tg.init_tinyg()          # Initialize the TinyG connection
                              # We are open and ready to rock the kitty time
 
     # Open master input file - contains a list of JSON files to process
@@ -439,6 +438,8 @@ def main():
                 
             if "defaults" in obj:
                 params = obj["defaults"]
+            else:
+                params = {}     # create an empty dictionary if defaults doesn't exist
 
         # Open an output file if enabled
         if OUTFILE_ENABLED:
