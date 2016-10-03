@@ -27,6 +27,13 @@
 ##################
 
 {
+  "defaults":{
+    "fail":"hard",
+    "precision":0.01
+  }
+}
+#
+{
     "t":{"label":"Setup for G18 tests",
          "send":["G18 G21 G90 G91.1 G94",
                  "G10 L20 P2 X0 Y0 Z0",
@@ -88,6 +95,7 @@
 {
     "t":{"label":"CW 720 degree circle - 2 rotations using I offset (X)",
        	 "send":["G2 I20 P2"]},
+         "precision":0.01,
     "sr":{"posx": 0, "posz": 0},
     "r":{"status":0}
 }
@@ -144,6 +152,7 @@
 {
     "t":{"label":"CCW 720 degree helix - 2 rotations w/Y helix",
       	 "send":["G3 I25 Y50 P2"]},
+         "precision":0.01,
     "sr":{"posx": 0, "posz": 50, "posz": 0},
     "r":{"status":0}
 }

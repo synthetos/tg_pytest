@@ -70,6 +70,8 @@ def compare_r(key, test_val, resp_val, response_string, params):
     else:                               # Test a numeric value against precision
         if abs(test_val - resp_val) <= precision:
             test = True
+        else:
+            print("  approx: test: {0}, resp: {1}, precision: {2}".format(test_val, resp_val, precision))
 
     if test == True:
         print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
@@ -413,11 +415,11 @@ def main():
             break;
 
         # Extract defaults and before/after data objects (it's OK if they don't exist)
-        before_all = ""
-        before_each = ""
-        after_all = ""
-        after_each = ""
-        params = ""
+        before_all = {}
+        before_each = {}
+        after_all = {}
+        after_each = {}
+        params = {}                         # start with an empty dictionary
         
         for obj in tests:
 
@@ -437,9 +439,7 @@ def main():
                 after_each = obj
                 
             if "defaults" in obj:
-                params = obj["defaults"]
-            else:
-                params = {}     # create an empty dictionary if defaults doesn't exist
+                params = obj["defaults"]    # replace params if defaults exist
 
         # Open an output file if enabled
         if OUTFILE_ENABLED:
