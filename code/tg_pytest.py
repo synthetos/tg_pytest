@@ -67,7 +67,12 @@ def compare_r(key, test_val, resp_val, response_string, params):
         if resp_val == None:
             test = True
 
+    elif type(test_val) == unicode:     # Test string values (Unicode), not StringType
+        if test_val == resp_val:
+            test = True
+        
     else:                               # Test a numeric value against precision
+#        print test_val, resp_val, type(test_val), type(resp_val)
         if abs(test_val - resp_val) <= precision:
             test = True
         else:
@@ -143,6 +148,8 @@ def analyze_sr(t_data, r_datae, params):
     result = 0
     build_sr = {}                   # build a synthetic SR to reconstruct filtered SRs
     last_sr = None                  # record the last SR
+    precision = params["use_precision"]
+
     for r_data in r_datae:
         if "sr" in r_data:
             last_sr = r_data
@@ -157,11 +164,20 @@ def analyze_sr(t_data, r_datae, params):
     # test if keys are present and match t_data           
     for k in t_data["sr"]:
         if k in build_sr:
-            if t_data["sr"][k] == build_sr[k]:
+            test = False
+            if type(t_data["sr"][k]) == unicode:  # Test string values (unicode), not string
+                if t_data["sr"][k] == build_sr[k]:
+                    test = True
+
+            elif abs(t_data["sr"][k] - build_sr[k]) <= precision:
+                test = True
+
+            if test == True:
                 print("  passed: {0}: {1}".format(k, build_sr[k]))
             else:
                 print("  FAILED: {0}: {1} should be {2}".format(k, build_sr[k], t_data["sr"][k]))
                 result -= 1
+
         else:
             print("  MISSING: \"{0}\" is missing from response".format(k))
 

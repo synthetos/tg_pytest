@@ -5,6 +5,7 @@
 # include 000-setup/setup-settings-001.json
 #
 # JSON BASELINE TESTS
+#
 {
     "t":{"label":"Read a float - strict JSON mode",
          "send":["{\"fb\":null}"]},

@@ -50,13 +50,13 @@
     "sr":{"stat":3}
 }
 
-# Test 3 - Bad command
+# Test 3 - Bad command. Supposed to end in ALARM state
 {
     "t":{"label":"Bad Gcode command",
          "send":["G7x34.23"],
          "after":["{clear:n}"]},
     "r":{"status":131},
-    "sr":{"stat":3}
+    "sr":{"stat":2}
 }
 #EOF
 # Example of how to stop the file
@@ -66,5 +66,5 @@
          "send":["G7x34.23"],
          "fail":"soft"},
     "r":{"status":131},
-    "sr":{"stat":3}
+    "sr":{"stat":2}
 }
