@@ -63,20 +63,18 @@ def compare_r(key, test_val, resp_val, response_string, params):
     if test_val == "*":                 # Pass all wildcards
         test = True
     
-    elif test_val == None:              # Null values are not valid for numerical tests that follow
+    elif test_val == None:
         if resp_val == None:
             test = True
-
-    elif type(test_val) == unicode:     # Test string values (Unicode), not StringType
-        if test_val == resp_val:
-            test = True
-        
-    else:                               # Test a numeric value against precision
-#        print test_val, resp_val, type(test_val), type(resp_val)
+            
+    elif type(test_val) == int:         # Test a numeric value against precision
         if abs(test_val - resp_val) <= precision:
             test = True
         else:
             print("  approx: test: {0}, resp: {1}, precision: {2}".format(test_val, resp_val, precision))
+    else:                               # Test all non-numeric types for exact match
+        if test_val == resp_val:
+            test = True
 
     if test == True:
         print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
@@ -164,13 +162,16 @@ def analyze_sr(t_data, r_datae, params):
     # test if keys are present and match t_data           
     for k in t_data["sr"]:
         if k in build_sr:
+
             test = False
-            if type(t_data["sr"][k]) == unicode:  # Test string values (unicode), not string
+            if type(t_data["sr"][k]) == int:         # Test a numeric value against precision
+                if abs(t_data["sr"][k] - build_sr[k]) <= precision:
+                    test = True
+                else:
+                    print("  approx: test: {0}, resp: {1}, precision: {2}".format(test_val, resp_val, precision))
+            else:
                 if t_data["sr"][k] == build_sr[k]:
                     test = True
-
-            elif abs(t_data["sr"][k] - build_sr[k]) <= precision:
-                test = True
 
             if test == True:
                 print("  passed: {0}: {1}".format(k, build_sr[k]))
@@ -332,6 +333,9 @@ def run_test(t_data, before_data, after_data, params):
     r_datae = []
     for line in tg.readlines():
         line = line.strip()
+        if line == "":
+            print("  EXCEPTION: Blank line")
+            continue        
         try:
             r_datae.append(json.loads(line))
         except:

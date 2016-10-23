@@ -219,6 +219,18 @@
 # Enable CRLF expansion on TX (EC)
 #
 {
+    "t":{"label":"Enable CRLF expansion using '1'",
+         "send":["{ec:1}"]},
+        "r":{"status":0, "ec":1}
+}
+#
+{
+    "t":{"label":"Disable CRLF expansion using '0'",
+         "send":["{ec:0}"]},
+        "r":{"status":0, "ec":0}
+}
+#
+{
     "t":{"label":"Enable CRLF expansion on TX",
          "send":["{ec:true}"]},
         "r":{"status":0, "ec":true}
@@ -234,18 +246,6 @@
     "t":{"label":"Read CRLF expansion on TX setting",
          "send":["{ec:null}"]},
         "r":{"status":0, "ec":false}
-}
-#
-{
-    "t":{"label":"Enable CRLF expansion using '1'",
-         "send":["{ec:1}"]},
-        "r":{"status":0, "ec":1}
-}
-#
-{
-    "t":{"label":"Disable CRLF expansion using '0'",
-         "send":["{ec:0}"]},
-        "r":{"status":0, "ec":0}
 }
 #
 {
