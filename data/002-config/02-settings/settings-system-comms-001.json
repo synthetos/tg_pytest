@@ -6,6 +6,7 @@
 #
 # JSON Verbosity
 #
+#
 {
     "t":{"label":"Set JV to 1 (FOOTER only) - returns null r object",
          "send":["{jv:1}"]},
@@ -270,7 +271,8 @@
 # Enable echo (EE)
 {
     "t":{"label":"Enable echo",
-         "send":["{ee:true}"]},
+         "send":["{ee:true}"],
+         "after":["{ee:false}"]},
         "r":{"status":0, "ee":true}
 }
 #
@@ -288,7 +290,8 @@
 #
 {
     "t":{"label":"Enable echo using '1'",
-         "send":["{ee:1}"]},
+         "send":["{ee:1}"],
+         "after":["{ee:0}"]},
         "r":{"status":0, "ee":1}
 }
 #
@@ -299,13 +302,13 @@
 }
 #
 {
-    "t":{"label":"Set echo using '2' - EXCEPTION",
+    "t":{"label":"Set echo using '2'",
          "send":["{ee:2}"]},
         "r":{"status":110, "ee":null}
 }
 #
 {
-    "t":{"label":"Set echo using '-1' - EXCEPTION",
+    "t":{"label":"Set echo using '-1'",
          "send":["{ee:-1}"]},
         "r":{"status":110, "ee":null}
 }
