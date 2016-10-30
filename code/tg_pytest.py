@@ -168,7 +168,7 @@ def analyze_sr(t_data, r_datae, params):
                 if abs(t_data["sr"][k] - build_sr[k]) <= precision:
                     test = True
                 else:
-                    print("  approx: test: {0}, resp: {1}, precision: {2}".format(test_val, resp_val, precision))
+                    print("  approx: test: {0}, resp: {1}, precision: {2}".format(t_data["sr"][k], build_sr[k], precision))
             else:
                 if t_data["sr"][k] == build_sr[k]:
                     test = True
