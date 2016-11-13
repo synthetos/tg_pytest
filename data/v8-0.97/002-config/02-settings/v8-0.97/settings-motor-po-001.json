@@ -1,0 +1,47 @@
+################################################################################
+#
+#   settings-motor-po-001.json - Test motor Polarity settings
+#
+# include 000-setup/setup-settings-001.json
+#
+{
+    "t":{"label":"Write 1po - write with 1",
+         "send":["{1po:1}"]},
+        "r":{"status":0, "1po":1}
+}
+#
+{
+    "t":{"label":"Write 1po - write with 0",
+         "send":["{1po:0}"]},
+        "r":{"status":0, "1po":0}
+}
+#
+{
+    "t":{"label":"Read 1po",
+         "send":["{1po:null}"]},
+         "r":{"status":0, "1po":0}
+}
+# EXCEPTIONS
+{
+    "t":{"label":"Write 1po - boolean value - EXCEPTION",
+         "send":["{1po:f}"]},
+        "r":{"status":117, "1po":null}
+}
+#
+{
+    "t":{"label":"Write 1po - float value - EXCEPTION",
+         "send":["{1po:1.0}"]},
+        "r":{"status":117, "1po":null}
+}
+#
+{
+    "t":{"label":"Write 1po - negative value - EXCEPTION",
+         "send":["{1po:-1}"]},
+        "r":{"status":110, "1po":null}
+}
+#
+{
+    "t":{"label":"write 1po with string - EXCEPTION",
+         "send":["{1po:\"0\"}"]},
+        "r":{"status":117, "1po":null}
+}

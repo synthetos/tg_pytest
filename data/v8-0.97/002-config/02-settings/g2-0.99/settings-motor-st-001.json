@@ -1,0 +1,16 @@
+################################################################################
+#
+#  settings-motor-st-001.json
+#
+# include 000-setup/setup-settings-001.json
+#
+# Global switch type tests
+#
+{
+    "t":{"label":"Test various type errors",
+         "send":["{st:true}",
+                 "{st:false}",
+                 "{st:\"1\"}"
+                ]},
+        "r":{"status":117, "st":null}
+}

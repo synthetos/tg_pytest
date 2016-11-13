@@ -1,0 +1,196 @@
+################################################################################
+#
+#  settings-system-001.json - Baseline system settings (this is a long one)
+#
+# include 000-setup/setup-settings-001.json
+#
+# SYSTEM IDENTIFICATION
+# Firmware Build
+{
+    "t":{"label":"Write fb, is read-only - EXCEPTION",
+         "send":["{\"fb\":999.01}"]},
+        "r":{"status":104, "fb":null}
+}
+#
+{
+    "t":{"label":"Read fb",
+         "send":["{\"fb\":null}"]},
+        "r":{"status":0, "fb":"*"}
+}
+#
+{
+    "t":{"label":"Read fb",
+         "send":["{fb:null}"]},
+        "r":{"status":0, "fb":"*"}
+}
+# Firmware Version
+{
+    "t":{"label":"Write fv, is read-only - EXCEPTION",
+         "send":["{fv:99999999999.01}"]},
+        "r":{"status":104, "fv":null}
+}
+#
+{
+    "t":{"label":"Read fv",
+         "send":["{fv:n}"]},
+        "r":{"status":0, "fv":"*"}
+}
+# Hardware Platform
+{
+    "t":{"label":"Write hp",
+         "send":["{hp:2}"]},
+        "r":{"status":0, "hp":2}
+}
+#
+{
+    "t":{"label":"Write hp with float - EXCEPTION",
+         "send":["{hp:2.2}"]},
+        "r":{"status":117, "hp":null}
+}
+#
+{
+    "t":{"label":"Read hp",
+         "send":["{hp:n}"]},
+        "r":{"status":0, "hp":2}
+}
+# Hardware Version
+{
+    "t":{"label":"Write hv",
+         "send":["{hv:8}"]},
+        "r":{"status":0, "hv":8}
+}
+#
+{
+    "t":{"label":"Write hv, float - EXCEPTION",
+         "send":["{hv:7.3}"]},
+        "r":{"status":117, "hv":null}
+}
+#
+{
+    "t":{"label":"Write hv, too large - EXCEPTION",
+         "send":["{hv:11}"]},
+        "r":{"status":109, "hv":null}
+}
+#
+{
+    "t":{"label":"Read hv",
+         "send":["{hv:n}"]},
+        "r":{"status":0, "hv":8}
+}
+# Board ID
+{
+    "t":{"label":"Write board id, is read-only - EXCEPTION",
+         "send":["{id:\"THX1138\"}"]},
+        "r":{"status":104, "id":null}
+}
+#
+{
+    "t":{"label":"Read board id",
+         "send":["{id:n}"]},
+        "r":{"status":0, "id":"*"}
+}
+#
+# GLOBAL SYSTEM SETTINGS
+#
+# Chordal Tolerance
+{
+    "t":{"label":"Write chordal tolerance in MM",
+        "before":["g21"],
+         "send":["{ct:0.42}"]},
+        "r":{"status":0, "ct":0.42}
+}
+#
+{
+    "t":{"label":"Write chordal tolerance zero - EXCEPTION",
+         "send":["{ct:0}"]},
+        "r":{"status":108, "ct":null}
+}
+#
+{
+    "t":{"label":"Write chordal tolerance negative number - EXCEPTION",
+         "send":["{ct:-1}"]},
+        "r":{"status":108, "ct":null}
+}
+#
+{
+    "t":{"label":"Read chordal tolerance",
+         "send":["{ct:n}"]},
+        "r":{"status":0, "ct":0.42}
+}
+#
+{
+    "t":{"label":"Read chordal tolerance in INCHES",
+         "before":["g20"],
+         "send":["{ct:n}"]},
+        "r":{"status":0, "ct":0.0165}
+}
+#
+{
+    "t":{"label":"Write chordal tolerance in INCHES",
+         "before":["g20"],
+         "send":["{ct:0.01}"]},
+        "r":{"status":0, "ct":0.01}
+}
+#
+{
+    "t":{"label":"Read chordal tolerance in INCHES",
+         "before":["g20"],
+         "send":["{ct:n}"]},
+        "r":{"status":0, "ct":0.01}
+}
+# Soft Limit Enable
+{
+    "t":{"label":"Set soft limit enable false",
+         "send":["{sl:false}"]},
+        "r":{"status":0, "sl":false}
+}
+#
+{
+    "t":{"label":"Set soft limit enable true",
+         "send":["{sl:true}"]},
+        "r":{"status":0, "sl":true}
+}
+#
+{
+    "t":{"label":"Read soft limit enable",
+         "send":["{sl:null}"]},
+        "r":{"status":0, "sl":true}
+}
+#
+{
+    "t":{"label":"Set soft limit enable false using '0'",
+         "send":["{sl:0}"]},
+        "r":{"status":0, "sl":0}
+}
+#
+{
+    "t":{"label":"Set soft limit enable true using '1'",
+         "send":["{sl:1}"]},
+        "r":{"status":0, "sl":1}
+}
+#
+{
+    "t":{"label":"Set soft limit using '2' - EXCEPTION",
+         "send":["{sl:2}"]},
+        "r":{"status":110, "sl":null}
+}
+#
+{
+    "t":{"label":"Set soft limit using '-1' - EXCEPTION",
+         "send":["{sl:-1}"]},
+        "r":{"status":110, "sl":null}
+}
+#
+{
+    "t":{"label":"Test various type errors",
+         "send":["{sl:1.0}",
+                 "{sl:\"1\"}"
+                ]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"Read soft limit enable",
+         "send":["{sl:null}"]},
+        "r":{"status":0, "sl":true}
+}

@@ -1,0 +1,52 @@
+################################################################################
+#
+#  settings-global-ct.json
+#
+# include 000-init/init-json.json
+#
+# Chordal Tolerance
+{
+    "t":{"label":"Write chordal tolerance in MM",
+        "before":["g21"],
+         "send":["{ct:0.42}"]},
+        "r":{"status":0, "ct":0.42}
+}
+#
+{
+    "t":{"label":"Write chordal tolerance zero - EXCEPTION",
+         "send":["{ct:0}"]},
+        "r":{"status":108, "ct":null}
+}
+#
+{
+    "t":{"label":"Write chordal tolerance negative number - EXCEPTION",
+         "send":["{ct:-1}"]},
+        "r":{"status":108, "ct":null}
+}
+#
+{
+    "t":{"label":"Read chordal tolerance",
+         "send":["{ct:n}"]},
+        "r":{"status":0, "ct":0.42}
+}
+#
+{
+    "t":{"label":"Read chordal tolerance in INCHES",
+         "before":["g20"],
+         "send":["{ct:n}"]},
+        "r":{"status":0, "ct":0.0165}
+}
+#
+{
+    "t":{"label":"Write chordal tolerance in INCHES",
+         "before":["g20"],
+         "send":["{ct:0.01}"]},
+        "r":{"status":0, "ct":0.01}
+}
+#
+{
+    "t":{"label":"Read chordal tolerance in INCHES",
+         "before":["g20"],
+         "send":["{ct:n}"]},
+        "r":{"status":0, "ct":0.01}
+}

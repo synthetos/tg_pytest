@@ -1,0 +1,42 @@
+################################################################################
+#
+#  settings-motor-timers-001.json
+#
+# See 004-specials/powerManagement to exercise the timer functions (not just the syntax)
+#
+# XXXX include 000-setup/setup-settings-001.json
+#
+# The timeout tests are sensitive to the following system settings
+#define MOTOR_TIMEOUT_SECONDS_MIN   0.1
+#define MOTOR_TIMEOUT_SECONDS_MAX   4294967
+#
+{
+    "t":{"label":"Set configs for JSON tests",
+         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "delay":0.100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set motor timeout",
+         "send":["{mt:10.1}"]},
+        "r":{"status":0, "mt":10.1}
+}
+#
+{
+    "t":{"label":"Set motor timeout forced to MOTOR_TIMEOUT_SECONDS_MIN",
+         "send":["{mt:-10}"]},
+        "r":{"status":0, "mt":0.1}
+}
+#
+{
+    "t":{"label":"Set motor timeout forced to MOTOR_TIMEOUT_SECONDS_MAX",
+         "send":["{mt:4000000000}"]},
+        "r":{"status":0, "mt":4294967}
+}
+#
+{
+    "t":{"label":"Read motor timeout = MOTOR_TIMEOUT_SECONDS_MAX",
+         "send":["{mt:null}"]},
+        "r":{"status":0, "mt":4294967}
+}

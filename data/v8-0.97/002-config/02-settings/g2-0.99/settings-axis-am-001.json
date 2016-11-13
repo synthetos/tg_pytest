@@ -1,0 +1,97 @@
+###############################################################################
+#   settings-axis-am-001.json - Test axis settings Axis Mode
+#
+# include 000-init/init-01-defaults-001.json
+# include 000-init/init-02-json-g2-0.99-001.json
+# include 000-init/init-03-gcode-001.json
+#
+{
+    "t":{"label":"Zero X axis",
+         "send":["g28.3 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_DISABLED",
+         "send":["{xam:0}"]},
+        "r":{"status":0, "xam":0}
+}
+#
+{
+    "t":{"label":"Read xam",
+         "send":["{xam:null}"]},
+        "r":{"status":0, "xam":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_STANDARD",
+         "send":["{xam:1}"]},
+        "r":{"status":0, "xam":1}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_INHIBITED",
+         "send":["{xam:2}"]},
+        "r":{"status":0, "xam":2}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_RADIUS - EXCEPTION",
+        "send":["{xam:3}"]},
+        "r":{"status":109, "xam":null}
+}
+#
+{
+    "t":{"label":"Write aam - AXIS_RADIUS - OK",
+        "send":["{aam:3}"]},
+        "r":{"status":0, "aam":3}
+}
+#
+{
+    "t":{"label":"Write aam - AXIS_RADIUS - EXCEPTION",
+        "send":["{aam:4}"]},
+        "r":{"status":109, "aam":null}
+}
+# AM Axis Mode function tests
+{
+    "t":{"label":"Write xam - AXIS_DISABLED",
+        "send":["{xam:0}"]},
+        "r":{"status":0, "xam":0}
+}
+#
+{
+    "t":{"label":"Try to move X axis while disabled",
+        "send":["g0 x10"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":0, "posy":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_INHBITED",
+         "send":["{xam:2}"]},
+        "r":{"status":0, "xam":2}
+}
+#
+{
+    "t":{"label":"Try to move X axis while inhibited",
+        "send":["g0 x10"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":10, "posy":0}
+}
+#
+{
+    "t":{"label":"Write xam - AXIS_STANDARD",
+         "send":["{xam:1}"]},
+        "r":{"status":0, "xam":1}
+}
+#
+{
+    "t":{"label":"Move X axis",
+        "send":["g0 x0"],
+        "after":["g0 x0"]},
+        "r":{"status":0},
+        "sr":{"posx":0, "posy":0}
+}

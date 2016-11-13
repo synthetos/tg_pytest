@@ -1,0 +1,35 @@
+################################################################################
+#
+#   json-txt.json - JSON TXT container tests
+#
+# include 000-init/init-json.json
+#
+# TXT mixed with TIDs
+# Stuff other than TXT on a line
+#
+# SUCCESS CASES
+#
+{
+    "t":{"label":"Simple TXT container with single line response",
+        "send":["{txt:\"$xvm\"}"]},
+        "r":{"status":0, "txt":"*"}
+}
+#
+{
+    "t":{"label":"TXT container with multi-line response",
+        "send":["{txt:\"$x\"}"]},
+        "r":{"status":0, "txt":"*"}
+}
+#
+{
+    "t":{"label":"TXT container with JSON command (recursive JSON parser call)",
+        "send":["{txt:\"{xvm:n}\"}"]},
+        "r":{"status":0}
+}
+# EOF
+# Is this an error? There is no txt ins the response if the container is only JSON
+{
+    "t":{"label":"TXT container with JSON command (recursive JSON parser call)",
+        "send":["{txt:\"{xvm:n}\"}"]},
+        "r":{"status":0, "txt":"*"}
+}

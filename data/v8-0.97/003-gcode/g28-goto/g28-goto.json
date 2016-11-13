@@ -1,0 +1,104 @@
+################################################################################
+#
+#  g28-goto-001.json - test g28, g30 go-to-home
+#
+#  Do not run any preamble before this file
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+# SETUP ROUTINES
+#
+# include 000-setup/setup-OMC-001.json
+#
+# G28 / G54 TESTS
+#
+{
+    "t":{"label":"Move to starting position in G54 coordinates",
+         "send":["g0 x50 y50 z-30"]},
+    "r":{"status":0},
+    "sr":{"posx": 50, "posy": 50, "posz": -30}
+}
+#
+{
+  "t":{"label":"Save G28 starting position",
+       "send":["G28.1"]},
+      "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Move to new position",
+         "send":["g0 x60 y60 z-20"]},
+    "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Return to G28 starting position",
+       "send":["G28"]},
+      "r":{"status":0},
+      "sr":{"posx": 50, "posy": 50, "posz": -30}
+}
+#
+{
+    "t":{"label":"Move to new position",
+         "send":["g0 x60 y60 z-20"]},
+    "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Return to G28 starting position through Z-30",
+       "send":["G28 X50 Y50"]},
+      "r":{"status":0},
+      "sr":{"posx": 50, "posy": 50, "posz": -30}
+}
+# G28 / G55 TEST #1
+#
+# Assume tool has succesfully returned to saved starting position
+{
+  "t":{"label":"Set G55 coordinates",
+       "send":["G10 L20 P2 X0 Y0 Z0"]},
+      "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Set to G55",
+       "send":["G55"]},
+      "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Report starting position in G55 coordinates",
+         "send":["{sr:n}"]},
+         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0}}
+}
+# G28 / G55 TEST #2
+#
+{
+    "t":{"label":"Move to new position in G55",
+         "send":["g0 x20 y20 z-10"]},
+    "r":{"status":0},
+    "sr":{"posx": 20, "posy": 20, "posz": -10}
+}
+#
+{
+  "t":{"label":"Return to G28 starting position",
+       "send":["G28"]},
+      "r":{"status":0},
+      "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
+# G28 / G55 INCHES TEST
+#
+{
+    "t":{"label":"Move to new position in G55 INCHES mode",
+         "send":["g20 g0 x2 y1.5 z-0.5"]},
+    "r":{"status":0},
+    "sr":{"posx": 2, "posy": 1.5, "posz": -0.5}
+}
+#
+{
+  "t":{"label":"Return to G28 starting position while in G20 INCHES mode ",
+       "send":["G28"]},
+      "r":{"status":0},
+      "sr":{"posx": 0, "posy": 0, "posz": 0}
+}

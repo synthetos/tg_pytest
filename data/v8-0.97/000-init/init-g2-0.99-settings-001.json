@@ -1,0 +1,31 @@
+################################################################################
+#
+#   init-g2-0.99-settings-001.json
+#   Initialize for g2 settings tests
+#
+{
+  "defaults":{
+    "fail":"hard",
+    "delay":0.100,
+    "precision":0.00001
+  }
+}
+#
+{
+  "before_all":{
+    "label":"Reset default settings",
+    "before":["{defa:t}"]
+  }
+}
+#
+{
+    "t":{"label":"Set configs for settings tests",
+         "send":["{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set Gcode defaults",
+         "send":["G21"]},
+    "r":{"status":0}
+}

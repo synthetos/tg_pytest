@@ -1,0 +1,9 @@
+################################################################################
+#
+#   example-incl.json - Example of include file
+#
+{
+    "t":{"label":"Included Tail wag",
+         "send":["g0 x4 y4", "g0 x0 y0"]
+        }
+}

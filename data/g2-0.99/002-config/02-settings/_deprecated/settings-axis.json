@@ -1,0 +1,270 @@
+################################################################################
+#
+#   settings-axis.json
+#
+# include 000-init/init-json.json
+#
+# Velocity Max
+{
+    "t":{"label":"Write yvm in MM",
+         "before":["G21"],
+         "send":["{yvm:1000}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Read yvm in MM",
+         "send":["{yvm:null}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Read yvm in Inches",
+         "before":["G20"],
+         "send":["{yvm:null}"]},
+         "r":{"status":0, "yvm":39}
+}
+#
+{
+    "t":{"label":"Write yvm in Inches",
+         "before":["G20"],
+         "send":["{yvm:30.1}"],
+         "after":["G21"]},
+         "r":{"status":0, "yvm":30}
+}
+# SKIP
+{
+    "t":{"label":"Write yvm - with illegal values - EXCEPTION",
+         "send":["{yvm:-1}",
+                 "{yvm:0}"]},
+        "r":{"status":108, "yvm":null}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{yvm:t}",
+                 "{yvm:\"1000.5\"}"]},
+        "r":{"status":117, "yvm":null}
+}
+#
+# Feed Rate
+#
+{
+    "t":{"label":"Write yfr in MM",
+         "before":["G21"],
+         "send":["{yfr:1000}"]},
+        "r":{"status":0, "yfr":1000}
+}
+#
+{
+    "t":{"label":"Read yfr in MM",
+         "send":["{yfr:null}"]},
+        "r":{"status":0, "yfr":1000}
+}
+#
+{
+    "t":{"label":"Read yfr in Inches",
+         "before":["G20"],
+         "send":["{yfr:null}"]},
+         "r":{"status":0, "yfr":39}
+}
+#
+{
+    "t":{"label":"Write yfr in Inches",
+         "before":["G20"],
+         "send":["{yfr:30.1}"],
+         "after":["G21"]},
+         "r":{"status":0, "yfr":30}
+}
+# SKIP
+{
+    "t":{"label":"Write yfr with illegal values - EXCEPTION",
+         "send":["{yfr:-1}",
+                 "{yfr:0}"]},
+        "r":{"status":108, "yfr":null}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{yfr:t}",
+                 "{yfr:\"1000.5\"}"]},
+        "r":{"status":117, "yfr":null}
+}
+#
+# Travel Minumum
+#
+{
+    "t":{"label":"Write ytn in MM",
+         "before":["G21"],
+         "send":["{ytn:2}"]},
+        "r":{"status":0, "ytn":2}
+}
+#
+{
+    "t":{"label":"Read ytn in MM",
+         "send":["{ytn:null}"]},
+        "r":{"status":0, "ytn":2}
+}
+#
+{
+    "t":{"label":"Read ytn in Inches",
+         "before":["G20"],
+         "send":["{ytn:null}"]},
+         "r":{"status":0, "ytn":0.079}
+}
+#
+{
+    "t":{"label":"Write ytn in Inches",
+         "before":["G20"],
+         "send":["{ytn:0.1}"],
+         "after":["G21"]},
+         "r":{"status":0, "ytn":0.1}
+}
+#
+{
+    "t":{"label":"Write ytn - negative value - OK",
+         "send":["{ytn:-100}"]},
+        "r":{"status":0, "ytn":-100}
+}
+#
+{
+    "t":{"label":"Write ytn - zero value - OK",
+         "send":["{ytn:0}"]},
+        "r":{"status":0, "ytn":0}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{ytn:t}",
+                 "{ytn:\"1000.5\"}"]},
+        "r":{"status":117, "ytn":null}
+}
+#
+# Travel Maximum
+#
+{
+    "t":{"label":"Write ytm in MM",
+         "before":["G21"],
+         "send":["{ytm:400}"]},
+        "r":{"status":0, "ytm":400}
+}
+#
+{
+    "t":{"label":"Read ytm in MM",
+         "send":["{ytm:null}"]},
+        "r":{"status":0, "ytm":400}
+}
+#
+{
+    "t":{"label":"Read ytm in Inches",
+         "before":["G20"],
+         "send":["{ytm:null}"]},
+         "r":{"status":0, "ytm":15.748}
+}
+#
+{
+    "t":{"label":"Write ytm in Inches",
+         "before":["G20"],
+         "send":["{ytm:15.1}"],
+         "after":["G21"]},
+         "r":{"status":0, "ytm":15.1}
+}
+#
+{
+    "t":{"label":"Write ytn - negative value - OK",
+         "send":["{ytm:-100}"]},
+        "r":{"status":0, "ytm":-100}
+}
+#
+{
+    "t":{"label":"Write ytn - zero value - OK",
+         "send":["{ytm:0}"]},
+        "r":{"status":0, "ytm":0}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{ytm:t}",
+                 "{ytm:\"1000.5\"}"]},
+        "r":{"status":117, "ytm":null}
+}
+# Jerk Max
+{
+    "t":{"label":"Write xjm in mm/min^3",
+         "before":["G21"],
+         "send":["{xjm:1000000000}"]},
+        "r":{"status":0, "xjm":1000}
+}
+#
+{
+    "t":{"label":"Write xjm in mm, divide by 1 million",
+         "send":["{xjm:2000}"]},
+        "r":{"status":0, "xjm":2000}
+}
+#
+{
+    "t":{"label":"Read xjm",
+         "send":["{xjm:null}"]},
+        "r":{"status":0, "xjm":2000}
+}
+#
+{
+    "t":{"label":"Read xjm in INCHES",
+         "before":["G20"],
+         "send":["{xjm:null}"]},
+        "r":{"status":0, "xjm":79}
+}
+# SKIP
+{
+    "t":{"label":"Write xjm with bad values - EXCEPTION",
+         "send":["{xjm:-1}",
+                 "{xjm:0}"]},
+        "r":{"status":108, "xjm":null}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{xjm:t}",
+                 "{xjm:\"1000.5\"}"]},
+        "r":{"status":117, "xjm":null}
+}
+# Jerk High Speed
+{
+    "t":{"label":"Write xjh in mm/min^3",
+         "before":["G21"],
+         "send":["{xjh:1000000000}"]},
+        "r":{"status":0, "xjh":1000}
+}
+#
+{
+    "t":{"label":"Write xjh in mm, divide by 1 million",
+         "send":["{xjh:2000}"]},
+        "r":{"status":0, "xjh":2000}
+}
+#
+{
+    "t":{"label":"Read xjh",
+         "send":["{xjh:null}"]},
+        "r":{"status":0, "xjh":2000}
+}
+#
+{
+    "t":{"label":"Read xjh in INCHES",
+         "before":["G20"],
+         "send":["{xjh:null}"]},
+        "r":{"status":0, "xjh":79}
+}
+# SKIP
+{
+    "t":{"label":"Write xjh with bad values - EXCEPTION",
+         "send":["{xjh:-1}",
+                 "{xjh:0}"]},
+        "r":{"status":108, "xjh":null}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{xjh:t}",
+                 "{xjh:\"1000.5\"}"]},
+        "r":{"status":117, "xjh":null}
+}

@@ -1,0 +1,59 @@
+################################################################################
+#
+#   settings-motor-pl-001.json - Test motor Power Level settings
+#
+# include 000-setup/setup-settings-001.json
+#
+{
+    "t":{"label":"Read 3pl - default value",
+         "send":["{3pl:null}"]},
+         "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Write 3pl - Zero power",
+         "send":["{3pl:0}"]},
+        "r":{"status":0, "3pl":0}
+}
+#
+{
+    "t":{"label":"Write 3pl - Half power",
+         "send":["{3pl:0.5}"]},
+        "r":{"status":0, "3pl":0.5}
+}
+#
+{
+    "t":{"label":"Write 3pl - Full Power",
+         "send":["{3pl:1.0}"]},
+        "r":{"status":0, "3pl":1.0}
+}
+#
+{
+    "t":{"label":"Write 3pl - More that FUll Power",
+         "send":["{3pl:2.5}"]},
+        "r":{"status":0, "3pl":1.0}
+}
+# EXCEPTIONS
+{
+    "t":{"label":"Write 3pl - unsupported value - EXCEPTION",
+         "send":["{3pl:4}"]},
+        "r":{"status":0, "3pl":3}
+}
+#
+{
+    "t":{"label":"Write 3pl - negative value - EXCEPTION",
+         "send":["{3pl:-0.5}"]},
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"write 3pl with boolean - EXCEPTION",
+         "send":["{3pl:t}"]},
+        "r":{"status":117}
+}
+#
+{
+    "t":{"label":"write 3pl with string - EXCEPTION",
+         "send":["{3pl:\"0.5\"}"]},
+        "r":{"status":117}
+}

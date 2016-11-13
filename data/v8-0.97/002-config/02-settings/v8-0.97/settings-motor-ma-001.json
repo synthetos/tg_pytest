@@ -1,0 +1,65 @@
+################################################################################
+#
+#   settings-motor-ma-001.json - Test motor Map Axis settings
+#
+# include 000-setup/setup-settings-001.json
+#
+{
+    "t":{"label":"Write 1ma - with valid value",
+         "send":["{1ma:4}"]},
+        "r":{"status":0, "1ma":4}
+}
+#
+{
+    "t":{"label":"Read 1ma - flat",
+         "send":["{1ma:null}"]},
+        "r":{"status":0, "1ma":4}
+}
+#
+{
+    "t":{"label":"Read 1ma - nested",
+         "send":["{1:{ma:null}}"]},
+        "r":{"status":0, "1":{"ma":4}}
+}
+#
+{
+    "t":{"label":"Read 2ma",
+         "send":["{2ma:null}"]},
+        "r":{"status":0, "2ma":"*"}
+}
+#
+{
+    "t":{"label":"Write 2ma - with invalid value - EXCEPTION",
+         "send":["{2ma:10}"]},
+        "r":{"status":110, "2ma":null}
+}
+#
+{
+    "t":{"label":"Write 2ma - with negative value - EXCEPTION",
+         "send":["{2ma:-1}"]},
+        "r":{"status":110, "2ma":null}
+}
+#
+{
+    "t":{"label":"Read 7ma - unrecognized command - EXCEPTION",
+         "send":["{7ma:null}"]},
+        "r":{"status":100,"7ma":null}
+}
+# SKIP
+{
+    "t":{"label":"write 3ma with boolean - EXCEPTION",
+         "send":["{3ma:t}"]},
+        "r":{"status":117, "3ma":null}
+}
+# SKIP
+{
+    "t":{"label":"write 3ma with float - EXCEPTION",
+         "send":["{3ma:4.1}"]},
+        "r":{"status":117, "3ma":null}
+}
+# SKIP
+{
+    "t":{"label":"write 3ma with string - EXCEPTION",
+         "send":["{3ma:\"3\"}"]},
+        "r":{"status":117, "3ma":null}
+}

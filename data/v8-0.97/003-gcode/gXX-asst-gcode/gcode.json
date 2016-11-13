@@ -1,0 +1,19 @@
+################################################################################
+#
+#   gcode-001.json
+#
+#   Basic gcode tests
+#
+
+{
+    "t":{"label":"Set millimeter mode",
+         "send":["G21"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"G0 movement in millimeters",
+         "send":["g0 x25.4 y25.4"]},
+    "r":{"status":0},
+    "sr":{"stat":3, "posx":25.4}
+}

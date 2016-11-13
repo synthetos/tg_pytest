@@ -184,7 +184,7 @@ def split_json_file(fd, data, indent):
         if "{" not in chunk:                # skip comment (must be last test)
             continue
 
-        json_text = chunk[chunk.index("{"):]     # discard leading comment from previous line
+        json_text = chunk[chunk.index("{"):] # discard leading comment from previous line
 
         if not skip:
             try:

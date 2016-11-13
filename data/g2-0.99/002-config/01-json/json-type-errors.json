@@ -1,0 +1,72 @@
+################################################################################
+#
+#   json-type-errors.json - JSON exception tests
+#
+# include 000-init/init-json.json
+#
+# JSON TYPE ERRORS
+{
+    "t":{"label":"TYPE ERROR: Boolean value is float 0.0",
+         "send":["{sl:0.0}"]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: Boolean value is float 1.0",
+         "send":["{sl:1.0}"]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: Boolean value is fractional 0.5",
+         "send":["{sl:0.5}"]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: Boolean value is fractional 0.99999999999",
+         "send":["{sl:0.99999999999}"]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: Boolean value is string",
+         "send":["{sl:\"true\"}"]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: string value is wrong type for key",
+         "send":["{xvm:\"FUBAR\"}"]},
+        "r":{"status":117, "xvm":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: boolean value is wrong type for key",
+         "send":["{xvm:true}"]},
+        "r":{"status":117, "xvm":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: numeric value is wrong type for key",
+         "send":["{msg:12345}"]},
+        "r":{"status":117, "msg":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: boolean value is wrong type for key",
+         "send":["{msg:true}"]},
+        "r":{"status":117, "msg":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: string value is wrong type for key",
+         "send":["{sl:\"WTF\"}"]},
+        "r":{"status":117, "sl":null}
+}
+#
+{
+    "t":{"label":"TYPE ERROR: numeric value is wrong type for key",
+         "send":["{sl:12345.678}"]},
+        "r":{"status":117, "sl":null}
+}

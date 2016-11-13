@@ -1,0 +1,79 @@
+################################################################################
+#
+#  settings-version-g2.0.99-001.json - Baseline system settings (this is a long one)
+#
+# include 000-setup/setup-settings-001.json
+#
+# SYSTEM IDENTIFICATION
+# Firmware Build
+{
+    "t":{"label":"Write fb, is read-only - EXCEPTION",
+         "send":["{\"fb\":999.01}"]},
+        "r":{"status":104, "fb":null}
+}
+#
+{
+    "t":{"label":"Read fb",
+         "send":["{\"fb\":null}"]},
+        "r":{"status":0, "fb":"*"}
+}
+#
+{
+    "t":{"label":"Read fb",
+         "send":["{fb:null}"]},
+        "r":{"status":0, "fb":"*"}
+}
+# Firmware Version
+{
+    "t":{"label":"Write fv, is read-only - EXCEPTION",
+         "send":["{fv:99999999999.01}"]},
+        "r":{"status":104, "fv":null}
+}
+#
+{
+    "t":{"label":"Read fv",
+         "send":["{fv:n}"]},
+        "r":{"status":0, "fv":"*"}
+}
+# Hardware Platform
+{
+    "t":{"label":"Write hp - EXCEPTION",
+         "send":["{hp:2}"]},
+         "r":{"status":104, "hp":null}
+}
+#
+{
+    "t":{"label":"Read hp",
+         "send":["{hp:n}"]},
+        "r":{"status":0, "hp":"*"}
+}
+# Hardware Version
+{
+    "t":{"label":"Write hv",
+         "send":["{hv:8}"]},
+        "r":{"status":0, "hv":8}
+}
+#
+{
+    "t":{"label":"Write hv - float is truncated",
+         "send":["{hv:7.3}"]},
+        "r":{"status":0, "hv":7}
+}
+#
+{
+    "t":{"label":"Read hv - should be what was written above",
+         "send":["{hv:n}"]},
+        "r":{"status":0, "hv":7}
+}
+# Board ID
+{
+    "t":{"label":"Write board id, is read-only - EXCEPTION",
+         "send":["{id:\"THX1138\"}"]},
+        "r":{"status":104, "id":null}
+}
+#
+{
+    "t":{"label":"Read board id",
+         "send":["{id:n}"]},
+        "r":{"status":0, "id":"*"}
+}

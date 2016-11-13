@@ -8,7 +8,8 @@ __license__ = 'Python'
 
 #### CONSTANTS ####
 
-TEST_DATA_DIR = "../data"
+TEST_DATA_DIR = "../data/g2-0.99"
+#TEST_DATA_DIR = "../data/v8-0.97"
 TEST_MASTER_FILE = "test-master.cfg"
 OUTFILE_ENABLED = False     # True or False
 
@@ -66,12 +67,15 @@ def compare_r(key, test_val, resp_val, response_string, params):
     elif test_val == None:
         if resp_val == None:
             test = True
+
+    elif resp_val == None:              # happens when board returns Null for a bad command
+        test = False
             
     elif type(test_val) == int:         # Test a numeric value against precision
         if abs(test_val - resp_val) <= precision:
             test = True
         else:
-            print("  approx: test: {0}, resp: {1}, precision: {2}".format(test_val, resp_val, precision))
+            print("  approx: resp: {0}, test: {1}, precision: {2}".format(resp_val, test_val, precision))
     else:                               # Test all non-numeric types for exact match
         if test_val == resp_val:
             test = True
@@ -89,7 +93,7 @@ def compare_r(key, test_val, resp_val, response_string, params):
 #
 #   Analyzers
 #
-    
+
 def analyze_r(t_data, r_datae, params):
     """
     Analyze response objects in response list
@@ -172,7 +176,6 @@ def analyze_sr(t_data, r_datae, params):
             else:
                 if t_data["sr"][k] == build_sr[k]:
                     test = True
-
             if test == True:
                 print("  passed: {0}: {1}".format(k, build_sr[k]))
             else:
@@ -428,7 +431,7 @@ def main():
             print("CANNOT OPEN: {0}".format(test_file))
             exit(1)
             
-        print("RUN: {0}".format(test_file))
+        print("RUN: {0}/{1}".format(TEST_DATA_DIR, test_file))
         tests = []
         tests = split_json_file(in_fd, tests, "  ")
         if tests == None:

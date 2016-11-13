@@ -1,0 +1,159 @@
+################################################################################
+#
+#  defaults-001.json - test {defa:n} reset to defaults
+#
+#  Do not run any preamble before this file
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+# DEFAULT TESTS
+{
+    "t":{"label":"Set default configuration",
+         "send":["{defa:1}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set default configuration with ",
+         "send":["{defa:1}"]},
+    "r":{"status":0}
+}
+
+
+# EOF
+{
+    "t":{"label":"Set configs for probing tests",
+         "send":["{js:1}","{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+         "delay":0.100},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Clear status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
+         "send":["{srs:{clear:t}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+         "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set gcode defaults",
+         "send":["G21 G94 G90 G91.1",
+                 "G10 L2 P1 X0 Y0 Z0",
+                 "G10 L2 P2 X0 Y0 Z0",
+                 "G10 L2 P3 X0 Y0 Z0",
+                 "G10 L2 P4 X0 Y0 Z0",
+                 "G10 L2 P5 X0 Y0 Z0",
+                 "G10 L2 P6 X0 Y0 Z0",
+                 "G54"
+               ]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Home Othermachine",
+         "send":["g28.2 x0 y0 z0"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Go to starting position & save",
+         "send":["g0 x50 y50 z-30","g28.1"]},
+    "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Set to G55 coordinates",
+       "send":["G21 G90 G94",
+               "G10 L20 P2 X0 Y0 Z0",
+               "G55"]},
+      "r":{"status":0}
+}
+#
+# PROBE TESTS START HERE
+#
+{
+  "t":{"label":"PROBING TEST: simple Z probe - should be successful",
+       "send":["G38.2 F400 Z-40"],
+       "after":["G28"]},
+  "r":{"status":0}
+}
+#
+# Probe after arc. See if a full planner buffer is handled correctly going into a probe
+{
+  "t":{"label":"PROBING TEST: probe after an arc",
+       "send":["G2 F2000 I25 X25 Y25","G38.2 F400 Z-40"],
+       "after":["G28"]},
+  "r":{"status":0}
+}
+#
+{
+  "t":{"label":"PROBING TEST: probe in 3 dimensions",
+       "send":["G38.2 F413.54 X20.1 Y23.444 Z-40"],
+       "after":["G28"]},
+  "r":{"status":0}
+}
+#
+{
+  "t":{"label":"PROBING TEST: fails to contact - should report success",
+       "send":["G38.2 F400 Z-10"],
+       "after":["G28"]},
+  "r":{"status":0}
+}
+#
+# FAILURES: PROBE CONFIGURATION AND CALLING FAILURES
+#
+{
+  "t":{"label":"PROBING EXCEPTION: - missing probe switch - 0.97 flavor",
+       "before":["{zsn:0}"],
+       "send":["G38.2 F400 Z-40"],
+       "after":["{zsn:4}"],
+       "delay":0.100},
+  "r":{"status":252}
+}
+#
+{
+  "t":{"label":"PROBING EXCEPTION: - zero feed rate",
+       "send":["G38.2 F0 Z-40"]},
+  "r":{"status":142}
+}
+#
+{
+  "t":{"label":"PROBING EXCEPTION: - missing probing axis",
+       "send":["G38.2 F400"]},
+  "r":{"status":134}
+}
+#
+{
+  "t":{"label":"PROBING EXCEPTION: - has rotary axis",
+       "send":["G38.2 F400 A40"]},
+  "r":{"status":135}
+}
+#
+{
+  "t":{"label":"PROBING EXCEPTION: - travel too short",
+       "send":["G38.2 F400 Z-0.025"]},
+  "r":{"status":251}
+}
+# EOF
+# Note: before_each label will not actually be displayed - it's here for reference only
+{
+  "before_each":{
+    "label":"clear alarms and return to home",
+    "before":["{clear:n}","F2000","G28"],
+    "delay":0.100
+  }
+}
+#
+{
+  "after_all":{
+    "label":"Return to home",
+    "after":["{clear:n}","{srs:{defa:t}}","M30"]
+  }
+}

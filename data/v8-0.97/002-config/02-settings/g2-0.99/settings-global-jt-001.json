@@ -1,0 +1,30 @@
+################################################################################
+#
+#  settings-system-0.99-001.json - System settings used in 0.99 only
+#
+# include 000-setup/setup-settings-0.99-001.json
+#
+# Junction Integration Time
+{
+    "t":{"label":"Write junction integration time",
+         "send":["{jt:1.01}"]},
+        "r":{"status":0, "jt":1.01}
+}
+#
+{
+    "t":{"label":"Write junction integration time zero - EXCEPTION",
+         "send":["{jt:0}"]},
+        "r":{"status":108, "jt":null}
+}
+# SKIP
+{
+    "t":{"label":"Write junction integration time negative number - EXCEPTION",
+         "send":["{jt:-1}"]},
+        "r":{"status":108, "jt":null}
+}
+#
+{
+    "t":{"label":"Read junction integration time",
+         "send":["{jt:n}"]},
+        "r":{"status":0, "ja":1.01}
+}

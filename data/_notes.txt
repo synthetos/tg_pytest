@@ -1,0 +1,7 @@
+Notes for Testing
+
+Test sets to add:
+- soft limits
+- hard limits
+- inches mode
+- isolate arc cases from Issues

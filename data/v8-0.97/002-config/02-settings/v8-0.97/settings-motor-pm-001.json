@@ -1,0 +1,65 @@
+################################################################################
+#
+#   settings-motor-pm-001.json - Test motor Power Management settings
+#
+# include 000-setup/setup-settings-001.json
+#
+{
+    "t":{"label":"Write 2pm - MOTOR_DISABLED",
+         "send":["{2pm:0}"]},
+        "r":{"status":0, "2pm":0}
+}
+#
+{
+    "t":{"label":"Read 2pm - default value",
+         "send":["{2pm:null}"]},
+         "r":{"status":0, "2pm":0}
+}
+#
+{
+    "t":{"label":"Write 2pm - MOTOR_ALWAYS_POWERED",
+         "send":["{2pm:1}"]},
+        "r":{"status":0, "2pm":1}
+}
+#
+{
+    "t":{"label":"Write 2pm - MOTOR_POWERED_IN_CYCLE",
+         "send":["{2pm:2}"]},
+        "r":{"status":0, "2pm":2}
+}
+#
+{
+    "t":{"label":"Write 2pm - MOTOR_POWERED_ONLY_WHEN MOVING",
+         "send":["{2pm:3}"]},
+        "r":{"status":0, "2pm":3}
+}
+# EXCEPTIONS
+{
+    "t":{"label":"Write 2pm - unsupported value - EXCEPTION",
+         "send":["{2pm:4}"]},
+        "r":{"status":110, "2pm":null}
+}
+#
+{
+    "t":{"label":"Write 2pm - float value - EXCEPTION",
+         "send":["{2pm:4.1}"]},
+        "r":{"status":117, "2pm":null}
+}
+# NOTE: SHould return 108, value under range.
+{
+    "t":{"label":"Write 2pm - negative value - EXCEPTION",
+         "send":["{2pm:-2}"]},
+        "r":{"status":110, "2pm":null}
+}
+#
+{
+    "t":{"label":"write 2pm with boolean - EXCEPTION",
+         "send":["{2pm:t}"]},
+        "r":{"status":117, "2pm":null}
+}
+#
+{
+    "t":{"label":"write 2pm with string - EXCEPTION",
+         "send":["{2pm:\"2\"}"]},
+        "r":{"status":117, "2pm":null}
+}

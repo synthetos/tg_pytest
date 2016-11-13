@@ -1,0 +1,92 @@
+################################################################################
+#
+#   settings-axis-fr-vm.json - Feed rate and velocity settings tests
+#
+# include 000-init/init-json.json
+#
+# Velocity Max
+{
+    "t":{"label":"Write yvm in MM",
+         "before":["G21"],
+         "send":["{yvm:1000}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Read yvm in MM",
+         "send":["{yvm:null}"]},
+        "r":{"status":0, "yvm":1000}
+}
+#
+{
+    "t":{"label":"Read yvm in Inches",
+         "before":["G20"],
+         "send":["{yvm:null}"]},
+         "r":{"status":0, "yvm":39}
+}
+#
+{
+    "t":{"label":"Write yvm in Inches",
+         "before":["G20"],
+         "send":["{yvm:30.1}"],
+         "after":["G21"]},
+         "r":{"status":0, "yvm":30}
+}
+# SKIP
+{
+    "t":{"label":"Write yvm - with illegal values - EXCEPTION",
+         "send":["{yvm:-1}",
+                 "{yvm:0}"]},
+        "r":{"status":108, "yvm":null}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{yvm:t}",
+                 "{yvm:\"1000.5\"}"]},
+        "r":{"status":117, "yvm":null}
+}
+#
+# Feed Rate
+#
+{
+    "t":{"label":"Write yfr in MM",
+         "before":["G21"],
+         "send":["{yfr:1000}"]},
+        "r":{"status":0, "yfr":1000}
+}
+#
+{
+    "t":{"label":"Read yfr in MM",
+         "send":["{yfr:null}"]},
+        "r":{"status":0, "yfr":1000}
+}
+#
+{
+    "t":{"label":"Read yfr in Inches",
+         "before":["G20"],
+         "send":["{yfr:null}"]},
+         "r":{"status":0, "yfr":39}
+}
+#
+{
+    "t":{"label":"Write yfr in Inches",
+         "before":["G20"],
+         "send":["{yfr:30.1}"],
+         "after":["G21"]},
+         "r":{"status":0, "yfr":30}
+}
+# SKIP
+{
+    "t":{"label":"Write yfr with illegal values - EXCEPTION",
+         "send":["{yfr:-1}",
+                 "{yfr:0}"]},
+        "r":{"status":108, "yfr":null}
+}
+# SKIP
+{
+    "t":{"label":"Test type errors - EXCEPTION",
+         "send":["{yfr:t}",
+                 "{yfr:\"1000.5\"}"]},
+        "r":{"status":117, "yfr":null}
+}

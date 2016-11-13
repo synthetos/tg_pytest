@@ -1,0 +1,122 @@
+################################################################################
+#
+#  softlimits-001.json - test soft limits
+#
+#  Do not run any preamble before this file
+{
+  "defaults":{
+    "fail":"hard"
+  }
+}
+#
+{
+    "t":{"label":"Clear alarm",
+         "send":["{clear:n}"]},
+    "r":{"status":0}
+}
+# include 000-setup/setup-OMC-001.json
+#
+#
+# TEST:
+{
+    "t":{"label":"Turn soft limits on",
+         "send":["{sl:t}"],
+         "setup":true},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Move to starting position in G54 coordinates",
+         "send":["g0 x50 y50 z-30"]},
+    "r":{"status":0},
+    "sr":{"posx": 50, "posy": 50, "posz": -30}
+}
+#
+{
+  "t":{"label":"Save G30 starting position",
+       "send":["G30.1"]},
+      "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Move to zero",
+         "send":["g0 x0 y0 z0"]},
+    "r":{"status":0},
+    "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
+#
+{
+    "t":{"label":"Attempt to move below zero - should fire and alarm",
+         "send":["g0 x-1 y0 z0"]},
+    "r":{"status":220},
+    "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
+#
+{
+    "t":{"label":"Attempt to move during an alarm",
+         "send":["g0 x1 y0 z0"]},
+    "r":{"status":204},
+    "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
+#
+{
+    "t":{"label":"Clear alarm",
+         "send":["{clear:n}"]},
+    "r":{"status":0},
+    "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
+#
+{
+    "t":{"label":"Attempt to move after an alarm",
+         "send":["g0 x1 y0 z0"]},
+    "r":{"status":0},
+    "sr":{"posx": 1, "posy": 0, "posz": 0}
+}
+#
+{
+    "t":{"label":"goto home G30",
+         "send":["g30"]},
+    "r":{"status":0},
+    "sr":{"posx": 50, "posy": 50, "posz": -30}
+}
+#
+{
+    "t":{"label":"Attempt to move beyond Z max - should fire and alarm",
+         "send":["g0 x200 y0 z0"],
+         "after":["{clear:n}"]},
+    "r":{"status":220},
+    "sr":{"posx": 50, "posy": 50, "posz": -30}
+}
+
+# EOF
+{
+  "t":{"label":"Set G55 coordinates",
+       "send":["G10 L20 P2 X0 Y0 Z0"]},
+      "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Set to G55",
+       "send":["G55"]},
+      "r":{"status":0}
+}
+#
+{
+  "t":{"label":"Report starting position in G55 coordinates",
+         "send":["{sr:n}"]},
+         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0}}
+}
+#
+{
+    "t":{"label":"Move to new position in G55 INCHES mode",
+         "send":["g20 g0 x2 y1.5 z-0.5"]},
+    "r":{"status":0},
+    "sr":{"posx": 2, "posy": 1.5, "posz": -0.5}
+}
+#
+{
+  "t":{"label":"Return to G28 starting position while in G20 INCHES mode ",
+       "send":["G28"]},
+      "r":{"status":0},
+      "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
