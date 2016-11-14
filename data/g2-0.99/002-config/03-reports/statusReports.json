@@ -1,10 +1,10 @@
 ################################################################################
 #
-#   statusReports-001.json
+#   statusReports.json
 #
 # It's best to run these tests with no setup file, as setup is handled locally
 #
-# Note: These tests require that the default SR have posx, posy,posz, posa to work correctly
+# Note: These tests require that the default SR have posx, posy, posz to work correctly
 {
   "defaults":{
     "fail":"hard"
@@ -22,20 +22,20 @@
 #
 {
     "t":{"label":"DEFA TEST: Reset status reports using $defa=1",
-        "send":["{defa:1}"]},
+        "before":["{defa:1}"]},
         "r":{"status":0, "defa":1}
 }
 #
 {
-    "t":{"label":"SR should return posx, posy, posz, posa",
+    "t":{"label":"SR should return posx, posy, posz",
          "send":["{sr:n}"]},
-         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
+         "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0}}
 }
-#
+# EOF - these are tests for incremental status reports
 {
-    "t":{"label":"SRS should return posx, posy, posz, posa",
+    "t":{"label":"SRS should return posx, posy, posz",
          "send":["{srs:n}"]},
-         "r":{"status":0, "srs":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}}
+         "r":{"status":0, "srs":{"posx":0.0,"posy":0.0,"posz":0.0}}
 }
 # __SRS_CLEAR_TEST
 {

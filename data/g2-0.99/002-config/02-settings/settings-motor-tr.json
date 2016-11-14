@@ -5,6 +5,20 @@
 # include 000-init/init-json.json
 #
 {
+  "before_all":{
+    "label":"Set motor mappings 1234 to XYZA",
+    "before":["{1ma:0}, {2ma:1}, {3ma:2}, {4ma:3}"]
+  }
+}
+#
+{
+  "before_each":{
+    "label":"Reset to MM mode",
+    "before":["G21"]
+  }
+}
+# Linear Axis TR Tests
+{
     "t":{"label":"Write 3tr - reasonable value",
          "send":["{3tr:5.08}"]},
         "r":{"status":0, "3tr":5.08}
@@ -39,6 +53,43 @@
          "before":["G20"],
          "send":["{3tr:null}"]},
          "r":{"status":0, "3tr":0.20}
+}
+# Rotary Axis SU Tests
+{
+    "t":{"label":"Write 4tr - reasonable value",
+         "send":["{4tr:360}"]},
+        "r":{"status":0, "4tr":360}
+}
+#
+{
+    "t":{"label":"Read 4tr in MM - flat",
+         "send":["{4tr:null}"]},
+         "r":{"status":0, "4tr":360}
+}
+#
+{
+    "t":{"label":"Read 4tr in MM - nested",
+         "send":["{4:{tr:null}}"]},
+         "r":{"status":0, "4":{"tr":360}}
+}
+#
+{
+    "t":{"label":"Write 4tr - ridiculous value - should still pass",
+         "send":["{4tr:20000}"]},
+        "r":{"status":0, "4tr":20000}
+}
+#
+{
+    "t":{"label":"Write 4tr - reasonable value (again)",
+         "send":["{4tr:7.5}"]},
+        "r":{"status":0, "4tr":7.5}
+}
+#
+{
+    "t":{"label":"Read 4tr in Inches",
+         "before":["G20"],
+         "send":["{4tr:null}"]},
+         "r":{"status":0, "4tr":7.5}
 }
 # EXCEPTIONS
 {

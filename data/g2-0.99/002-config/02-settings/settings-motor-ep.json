@@ -1,0 +1,60 @@
+################################################################################
+#
+#   settings-motor-ep.json - Test Motor Enable Polarity settings
+#
+# include 000-init/init-json.json
+#
+{
+    "t":{"label":"Write 1ep with 1 - Enable is active LOW (standard)",
+         "send":["{1ep:1}"]},
+        "r":{"status":0, "1ep":1}
+}
+#
+{
+    "t":{"label":"Read 1ep",
+         "send":["{1ep:null}"]},
+         "r":{"status":0, "1ep":1}
+}
+#
+{
+    "t":{"label":"Write 1ep with 0 - Enable is active HI",
+         "send":["{1ep:0}"]},
+        "r":{"status":0, "1ep":0}
+}
+#
+{
+    "t":{"label":"Read 1ep",
+         "send":["{1ep:null}"]},
+         "r":{"status":0, "1ep":0}
+}
+# EXCEPTIONS
+{
+    "t":{"label":"Write 1ep - too large - EXCEPTION",
+         "send":["{1ep:2}"]},
+        "r":{"status":110, "1ep":null}
+}
+#
+{
+    "t":{"label":"Write 1ep - negative value - EXCEPTION",
+         "send":["{1ep:-1}"]},
+        "r":{"status":110, "1ep":null}
+}
+# EOF
+# SKIP
+{
+    "t":{"label":"Write 1po - boolean value - EXCEPTION",
+         "send":["{1po:f}"]},
+        "r":{"status":117, "1po":null}
+}
+# SKIP
+{
+    "t":{"label":"Write 1po - float value - EXCEPTION",
+         "send":["{1po:1.0}"]},
+        "r":{"status":117, "1po":null}
+}
+# SKIP
+{
+    "t":{"label":"write 1po with string - EXCEPTION",
+         "send":["{1po:\"0\"}"]},
+        "r":{"status":117, "1po":null}
+}

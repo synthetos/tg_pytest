@@ -15,7 +15,7 @@
   "before_all":{
     "label":"Setup for power management tests",
     "before":["{ej:1}", "{jv:5}", "{qv:0}", "{sv:2}", "{si:200}",
-            "{sr:{pwr1:t, pwr2:t, pwr3:t}",
+            "{sr:{pwr1:t, pwr2:t, pwr3:t}}",
             "{1pm:2}, {2pm:2}, {3pm:2}",
             "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}",
             "{mt:0.5}",

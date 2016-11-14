@@ -42,7 +42,7 @@
 # SETUP ROUTINES
 {
     "t":{"label":"Set configs",
-         "send":["{js:1}", "{jv:5}", "{tv:1}", "{qv:0}","{sv:2}", "{si:100}"],
+         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}","{sv:2}", "{si:100}"],
          "delay":0.100,
          "setup":true},
     "r":{"status":0}

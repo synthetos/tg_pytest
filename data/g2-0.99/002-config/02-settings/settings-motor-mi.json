@@ -23,7 +23,7 @@
 }
 #
 {
-    "t":{"label":"Read 4mi - tread the previous unsupported value",
+    "t":{"label":"Read 4mi - read the previous unsupported value",
          "send":["{4mi:null}"]},
          "r":{"status":0, "4mi":10}
 }
@@ -46,6 +46,13 @@
          "send":["{4mi:-2}"]},
         "r":{"status":108, "4mi":null}
 }
+#
+{
+    "t":{"label":"Write 9mi - non-existent motor - EXCEPTION",
+         "send":["{9mi:16}"]},
+        "r":{"status":100, "9mi":null}
+}
+#
 # SKIP
 {
     "t":{"label":"write 4mi with boolean - EXCEPTION",
