@@ -1,74 +1,85 @@
 ################################################################################
 #
-#   g4-dwell-001.json
+#   g4-dwell.json
 #
 # MACHINE SETUP
-#   Prior to running this file:
-#     Position the machine in the center of travel in X, Y and Z
-#     Clearance must be at least 25mm positive and negative in each dimension.
-#     This position will be set (0,0,0) by setup-centered's G28.3 command
+#   These tests are best run on a fast XY belt machine like a Shapeoko,
+#   Ultimaker or a Makeblock. Maximums tested:
+#       X and Y maximum velocity        40,000 mm/min
+#       X and Y maximum jerk            20,000 mm/min^3 (* 1,000,000)
+#       JT junction integration time    2.0
 #
+#   Position the machine in the center of travel in X, Y and Z
+#   Clearance must be at least 100mm positive and negative in each dimension.
+#   This position will be set (0,0,0) by setup-centered's G28.3 command
+#
+##################
+### TEST SETUP ###
+##################
+
 {
   "before_all":{
-    "label":"Setup for smoke tests",
-    "before":["G21 G90 G94",
-            "G10 L20 P2 X0 Y0 Z0",
-            "G55",
+    "label":"Setup for dwell tests",
+    "fail":"hard",
+    "before":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+            "{ct:0.1}","{jt:2.0}",
+            "{xvm:40000}","{xjm:20000}",
+            "{yvm:40000}","{yjm:20000}",
+            "G17 G21 G90 G91.1 G94",
+            "G28.3 X0 Y0",
             "G28.1",
-            "F2000" ]
+            "F2000"
+            ]
   }
 }
 #
 {
   "before_each":{
-    "XXX_before":["{clear:n}","G28"]
+    "label":"Return to home",
+    "before":["{clear:n}","G28"]
   }
 }
 #
-
 {
   "after_all":{
     "label":"Return to home",
     "after":["{clear:n}","G28"]
   }
 }
-#
-# TESTS BEGIN HERE
-#
-# Test 1 - Traverse
-{
-    "t":{"label":"G0 movement",
-         "send":["g0x10y10","g4 p0.5","g0x0y0"],
-         "fail":"soft"},
-    "r":{"status":0},
-    "sr":{"stat":3}
-}
-#
-# Test 2 - Feed
-{
-    "t":{"label":"G1 movement",
-         "send":["F1000", "g1x10y10","g4 p0.5","g1x0y0"],
-         "fail":"soft"},
-    "r":{"status":0},
-    "sr":{"stat":3}
-}
-# EOF
 
-# Test 3 - Bad command
+########################
+### TESTS START HERE ###
+########################
+
 {
-    "t":{"label":"Bad Gcode command",
-         "send":["G7x34.23"],
-         "after":["{clear:n}"]},
-    "r":{"status":131},
-    "sr":{"stat":3}
+    "t":{"label":"1 second dwell - watch LED on out1, get timing with logic anayzer",
+         "send":["M100 ({out1:0})",
+                 "M100 ({out1:1})",
+                 "G4 P1",
+                 "M100 ({out1:0})"],
+         "r":{"status":0},
+         "sr":{"stat":3}
+    }
 }
-#EOF
-# Example of how to stop the file
-# Test 4 - This test will not be run due to the EOF
+#
 {
-    "t":{"label":"Bad Gcode command",
-         "send":["G7x34.23"],
-         "fail":"soft"},
-    "r":{"status":131},
-    "sr":{"stat":3}
+    "t":{"label":"10 millisecond dwell - watch LED on out1, get timing with logic anayzer",
+         "send":["M100 ({out1:0})",
+                 "M100 ({out1:1})",
+                 "G4 P0.01",
+                 "M100 ({out1:0})"],
+         "r":{"status":0},
+         "sr":{"stat":3}
+    }
+}
+#
+{
+    "t":{"label":"Dwell in G1 movement",
+         "send":["F1000",
+                 "g1x10y10",
+                 "g4 p1",
+                 "g1x0y0"],
+         "r":{"status":0},
+         "sr":{"stat":3}
+    }
 }
