@@ -70,7 +70,7 @@ ongoing results. It's a batch tester, not streaming.
     - `fail` can be `hard` or `soft`. Hard (default) quits the test run if failure
     - `before` array of strings to send before the test - will not be analyzed
     - `after` array of strings to send after the test - will not be analyzed
-    - `setup` used to prevent before's and after's from executing in a given test
+    - `setup` if `true`, prevent before's and after's from executing in a given test
 
 
   - `r` analyzer contains the elements to check in all `r{}` responses:

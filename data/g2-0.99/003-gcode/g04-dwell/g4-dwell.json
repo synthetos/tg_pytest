@@ -63,7 +63,7 @@
 }
 #
 {
-    "t":{"label":"10 millisecond dwell - watch LED on out1, get timing with logic anayzer",
+    "t":{"label":"10 millisecond dwell - watch LED blip on out1, get timing with Logic",
          "send":["M100 ({out1:0})",
                  "M100 ({out1:1})",
                  "G4 P0.01",

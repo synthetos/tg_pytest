@@ -1,7 +1,6 @@
 ################################################################################
 #
-#   init-json.json
-#   Initialize for g2 json settings tests
+#   init-json.json - Initialize for g2 json settings tests
 {
   "defaults":{
     "fail":"hard",

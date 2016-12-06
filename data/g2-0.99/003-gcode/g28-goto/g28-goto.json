@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  g28-goto-001.json - test g28, g30 go-to-home
+#  g28-goto.json - test g28, g30 go-to-home
 #
 #  Do not run any preamble before this file
 {
@@ -10,7 +10,7 @@
 }
 # SETUP ROUTINES
 #
-# include 000-setup/setup-OMC-001.json
+# include 000-init/init-machine-OMC.json
 #
 # G28 / G54 TESTS
 #

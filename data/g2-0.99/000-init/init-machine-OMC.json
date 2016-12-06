@@ -2,37 +2,54 @@
 #
 #  init-machine-OMC.json - set up for Othermachine Othermill
 #
+# This file sets up the board to behave as an Othermachine Othermill:
+#       X min/max travel                0, 145.6
+#       X min/max travel                0, 119.1
+#       X min/max travel                -60.1, 0
+#
+#       XYZ maximum velocity            1500 mm/min
+#       XYZ maximum jerk                 500 mm/min^3 (* 1,000,000)
+#       JT junction integration time    0.75
+#
+#   Other parameters such as limit enables, motor power, etc. are not changed
+#   Motor mapping is assumed to be correct and not messed with.
+#
+#   Position the machine in the center of travel in XYZ: g0 x70 y60 z-30
+#   Safe clearance is (60,50,20) positive and negative in each dimension.
+#   This position will be set (0,0,0) by setup-centered's G28.3 command
+#
 {
     "t":{"label":"Restore Othermill default settings",
-         "send":["{defa:1}"],
-         "setup":true},
-    "r":{"status":0}
+         "setup":true,
+         "send":["{defa:1}"]
+    }
 }
 #
 {
     "t":{"label":"Set baseline configs",
-         "send":["{js:1}","{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
          "delay":0.100,
-         "setup":true},
-    "r":{"status":0}
+         "setup":true,
+         "send":["{js:1}","{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"]
+    }
 }
 #
 {
     "t":{"label":"Clear status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
-         "send":["{srs:{clear:t}}"],
-         "setup":true},
-    "r":{"status":0}
+         "setup":true,
+         "send":["{srs:{clear:t}}"]
+    }
 }
 #
 {
     "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-         "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"],
-         "setup":true},
-    "r":{"status":0}
+         "setup":true,
+         "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]
+     }
 }
 #
 {
     "t":{"label":"Set gcode defaults",
+         "setup":true,
          "send":["G21 G94 G90 G91.1",
                  "G10 L2 P1 X0 Y0 Z0",
                  "G10 L2 P2 X0 Y0 Z0",
@@ -41,14 +58,20 @@
                  "G10 L2 P5 X0 Y0 Z0",
                  "G10 L2 P6 X0 Y0 Z0",
                  "G54"
-               ],
-               "setup":true},
-    "r":{"status":0}
+               ]
+    }
 }
-#
+# SKIP
 {
     "t":{"label":"Home Othermill",
-         "send":["g28.2 x0 y0 z0"],
+         "setup":true,
+         "send":["g28.2 x0 y0 z0"]
+    }
+}
+# EOF
+{
+    "t":{"label":"Restore Othermill default settings",
+         "send":["{defa:1}"],
          "setup":true},
-    "r":{"status":0}
+    "r":{"status":15}
 }

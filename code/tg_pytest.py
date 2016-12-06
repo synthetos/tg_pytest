@@ -360,14 +360,15 @@ def run_test(t_data, before_data, after_data, params):
         print ("  FAILED: No response from board: {0}".format(first_line))
         fail_hard(t_data, params, line)
 
-    # Run analyzers on the response object list
-    results = 0
-    results += analyze_r(t_data, r_datae, params)
-    results += analyze_sr(t_data, r_datae, params)
-    results += analyze_er(t_data, r_datae, params)
+    # Run analyzers on the response object list (unless it's a setup)
+    if not setup:
+        results = 0
+        results += analyze_r(t_data, r_datae, params)
+        results += analyze_sr(t_data, r_datae, params)
+        results += analyze_er(t_data, r_datae, params)
 
-    if results < 0:
-        fail_hard(t_data, params, line)
+        if results < 0:
+            fail_hard(t_data, params, line)
 
     # Run "after" strings if this is not a setup "test"
     if not setup:
