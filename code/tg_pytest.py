@@ -290,9 +290,17 @@ def run_test(t_data, before_data, after_data, params):
         print("ERROR: No test data provided")
         return
 
+    # Check if this is a setup "test"
+    setup = False
+    if "setup" in t_data["t"]:
+        setup = True
+
     if "label" in t_data["t"]:
         print
-        print("TEST: {0}".format(t_data["t"]["label"]))
+        if not setup:
+            print("TEST: {0}".format(t_data["t"]["label"]))
+        else:
+            print("SETUP: {0}".format(t_data["t"]["label"]))
 
     # Get a delay time from params or a local override
     delay = 0
@@ -312,11 +320,6 @@ def run_test(t_data, before_data, after_data, params):
         params["use_precision"] = params["precision"]
     else:
         params["use_precision"] = 0
-
-    # Check if this is a setup "test"
-    setup = False
-    if "setup" in t_data["t"]:
-        setup = True
 
     # Run "before" strings if this is not a setup "test"
     if not setup:

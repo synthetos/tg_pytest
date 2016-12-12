@@ -1,0 +1,54 @@
+################################################################################
+#
+#  settings-comm-qv.json - Test queue report verbosity settings
+#
+# include 000-init/init-json.json
+#
+# Queue Report Verbosity
+{
+    "t":{"label":"Set QV to 0 (SILENT)",
+         "send":["{qv:0}"]},
+        "r":{"status":0, "qv":0}
+}
+#
+{
+    "t":{"label":"Set QV to 1 (SINGLE)",
+         "send":["{qv:1}"]},
+         "after":["{qv:0}"],
+        "r":{"status":0, "qv":1}
+}
+#
+{
+    "t":{"label":"Set QV to 2 (TRIPLE)",
+         "send":["{qv:2}"]},
+        "r":{"status":0, "qv":2}
+}
+#
+{
+    "t":{"label":"Read QV - was set to 2 by preceding test",
+         "send":["{qv:null}"]},
+        "r":{"status":0, "qv":2}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Set QV - too low",
+         "send":["{qv:-1}"]},
+        "r":{"status":108, "qv":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Set 3 - too high",
+         "send":["{qv:3}"]},
+        "r":{"status":109, "qv":null}
+}
+# SKIP
+{
+    "t":{"label":"EXCEPTION: Test various type errors",
+         "send":["{qv:true}",
+                 "{qv:false}",
+                 "{qv:1.0}",
+                 "{qv:1.1}",
+                 "{qv:\"1\"}"
+                ]},
+        "r":{"status":117, "qv":null}
+}

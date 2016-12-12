@@ -8,7 +8,8 @@
     "fail":"hard"
   }
 }
-# include 000-setup/setup-OMC-001.json
+# SETUP ROUTINES
+# include 000-init/init-machine-OMC.json
 #
 # TEST:
 {

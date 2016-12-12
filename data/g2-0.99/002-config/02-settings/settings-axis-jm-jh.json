@@ -6,14 +6,7 @@
 #
 # Jerk Max
 {
-    "t":{"label":"Write xjm in mm/min^3",
-         "before":["G21"],
-         "send":["{xjm:1000000000}"]},
-        "r":{"status":0, "xjm":1000}
-}
-#
-{
-    "t":{"label":"Write xjm in mm, divide by 1 million",
+    "t":{"label":"Write xjm in mm (divide by 1 million)",
          "send":["{xjm:2000}"]},
         "r":{"status":0, "xjm":2000}
 }
@@ -30,12 +23,25 @@
          "send":["{xjm:null}"]},
         "r":{"status":0, "xjm":79}
 }
-# SKIP
+#
 {
-    "t":{"label":"Write xjm with bad values - EXCEPTION",
-         "send":["{xjm:-1}",
-                 "{xjm:0}"]},
-        "r":{"status":108, "xjm":null}
+    "t":{"label":"EXCEPTION: Write xjm too large (100K max)",
+         "before":["G21"],
+         "send":["{xjm:100001}"]},
+        "r":{"status":110, "xjm":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write xjm too small (0.01 min)",
+         "before":["G21"],
+         "send":["{xjm:0.009}"]},
+        "r":{"status":110, "xjm":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write xjm with bad values",
+         "send":["{xjm:-1}"]},
+        "r":{"status":110, "xjm":null}
 }
 # SKIP
 {
@@ -45,12 +51,6 @@
         "r":{"status":117, "xjm":null}
 }
 # Jerk High Speed
-{
-    "t":{"label":"Write xjh in mm/min^3",
-         "before":["G21"],
-         "send":["{xjh:1000000000}"]},
-        "r":{"status":0, "xjh":1000}
-}
 #
 {
     "t":{"label":"Write xjh in mm, divide by 1 million",
@@ -75,7 +75,7 @@
     "t":{"label":"Write xjh with bad values - EXCEPTION",
          "send":["{xjh:-1}",
                  "{xjh:0}"]},
-        "r":{"status":108, "xjh":null}
+        "r":{"status":110, "xjh":null}
 }
 # SKIP
 {

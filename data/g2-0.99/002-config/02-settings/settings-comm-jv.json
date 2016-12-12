@@ -1,0 +1,65 @@
+################################################################################
+#
+#  settings-comm-jv.json  Test JSON verbosity communications settings
+#
+# include 000-init/init-json.json
+#
+# JSON Verbosity
+{
+    "t":{"label":"Set JV to 1 (FOOTER only) - returns null r object",
+        "send":["{jv:1}"]},
+        "after":["{jv:5}"],
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set JV to 2 (MESSAGES) - returns null r object",
+         "send":["{jv:2}"]},
+         "after":["{jv:5}"],
+        "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set JV to 3 (CONFIGS)",
+         "send":["{jv:3}"]},
+         "after":["{jv:5}"],
+        "r":{"status":0, "jv":3}
+}
+#
+{
+    "t":{"label":"Set JV to 4 (LINENUM)",
+         "send":["{jv:4}"]},
+         "after":["{jv:5}"],
+         "r":{"status":0, "jv":4}
+}
+#
+{
+    "t":{"label":"Set JV to 5 (VERBOSE)",
+         "send":["{jv:5}"]},
+         "r":{"status":0, "jv":5}
+}
+# SKIP
+{
+    "t":{"label":"EXCEPTION: Set JV to 6 - value too high",
+         "send":["{jv:6}"]},
+         "after":["{jv:5}"],
+         "r":{"status":109, "jv":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Set JV to -1 - value too low",
+         "send":["{jv:-1}"]},
+         "after":["{jv:5}"],
+         "r":{"status":108, "jv":null}
+}
+# SKIP
+{
+    "t":{"label":"EXCEPTION: Test various type errors",
+         "send":["{jv:true}",
+                 "{jv:false}",
+                 "{jv:1.0}",
+                 "{jv:1.1}",
+                 "{jv:\"1\"}"
+                ]},
+        "r":{"status":117, "jv":null}
+}
