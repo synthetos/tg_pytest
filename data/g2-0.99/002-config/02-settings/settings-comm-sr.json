@@ -71,9 +71,9 @@
 }
 #
 {
-    "t":{"label":"EXCEPTION: Set SI to 0 - below Minumum. Assumes 100 ms is minimum",
+    "t":{"label":"EXCEPTION: Set SI to 0 - below minumum",
          "send":["{si:0}"]},
-        "r":{"status":0, "si":100}
+        "r":{"status":108, "si":null}
 }
 # SKIP
 {

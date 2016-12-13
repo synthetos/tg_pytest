@@ -23,25 +23,25 @@
 }
 #
 {
-    "t":{"label":"Write 2sa - ridiculous value - should still pass",
-         "send":["{2sa:499.99}"]},
-        "r":{"status":0, "2sa":499.99}
-}
-#
-{
-    "t":{"label":"Write 2sa - zero value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 2sa - zero value",
          "send":["{2sa:0}"]},
         "r":{"status":108, "2sa":null}
 }
 #
 {
-    "t":{"label":"Write 2sa - negative value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 2sa - negative value",
          "send":["{2sa:-1.8}"]},
         "r":{"status":108, "2sa":null}
 }
+#
+{
+    "t":{"label":"EXCEPTION: Write 2sa - Value > 360 degrees",
+         "send":["{2sa:499.99}"]},
+        "r":{"status":109, "2sa":null}
+}
 # SKIP
 {
-    "t":{"label":"write 2sa with boolean - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 2sa with boolean",
          "send":["{2sa:t}"]},
         "r":{"status":117, "2sa":null}
 }

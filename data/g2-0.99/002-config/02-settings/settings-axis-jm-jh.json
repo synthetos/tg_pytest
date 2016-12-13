@@ -28,20 +28,20 @@
     "t":{"label":"EXCEPTION: Write xjm too large (100K max)",
          "before":["G21"],
          "send":["{xjm:100001}"]},
-        "r":{"status":110, "xjm":null}
+        "r":{"status":109, "xjm":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write xjm too small (0.01 min)",
          "before":["G21"],
          "send":["{xjm:0.009}"]},
-        "r":{"status":110, "xjm":null}
+        "r":{"status":108, "xjm":null}
 }
-#
+# SKIP
 {
     "t":{"label":"EXCEPTION: Write xjm with bad values",
          "send":["{xjm:-1}"]},
-        "r":{"status":110, "xjm":null}
+        "r":{"status":108, "xjm":null}
 }
 # SKIP
 {
@@ -70,16 +70,15 @@
          "send":["{xjh:null}"]},
         "r":{"status":0, "xjh":79}
 }
-# SKIP
+#
 {
-    "t":{"label":"Write xjh with bad values - EXCEPTION",
-         "send":["{xjh:-1}",
-                 "{xjh:0}"]},
-        "r":{"status":110, "xjh":null}
+    "t":{"label":"EXCEPTION: Write xjh with bad values",
+         "send":["{xjh:-1}"]},
+        "r":{"status":108, "xjh":null}
 }
 # SKIP
 {
-    "t":{"label":"Test type errors - EXCEPTION",
+    "t":{"label":"EXCEPTION: Test type errors",
          "send":["{xjh:t}",
                  "{xjh:\"1000.5\"}"]},
         "r":{"status":117, "xjh":null}

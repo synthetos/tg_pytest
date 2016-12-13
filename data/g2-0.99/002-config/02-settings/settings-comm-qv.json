@@ -21,6 +21,7 @@
 {
     "t":{"label":"Set QV to 2 (TRIPLE)",
          "send":["{qv:2}"]},
+         "after":["{qv:0}"],
         "r":{"status":0, "qv":2}
 }
 #

@@ -89,29 +89,29 @@
     "t":{"label":"Read 4tr in Inches",
          "before":["G20"],
          "send":["{4tr:null}"]},
-         "r":{"status":0, "4tr":7.5}
+         "r":{"status":0, "4tr":0.2953}
 }
 # EXCEPTIONS
 {
-    "t":{"label":"Write 3tr - zero value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3tr - zero value",
          "send":["{3tr:0}"]},
         "r":{"status":108, "3tr":null}
 }
 #
 {
-    "t":{"label":"Write 3tr - negative value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3tr - negative value",
          "send":["{3tr:-1.8}"]},
         "r":{"status":108, "3tr":null}
 }
 # SKIP
 {
-    "t":{"label":"write 3tr with boolean - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3tr with boolean",
          "send":["{3tr:t}"]},
         "r":{"status":117, "3tr":null}
 }
 # SKIP
 {
-    "t":{"label":"write 3tr with string - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3tr with string",
          "send":["{3tr:\"5.08\"}"]},
         "r":{"status":117, "3tr":null}
 }

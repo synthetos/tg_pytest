@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  settings-comm-jv.json  Test JSON verbosity communications settings
+#  settings-comm-jv.json - Test JSON verbosity communications settings
 #
 # include 000-init/init-json.json
 #
@@ -38,12 +38,11 @@
          "send":["{jv:5}"]},
          "r":{"status":0, "jv":5}
 }
-# SKIP
+#
 {
-    "t":{"label":"EXCEPTION: Set JV to 6 - value too high",
-         "send":["{jv:6}"]},
-         "after":["{jv:5}"],
-         "r":{"status":109, "jv":null}
+    "t":{"label":"Read JV (5)",
+         "send":["{jv:n}"]},
+         "r":{"status":0, "jv":5}
 }
 #
 {
@@ -51,6 +50,13 @@
          "send":["{jv:-1}"]},
          "after":["{jv:5}"],
          "r":{"status":108, "jv":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Set JV to 10 - value too high",
+         "send":["{jv:10}"]},
+         "after":["{jv:5}"],
+         "r":{"status":109, "jv":null}
 }
 # SKIP
 {

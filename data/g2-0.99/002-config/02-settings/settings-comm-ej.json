@@ -1,33 +1,56 @@
 ################################################################################
 #
-#  settings-enable-json.json - JSON enable settings
+#  settings-comm-ej.json - JSON enable settings
 #
 # include 000-init/init-json.json
 #
-#  Note:
-#   This is s weird command that cannot be fully tested in JSON
-#   and requires some manual tests. These are listed after the EOF
-#
 {
-    "t":{"label":"Write junction integration time zero - EXCEPTION",
-         "send":["{jt:0}"]},
-        "r":{"status":108, "jt":null}
+    "t":{"label":"Set enable JSON to JSON mode",
+         "send":["{ej:1}"]},
+        "r":{"status":0, "ej":1}
 }
 #
 {
-    "t":{"label":"Write junction integration time negative number - EXCEPTION",
-         "send":["{jt:-1}"]},
-        "r":{"status":108, "jt":null}
+    "t":{"label":"Set enable JSON to AUTO mode",
+         "send":["{ej:2}"]},
+        "r":{"status":0, "ej":2}
 }
 #
 {
-    "t":{"label":"Read junction integration time",
-         "send":["{jt:n}"]},
-        "r":{"status":0, "ja":1.01}
+    "t":{"label":"Read enable JSON",
+         "send":["{ej:n}"],
+         "after":["ej:1"]},
+        "r":{"status":0, "ej":2}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write enable JSON too low -1 ",
+         "send":["{ej:-1}"]},
+        "r":{"status":108, "ej":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write enable JSON too high 3 ",
+         "send":["{ej:3}"]},
+        "r":{"status":109, "ej":null}
 }
 # EOF
+#  Note:
+#   This is s weird command that cannot be fully tested in JSON
+#   and requires some manual tests.
+#
+# Run this and see if it returns Text mode:
 {
     "t":{"label":"Set EJ to Text mode",
          "send":["{ej:0}"]},
         "r":{"status":0, "ej":0}
 }
+
+- Set {jv:5}
+- Set {ej:0}    - verify it returns the EJ response as text
+- Run {xvm:n}   - verify it returns the response as text
+- Run $ej=1     - verify it returns something like {"r":{"ej":1},"f":[1,0,6]}
+- Run $xvm      - verify it returns something like {"r":{"xvm":40000},"f":[1,0,5]}
+- Run $ej=2     - it returned in JSON - perhaps it should be in text
+- Run $xvm      - verify it returns text
+- Run {xvm:n}   - verify it returns JSON

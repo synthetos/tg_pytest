@@ -26,13 +26,13 @@
 {
     "t":{"label":"EXCEPTION: Set homing input - too small",
          "send":["{yhi:-1}"]},
-         "r":{"status":110, "yhi":null}
+         "r":{"status":108, "yhi":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set homing input - too large",
          "send":["{yhi:16}"]},
-         "r":{"status":110, "yhi":null}
+         "r":{"status":109, "yhi":null}
 }
 # Homing Direction
 {
@@ -50,13 +50,13 @@
 {
     "t":{"label":"EXCEPTION: homing direction too small",
          "send":["{yhd:-1}"]},
-         "r":{"status":110, "yhd":null}
+         "r":{"status":108, "yhd":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: homing direction too large",
          "send":["{yhd:2}"]},
-         "r":{"status":110, "yhd":null}
+         "r":{"status":109, "yhd":null}
 }
 # Search Velocity
 {
@@ -68,11 +68,24 @@
 {
     "t":{"label":"Read ysv",
          "send":["{ysv:null}"]},
-         "r":{"status":0, "yvm":1000}
+         "r":{"status":0, "ysv":1000}
 }
+#
+{
+    "t":{"label":"EXCEPTION: Write ysv - negative value",
+         "send":["{ysv:-1000}"]},
+         "r":{"status":108, "ysv":null}
+}
+
+
+
+
+
+
+
 # EOF
 {
-    "t":{"label":"Write yvm - negative value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write yvm - negative value",
          "send":["{yvm:-1}"]},
         "r":{"status":108, "yvm":null}
 }

@@ -30,38 +30,38 @@
 # EXCEPTIONS
 # SKIP
 {
-    "t":{"label":"Write 4mi - float value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 4mi - float value",
          "send":["{4mi:4.1}"]},
         "r":{"status":117, "4mi":null}
 }
 #
 {
-    "t":{"label":"Write 4mi - zero value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 4mi - zero value",
          "send":["{4mi:0}"]},
         "r":{"status":108, "4mi":null}
 }
 #
 {
-    "t":{"label":"Write 4mi - negative value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 4mi - negative value",
          "send":["{4mi:-2}"]},
         "r":{"status":108, "4mi":null}
 }
 #
 {
-    "t":{"label":"Write 9mi - non-existent motor - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 9mi - non-existent motor",
          "send":["{9mi:16}"]},
         "r":{"status":100, "9mi":null}
 }
 #
 # SKIP
 {
-    "t":{"label":"write 4mi with boolean - EXCEPTION",
+    "t":{"label":"EXCEPTION: write 4mi with boolean",
          "send":["{4mi:t}"]},
         "r":{"status":117, "4mi":null}
 }
 # SKIP
 {
-    "t":{"label":"write 4mi with string - EXCEPTION",
+    "t":{"label":"EXCEPTION: write 4mi with string",
          "send":["{4mi:\"5.08\"}"]},
         "r":{"status":117, "4mi":null}
 }

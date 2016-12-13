@@ -5,7 +5,7 @@
 # include 000-init/init-json.json
 #
 {
-    "t":{"label":"Write 1ma - with valid value",
+    "t":{"label":"Write 1ma with valid value",
          "send":["{1ma:4}"]},
         "r":{"status":0, "1ma":4}
 }
@@ -29,19 +29,19 @@
 }
 #
 {
-    "t":{"label":"Write 2ma - with invalid value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 2ma - value too large",
          "send":["{2ma:10}"]},
-        "r":{"status":110, "2ma":null}
+        "r":{"status":109, "2ma":null}
 }
 #
 {
-    "t":{"label":"Write 2ma - with negative value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 2ma - with negative value",
          "send":["{2ma:-1}"]},
-        "r":{"status":110, "2ma":null}
+        "r":{"status":108, "2ma":null}
 }
 #
 {
-    "t":{"label":"Read 7ma - unrecognized command - EXCEPTION",
+    "t":{"label":"EXCEPTION: Read 7ma - unrecognized command",
          "send":["{7ma:null}"]},
         "r":{"status":100,"7ma":null}
 }
