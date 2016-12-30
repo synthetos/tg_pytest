@@ -273,7 +273,7 @@ def do_before_after(key, data, params):
         send_before_after("before", data["before_all"], delay)
     
     if key == "after_all" and "after" in data[key]:
-        if "label" in data[key]:
+        if "label" in data[key]:  
             print
             print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
             send_before_after("after", data["after_all"], delay)

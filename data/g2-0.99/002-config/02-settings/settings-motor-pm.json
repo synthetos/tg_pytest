@@ -35,31 +35,31 @@
 }
 # EXCEPTIONS
 {
-    "t":{"label":"Write 2pm - unsupported value - EXCEPTION",
-         "send":["{2pm:4}"]},
-        "r":{"status":110, "2pm":null}
-}
-# SKIP
-{
-    "t":{"label":"Write 2pm - float value - EXCEPTION",
-         "send":["{2pm:4.1}"]},
-        "r":{"status":117, "2pm":null}
+    "t":{"label":"EXCEPTION: Write 2pm - negative value",
+         "send":["{2pm:-2}"]},
+        "r":{"status":108, "2pm":null}
 }
 #
 {
-    "t":{"label":"Write 2pm - negative value - EXCEPTION",
-         "send":["{2pm:-2}"]},
-        "r":{"status":110, "2pm":null}
+    "t":{"label":"EXCEPTION: Write 2pm - unsupported value",
+         "send":["{2pm:4}"]},
+        "r":{"status":109, "2pm":null}
 }
 # SKIP
 {
-    "t":{"label":"write 2pm with boolean - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 2pm - float value",
+         "send":["{2pm:4.1}"]},
+        "r":{"status":117, "2pm":null}
+}
+# SKIP
+{
+    "t":{"label":"EXCEPTION: write 2pm with boolean",
          "send":["{2pm:t}"]},
         "r":{"status":117, "2pm":null}
 }
 # SKIP
 {
-    "t":{"label":"write 2pm with string - EXCEPTION",
+    "t":{"label":"EXCEPTION: write 2pm with string",
          "send":["{2pm:\"2\"}"]},
         "r":{"status":117, "2pm":null}
 }

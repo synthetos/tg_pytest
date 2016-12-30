@@ -36,9 +36,9 @@
 }
 #
 {
-    "t":{"label":"Write xam - AXIS_RADIUS - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write xam - AXIS_RADIUS",
         "send":["{xam:3}"]},
-        "r":{"status":110, "xam":null}
+        "r":{"status":109, "xam":null}
 }
 #
 {
@@ -48,9 +48,9 @@
 }
 #
 {
-    "t":{"label":"Write aam - AXIS_RADIUS - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write aam - AXIS_RADIUS",
         "send":["{aam:4}"]},
-        "r":{"status":110, "aam":null}
+        "r":{"status":109, "aam":null}
 }
 # AM Axis Mode function tests
 {

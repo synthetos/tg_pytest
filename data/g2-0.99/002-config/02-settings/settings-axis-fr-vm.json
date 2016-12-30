@@ -32,6 +32,27 @@
          "after":["G21"]},
          "r":{"status":0, "yvm":30}
 }
+# Test rotary axes are not unit converted
+{
+    "t":{"label":"Write avm in degrees, in Inches mode",
+         "before":["G20"],
+         "send":["{avm:18000}"]},
+         "r":{"status":0, "avm":18000}
+}
+#
+{
+    "t":{"label":"Read avm in degrees, in Inches mode",
+         "before":["G20"],
+         "send":["{avm:18000}"]},
+         "r":{"status":0, "avm":18000}
+}
+#
+{
+    "t":{"label":"Read avm in degrees, in MM mode",
+         "before":["G21"],
+         "send":["{avm:18000}"]},
+         "r":{"status":0, "avm":18000}
+}
 # SKIP
 {
     "t":{"label":"Write yvm - with illegal values - EXCEPTION",

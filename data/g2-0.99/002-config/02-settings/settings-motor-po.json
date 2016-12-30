@@ -22,27 +22,33 @@
          "r":{"status":0, "1po":0}
 }
 # EXCEPTIONS
+#
+{
+    "t":{"label":"EXCEPTION: Write 1po - value too large",
+         "send":["{1po:2}"]},
+        "r":{"status":109, "1po":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write 1po - negative value",
+         "send":["{1po:-1}"]},
+        "r":{"status":108, "1po":null}
+}
 # SKIP
 {
-    "t":{"label":"Write 1po - boolean value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 1po - boolean value",
          "send":["{1po:f}"]},
         "r":{"status":117, "1po":null}
 }
 # SKIP
 {
-    "t":{"label":"Write 1po - float value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 1po - float value",
          "send":["{1po:1.0}"]},
         "r":{"status":117, "1po":null}
 }
-#
-{
-    "t":{"label":"Write 1po - negative value - EXCEPTION",
-         "send":["{1po:-1}"]},
-        "r":{"status":110, "1po":null}
-}
 # SKIP
 {
-    "t":{"label":"write 1po with string - EXCEPTION",
+    "t":{"label":"EXCEPTION: write 1po with string",
          "send":["{1po:\"0\"}"]},
         "r":{"status":117, "1po":null}
 }

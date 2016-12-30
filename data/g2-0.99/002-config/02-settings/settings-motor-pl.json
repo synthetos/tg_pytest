@@ -29,31 +29,31 @@
 }
 # EXCEPTIONS
 {
-    "t":{"label":"Write 3pl - More that FUll Power - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3pl - More that Full Power",
          "send":["{3pl:2.5}"]},
-        "r":{"status":110, "3pl":null}
+        "r":{"status":109, "3pl":null}
 }
 #
 {
-    "t":{"label":"Write 3pl - unsupported value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3pl - unsupported value",
          "send":["{3pl:4}"]},
-        "r":{"status":110, "3pl":null}
+        "r":{"status":109, "3pl":null}
 }
 #
 {
-    "t":{"label":"Write 3pl - negative value - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3pl - negative value",
          "send":["{3pl:-0.5}"]},
-        "r":{"status":110, "3pl":null}
+        "r":{"status":108, "3pl":null}
 }
 # SKIP
 {
-    "t":{"label":"write 3pl with boolean - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3pl with boolean",
          "send":["{3pl:t}"]},
         "r":{"status":117}
 }
 # SKIP
 {
-    "t":{"label":"write 3pl with string - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write 3pl with string",
          "send":["{3pl:\"0.5\"}"]},
         "r":{"status":117}
 }

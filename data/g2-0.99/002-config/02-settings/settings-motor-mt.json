@@ -28,13 +28,13 @@
 }
 #
 {
-    "t":{"label":"Set motor timeout to negative number - EXCEPTION",
+    "t":{"label":"EXCEPTION: Set motor timeout to negative number",
          "send":["{mt:-10}"]},
-        "r":{"status":110, "mt":null}
+        "r":{"status":108, "mt":null}
 }
 #
 {
-    "t":{"label":"Set motor timeout above MOTOR_TIMEOUT_SECONDS_MAX - EXCEPTION",
+    "t":{"label":"EXCEPTION: Set motor timeout above MOTOR_TIMEOUT_SECONDS_MAX",
          "send":["{mt:4000000000}"]},
-        "r":{"status":110, "mt":null}
+        "r":{"status":109, "mt":null}
 }

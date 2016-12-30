@@ -5,27 +5,27 @@
 # include 000-init/init-json.json
 #
 # JSON SYNTAX ERRORS
-# SKIP
+#
 {
-    "t":{"label":"Key is missing - JSON SYNTAX ERROR",
+    "t":{"label":"EXCEPTION: Key is missing - JSON SYNTAX ERROR",
          "send":["{:null}"]},
         "r":{"status":111, "err":"*"}
 }
-# SKIP
+#
 {
-    "t":{"label":"Key is blank - JSON SYNTAX ERROR",
+    "t":{"label":"EXCEPTION: Key is blank - JSON SYNTAX ERROR",
          "send":["{   :null}"]},
         "r":{"status":111, "err":"*"}
 }
-# SKIP
+#
 {
-    "t":{"label":"Value is missing - JSON SYNTAX ERROR",
+    "t":{"label":"EXCEPTION: Value is missing - JSON SYNTAX ERROR",
          "send":["{key:}"]},
         "r":{"status":111, "err":"*"}
 }
 #
 {
-    "t":{"label":"Value is blank - JSON SYNTAX ERROR",
+    "t":{"label":"EXCEPTION: Value is blank - JSON SYNTAX ERROR",
          "send":["{key:     }"]},
         "r":{"status":111, "err":"*"}
 }

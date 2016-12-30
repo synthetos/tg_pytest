@@ -89,7 +89,7 @@
     "t":{"label":"Read 4tr in Inches",
          "before":["G20"],
          "send":["{4tr:null}"]},
-         "r":{"status":0, "4tr":0.2953}
+         "r":{"status":0, "4tr":7.5}
 }
 # EXCEPTIONS
 {
