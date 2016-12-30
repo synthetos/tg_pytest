@@ -36,15 +36,15 @@
 }
 #
 {
-    "t":{"label":"Set soft limit using '2' - EXCEPTION",
+    "t":{"label":"EXCEPTION: Set soft limit to 2",
          "send":["{sl:2}"]},
-        "r":{"status":110, "sl":null}
+        "r":{"status":109, "sl":null}
 }
 #
 {
-    "t":{"label":"Set soft limit using '-1' - EXCEPTION",
+    "t":{"label":"EXCEPTION: Set soft limit to -1",
          "send":["{sl:-1}"]},
-        "r":{"status":110, "sl":null}
+        "r":{"status":108, "sl":null}
 }
 # SKIP
 {
@@ -53,10 +53,4 @@
                  "{sl:\"1\"}"
                 ]},
         "r":{"status":117, "sl":null}
-}
-#
-{
-    "t":{"label":"Read soft limit enable",
-         "send":["{sl:null}"]},
-        "r":{"status":0, "sl":true}
 }

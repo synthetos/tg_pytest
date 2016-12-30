@@ -1,0 +1,56 @@
+################################################################################
+#
+#  settings-global-lim.json - Hard Limit settings
+#
+# include 000-init/init-json.json
+#
+# hard Limit Enable
+{
+    "t":{"label":"Set hard limit enable false",
+         "send":["{lim:false}"]},
+        "r":{"status":0, "lim":false}
+}
+#
+{
+    "t":{"label":"Set hard limit enable true",
+         "send":["{lim:true}"]},
+        "r":{"status":0, "lim":true}
+}
+#
+{
+    "t":{"label":"Read hard limit enable",
+         "send":["{lim:null}"]},
+        "r":{"status":0, "lim":true}
+}
+#
+{
+    "t":{"label":"Set hard limit enable false using '0'",
+         "send":["{lim:0}"]},
+        "r":{"status":0, "lim":0}
+}
+#
+{
+    "t":{"label":"Set hard limit enable true using '1'",
+         "send":["{lim:1}"]},
+        "r":{"status":0, "lim":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Set hard limit to 2",
+         "send":["{lim:2}"]},
+        "r":{"status":109, "lim":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Set hard limit to -1",
+         "send":["{lim:-1}"]},
+        "r":{"status":108, "lim":null}
+}
+# SKIP
+{
+    "t":{"label":"Test various type errors",
+         "send":["{lim:1.0}",
+                 "{lim:\"1\"}"
+                ]},
+        "r":{"status":117, "lim":null}
+}

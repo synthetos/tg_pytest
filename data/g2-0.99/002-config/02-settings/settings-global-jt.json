@@ -12,19 +12,25 @@
 }
 #
 {
-    "t":{"label":"Write junction integration time zero - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write junction integration time zero",
          "send":["{jt:0}"]},
         "r":{"status":108, "jt":null}
 }
-# SKIP
+#
 {
-    "t":{"label":"Write junction integration time negative number - EXCEPTION",
+    "t":{"label":"EXCEPTION: Write junction integration time negative number",
          "send":["{jt:-1}"]},
         "r":{"status":108, "jt":null}
 }
 #
 {
+    "t":{"label":"EXCEPTION: Write junction integration greater than maximum",
+         "send":["{jt:10}"]},
+        "r":{"status":109, "jt":null}
+}
+#
+{
     "t":{"label":"Read junction integration time",
          "send":["{jt:n}"]},
-        "r":{"status":0, "ja":1.01}
+        "r":{"status":0, "jt":1.01}
 }

@@ -53,11 +53,10 @@
          "send":["{avm:18000}"]},
          "r":{"status":0, "avm":18000}
 }
-# SKIP
+#
 {
-    "t":{"label":"Write yvm - with illegal values - EXCEPTION",
-         "send":["{yvm:-1}",
-                 "{yvm:0}"]},
+    "t":{"label":"EXCEPTION: Write yvm - with illegal value",
+         "send":["{yvm:-1}"]},
         "r":{"status":108, "yvm":null}
 }
 # SKIP
@@ -97,11 +96,10 @@
          "after":["G21"]},
          "r":{"status":0, "yfr":30}
 }
-# SKIP
+#
 {
-    "t":{"label":"Write yfr with illegal values - EXCEPTION",
-         "send":["{yfr:-1}",
-                 "{yfr:0}"]},
+    "t":{"label":"EXCEPTION: Write yfr with illegal value",
+         "send":["{yfr:-1}"]},
         "r":{"status":108, "yfr":null}
 }
 # SKIP

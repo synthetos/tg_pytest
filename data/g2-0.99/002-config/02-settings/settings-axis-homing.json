@@ -77,12 +77,6 @@
          "r":{"status":108, "ysv":null}
 }
 
-
-
-
-
-
-
 # EOF
 {
     "t":{"label":"EXCEPTION: Write yvm - negative value",
