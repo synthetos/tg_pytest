@@ -1,0 +1,279 @@
+################################################################################
+#
+#  reports-global-state.json - Test common state values returned by status reports
+#
+# include 000-init/init-json.json
+#
+# System State - stat
+{
+    "t":{"label":"Read stat",
+        "before":["M30"],
+        "send":["{stat:null}"]},
+        "r":{"status":0, "stat":4}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write stat, is read-only",
+         "send":["{stat:999.01}"]},
+        "r":{"status":104, "stat":null}
+}
+# Line numbers - line, n
+{
+    "t":{"label":"Read active line number 'line'",
+         "before":["n42"],
+         "send":["{line:null}"]},
+        "r":{"status":0, "line":42}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write active line number 'line'",
+         "send":["{line:1}"]},
+        "r":{"status":104, "line":null}
+}
+# SKIP
+{
+    "t":{"label":"Read model line number 'n'",
+         "send":["{n:null}"]},
+        "r":{"status":0, "n":"*"}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write model line number 'n'",
+         "send":["{n:1}"]},
+        "r":{"status":104, "n":null}
+}
+#
+# Velocity - vel
+{
+    "t":{"label":"Read Velocity",
+        "send":["{vel:null}"]},
+        "r":{"status":0, "vel":"*"}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Velocity",
+        "send":["{vel:1}"]},
+        "r":{"status":104, "vel":null}
+}
+# Feedrate - feed
+{
+    "t":{"label":"Read Feedrate",
+        "before":["F1000"],
+        "send":["{feed:null}"]},
+        "r":{"status":0, "feed":1000}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Feedrate",
+        "send":["{feed:1}"]},
+        "r":{"status":104, "feed":null}
+}
+# Machine State - macs
+{
+    "t":{"label":"Read Machine State",
+        "before":["M30"],
+        "send":["{macs:null}"]},
+        "r":{"status":0, "macs":4}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Machine State",
+         "send":["{macs:1}"]},
+        "r":{"status":104, "macs":null}
+}
+# Cycle State - cycs
+{
+    "t":{"label":"Read Cycle State",
+         "send":["{cycs:null}"]},
+        "r":{"status":0, "cycs":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Cycle State",
+         "send":["{cycs:1}"]},
+        "r":{"status":104, "cycs":null}
+}
+# Motion State - mots
+{
+    "t":{"label":"Read Motion State",
+         "send":["{mots:null}"]},
+        "r":{"status":0, "mots":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Motion State",
+         "send":["{mots:1}"]},
+        "r":{"status":104, "mots":null}
+}
+# Hold State - hold
+{
+    "t":{"label":"Read Hold State",
+         "send":["{hold:null}"]},
+        "r":{"status":0, "hold":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Hold State",
+         "send":["{hold:1}"]},
+        "r":{"status":104, "hold":null}
+}
+# Units - unit
+{
+    "t":{"label":"Read Units mm",
+        "before":["G21"],
+        "send":["{unit:null}"]},
+        "r":{"status":0, "unit":1}
+}
+#
+{
+    "t":{"label":"Read Units inches",
+        "before":["G20"],
+        "send":["{unit:null}"]},
+        "r":{"status":0, "unit":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Units",
+         "send":["{unit:1}"]},
+        "r":{"status":104, "unit":null}
+}
+# Coordinate System - coor
+{
+    "t":{"label":"Read Coordinate System",
+        "before":["G55"],
+        "send":["{coor:null}"]},
+        "r":{"status":0, "coor":2}
+}
+#
+{
+    "t":{"label":"Read Coordinate System",
+        "before":["G59"],
+        "send":["{coor:null}"]},
+        "r":{"status":0, "coor":6}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Coordinate System",
+         "send":["{coor:1}"]},
+        "r":{"status":104, "coor":null}
+}
+# Motion Mode - momo
+{
+    "t":{"label":"Read Motion Mode",
+        "before":["G21 G1 F100 X10"],
+        "send":["{momo:null}"]},
+        "r":{"status":0, "momo":1}
+}
+#
+{
+    "t":{"label":"Read Motion Mode",
+        "before":["G80"],
+        "send":["{momo:null}"]},
+        "r":{"status":0, "momo":4}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Motion Mode",
+         "send":["{momo:1}"]},
+        "r":{"status":104, "momo":null}
+}
+# Selected Plane - plan
+{
+    "t":{"label":"Read Selected Plane",
+        "before":["G17"],
+        "send":["{plan:null}"]},
+        "r":{"status":0, "plan":0}
+}
+#
+{
+    "t":{"label":"Read Selected Plane",
+        "before":["G18"],
+        "send":["{plan:null}"]},
+        "r":{"status":0, "plan":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Selected Plane",
+         "send":["{plan:1}"]},
+        "r":{"status":104, "plan":null}
+}
+# Path Control Mode - path
+{
+    "t":{"label":"Read Path Control Mode",
+        "before":["G61"],
+        "send":["{path:null}"]},
+        "r":{"status":0, "path":0}
+}
+#
+{
+    "t":{"label":"Read Path Control Mode",
+        "before":["G64"],
+        "send":["{path:null}"]},
+        "r":{"status":0, "path":2}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Path Control Mode",
+         "send":["{path:1}"]},
+        "r":{"status":104, "path":null}
+}
+# Distance Mode - dist
+{
+    "t":{"label":"Read Relative Distance Mode",
+        "before":["G91"],
+        "send":["{dist:null}"]},
+        "r":{"status":0, "dist":1}
+}
+#
+{
+    "t":{"label":"Read Absolute Distance Mode",
+        "before":["G90"],
+        "send":["{dist:null}"]},
+        "r":{"status":0, "dist":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Distance Mode",
+         "send":["{dist:1}"]},
+        "r":{"status":104, "dist":null}
+}
+# Arc Distance Mode - admo
+{
+    "t":{"label":"Read Relative Arc Distance Mode",
+        "before":["G91.1"],
+        "send":["{admo:null}"]},
+        "r":{"status":0, "admo":1}
+}
+#
+{
+    "t":{"label":"Read Absolute Arc Distance Mode",
+        "before":["G90.1"],
+        "send":["{admo:null}"]},
+        "r":{"status":0, "admo":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Arc Distance Mode",
+         "send":["{admo:1}"]},
+        "r":{"status":104, "admo":null}
+}
+# Feed Rate Mode - frmo
+{
+    "t":{"label":"Read Feed Rate Mode",
+        "before":["G93"],
+        "send":["{frmo:null}"]},
+        "r":{"status":0, "frmo":0}
+}
+#
+{
+    "t":{"label":"Read Feed Rate Mode",
+        "before":["G94"],
+        "send":["{frmo:null}"]},
+        "r":{"status":0, "frmo":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write Feed Rate Mode",
+         "send":["{frmo:1}"]},
+        "r":{"status":104, "frmo":null}
+}

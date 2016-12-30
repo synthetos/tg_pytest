@@ -37,7 +37,7 @@
          "send":["{xjm:0.009}"]},
         "r":{"status":108, "xjm":null}
 }
-# SKIP
+#
 {
     "t":{"label":"EXCEPTION: Write xjm with bad values",
          "send":["{xjm:-1}"]},
