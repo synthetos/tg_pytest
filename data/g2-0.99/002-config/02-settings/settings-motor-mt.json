@@ -10,31 +10,32 @@
 #
 {
     "t":{"label":"Set configs for JSON tests",
-         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
-         "delay":0.100},
+        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],
+        "delay":0.100},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Set motor timeout",
-         "send":["{mt:10.1}"]},
-        "r":{"status":0, "mt":10.1}
+        "send":["{mt:10.1}"]},
+    "r":{"status":0, "mt":10.1}
 }
 #
 {
     "t":{"label":"Read motor timeout",
-         "send":["{mt:null}"]},
-        "r":{"status":0, "mt":10.1}
+        "before":["{mt:10.1}"],
+        "send":["{mt:null}"]},
+    "r":{"status":0, "mt":10.1}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set motor timeout to negative number",
-         "send":["{mt:-10}"]},
+        "send":["{mt:-10}"]},
         "r":{"status":108, "mt":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set motor timeout above MOTOR_TIMEOUT_SECONDS_MAX",
-         "send":["{mt:4000000000}"]},
-        "r":{"status":109, "mt":null}
+        "send":["{mt:4000000000}"]},
+    "r":{"status":109, "mt":null}
 }

@@ -7,50 +7,51 @@
 # Soft Limit Enable
 {
     "t":{"label":"Set soft limit enable false",
-         "send":["{sl:false}"]},
-        "r":{"status":0, "sl":false}
+        "send":["{sl:false}"]},
+    "r":{"status":0, "sl":false}
 }
 #
 {
     "t":{"label":"Set soft limit enable true",
-         "send":["{sl:true}"]},
-        "r":{"status":0, "sl":true}
+        "send":["{sl:true}"]},
+    "r":{"status":0, "sl":true}
 }
 #
 {
     "t":{"label":"Read soft limit enable",
-         "send":["{sl:null}"]},
-        "r":{"status":0, "sl":true}
+        "before":["{sl:true}"],
+        "send":["{sl:null}"]},
+    "r":{"status":0, "sl":true}
 }
 #
 {
     "t":{"label":"Set soft limit enable false using '0'",
-         "send":["{sl:0}"]},
-        "r":{"status":0, "sl":0}
+        "send":["{sl:0}"]},
+    "r":{"status":0, "sl":0}
 }
 #
 {
     "t":{"label":"Set soft limit enable true using '1'",
-         "send":["{sl:1}"]},
-        "r":{"status":0, "sl":1}
+        "send":["{sl:1}"]},
+    "r":{"status":0, "sl":1}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set soft limit to 2",
-         "send":["{sl:2}"]},
-        "r":{"status":109, "sl":null}
+        "send":["{sl:2}"]},
+    "r":{"status":109, "sl":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set soft limit to -1",
-         "send":["{sl:-1}"]},
-        "r":{"status":108, "sl":null}
+        "send":["{sl:-1}"]},
+    "r":{"status":108, "sl":null}
 }
 # SKIP
 {
     "t":{"label":"Test various type errors",
-         "send":["{sl:1.0}",
-                 "{sl:\"1\"}"
+        "send":["{sl:1.0}",
+                "{sl:\"1\"}"
                 ]},
-        "r":{"status":117, "sl":null}
+    "r":{"status":117, "sl":null}
 }

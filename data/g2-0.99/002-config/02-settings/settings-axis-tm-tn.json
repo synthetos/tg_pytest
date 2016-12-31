@@ -8,96 +8,98 @@
 #
 {
     "t":{"label":"Write ytn in MM",
-         "before":["G21"],
-         "send":["{ytn:2}"]},
-        "r":{"status":0, "ytn":2}
+        "before":["G21"],
+        "send":["{ytn:2}"]},
+    "r":{"status":0, "ytn":2}
 }
 #
 {
     "t":{"label":"Read ytn in MM",
-         "send":["{ytn:null}"]},
-        "r":{"status":0, "ytn":2}
+        "before":["G21","{ytn:2}"],
+        "send":["{ytn:null}"]},
+    "r":{"status":0, "ytn":2}
 }
 #
 {
     "t":{"label":"Read ytn in Inches",
-         "before":["G20"],
-         "send":["{ytn:null}"]},
-         "r":{"status":0, "ytn":0.079}
+        "before":["G21","{ytn:2}","G20"],
+        "send":["{ytn:null}"]},
+    "r":{"status":0, "ytn":0.079}
 }
 #
 {
     "t":{"label":"Write ytn in Inches",
-         "before":["G20"],
-         "send":["{ytn:0.1}"],
-         "after":["G21"]},
-         "r":{"status":0, "ytn":0.1}
+        "before":["G20"],
+        "send":["{ytn:0.1}"],
+        "after":["G21"]},
+    "r":{"status":0, "ytn":0.1}
 }
 #
 {
     "t":{"label":"Write ytn - negative value - OK",
-         "send":["{ytn:-100}"]},
-        "r":{"status":0, "ytn":-100}
+        "send":["{ytn:-100}"]},
+    "r":{"status":0, "ytn":-100}
 }
 #
 {
     "t":{"label":"Write ytn - zero value - OK",
-         "send":["{ytn:0}"]},
-        "r":{"status":0, "ytn":0}
+        "send":["{ytn:0}"]},
+    "r":{"status":0, "ytn":0}
 }
 # SKIP
 {
     "t":{"label":"Test type errors - EXCEPTION",
-         "send":["{ytn:t}",
+        "send":["{ytn:t}",
                  "{ytn:\"1000.5\"}"]},
-        "r":{"status":117, "ytn":null}
+    "r":{"status":117, "ytn":null}
 }
 #
 # Travel Maximum
 #
 {
     "t":{"label":"Write ytm in MM",
-         "before":["G21"],
-         "send":["{ytm:400}"]},
-        "r":{"status":0, "ytm":400}
+        "before":["G21"],
+        "send":["{ytm:400}"]},
+    "r":{"status":0, "ytm":400}
 }
 #
 {
     "t":{"label":"Read ytm in MM",
-         "send":["{ytm:null}"]},
-        "r":{"status":0, "ytm":400}
+        "before":["G21","{ytm:400}"],
+        "send":["{ytm:null}"]},
+    "r":{"status":0, "ytm":400}
 }
 #
 {
     "t":{"label":"Read ytm in Inches",
-         "before":["G20"],
-         "send":["{ytm:null}"]},
-         "r":{"status":0, "ytm":15.748}
+        "before":["G21","{ytm:400}","G20"],
+        "send":["{ytm:null}"]},
+    "r":{"status":0, "ytm":15.748}
 }
 #
 {
     "t":{"label":"Write ytm in Inches",
-         "before":["G20"],
-         "send":["{ytm:15.1}"],
-         "after":["G21"]},
-         "r":{"status":0, "ytm":15.1}
+        "before":["G20"],
+        "send":["{ytm:15.1}"],
+        "after":["G21"]},
+    "r":{"status":0, "ytm":15.1}
 }
 #
 {
     "t":{"label":"Write ytn - negative value - OK",
-         "send":["{ytm:-100}"]},
-        "r":{"status":0, "ytm":-100}
+        "send":["{ytm:-100}"]},
+    "r":{"status":0, "ytm":-100}
 }
 #
 {
     "t":{"label":"Write ytn - zero value - OK",
-         "send":["{ytm:0}"]},
-        "r":{"status":0, "ytm":0}
+        "send":["{ytm:0}"]},
+    "r":{"status":0, "ytm":0}
 }
 # SKIP
 {
     "t":{"label":"Test type errors - EXCEPTION",
-         "send":["{ytm:t}",
+        "send":["{ytm:t}",
                  "{ytm:\"1000.5\"}"]},
-        "r":{"status":117, "ytm":null}
+    "r":{"status":117, "ytm":null}
 }

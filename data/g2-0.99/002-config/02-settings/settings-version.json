@@ -7,91 +7,91 @@
 # Firmware Build
 {
     "t":{"label":"Read fb",
-         "send":["{\"fb\":null}"]},
-        "r":{"status":0, "fb":"*"}
+        "send":["{\"fb\":null}"]},
+    "r":{"status":0, "fb":"*"}
 }
 #
 {
     "t":{"label":"Read fb",
-         "send":["{fb:null}"]},
-        "r":{"status":0, "fb":"*"}
+        "send":["{fb:null}"]},
+    "r":{"status":0, "fb":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write fb, is read-only",
-         "send":["{\"fb\":999.01}"]},
-        "r":{"status":104, "fb":null}
+        "send":["{\"fb\":999.01}"]},
+    "r":{"status":104, "fb":null}
 }
 # Firmware Build String
 {
     "t":{"label":"Read fbs",
-         "send":["{fbs:null}"]},
-        "r":{"status":0, "fbs":"*"}
+        "send":["{fbs:null}"]},
+    "r":{"status":0, "fbs":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write fbs, is read-only",
-         "send":["{fbs:\"Cuckoo for Cocoa Puffs\"}"]},
-        "r":{"status":104, "fbs":null}
+        "send":["{fbs:\"Cuckoo for Cocoa Puffs\"}"]},
+    "r":{"status":104, "fbs":null}
 }
 # Firmware Config String
 {
     "t":{"label":"Read fbc",
-         "send":["{fbc:null}"]},
-        "r":{"status":0, "fbc":"*"}
+        "send":["{fbc:null}"]},
+    "r":{"status":0, "fbc":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write fbc, is read-only",
-         "send":["{fbc:\"We don't need no stinking configuration file\"}"]},
-        "r":{"status":104, "fbc":null}
+        "send":["{fbc:\"We don't need no stinking configuration file\"}"]},
+    "r":{"status":104, "fbc":null}
 }
 # Firmware Version
 {
     "t":{"label":"Read fv",
-         "send":["{fv:n}"]},
-        "r":{"status":0, "fv":"*"}
+        "send":["{fv:n}"]},
+    "r":{"status":0, "fv":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write fv, is read-only",
-         "send":["{fv:99999999999.01}"]},
-        "r":{"status":104, "fv":null}
+        "send":["{fv:99999999999.01}"]},
+    "r":{"status":104, "fv":null}
 }
 # Hardware Platform
 {
     "t":{"label":"Read hp",
-         "send":["{hp:n}"]},
-        "r":{"status":0, "hp":"*"}
+        "send":["{hp:n}"]},
+    "r":{"status":0, "hp":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write hp",
-         "send":["{hp:2}"]},
-         "r":{"status":104, "hp":null}
+        "send":["{hp:2}"]},
+    "r":{"status":104, "hp":null}
 }
 # Hardware Version
 #
 {
     "t":{"label":"Read hv - any reponse is OK",
-         "send":["{hv:n}"]},
-        "r":{"status":0, "hv":"*"}
+        "send":["{hv:n}"]},
+    "r":{"status":0, "hv":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write hv",
-         "send":["{hv:8}"]},
-        "r":{"status":104, "hv":null}
+        "send":["{hv:8}"]},
+    "r":{"status":104, "hv":null}
 }
 # Board ID
 {
     "t":{"label":"Read board id",
-         "send":["{id:n}"]},
-        "r":{"status":0, "id":"*"}
+        "send":["{id:n}"]},
+    "r":{"status":0, "id":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write board id, is read-only",
-         "send":["{id:\"THX1138\"}"]},
-        "r":{"status":104, "id":null}
+        "send":["{id:\"THX1138\"}"]},
+    "r":{"status":104, "id":null}
 }

@@ -10,108 +10,114 @@
     "before":["{1ma:0}, {2ma:1}, {3ma:2}, {4ma:3}"]
   }
 }
-#
-{
-  "before_each":{
-    "label":"Reset to MM mode",
-    "before":["G21"]
-  }
-}
 # Linear Axis TR Tests
 {
     "t":{"label":"Write 3tr - reasonable value",
-         "send":["{3tr:5.08}"]},
-        "r":{"status":0, "3tr":5.08}
+        "before":["G21"],
+        "send":["{3tr:5.08}"]},
+    "r":{"status":0, "3tr":5.08}
 }
 #
 {
     "t":{"label":"Read 3tr in MM - flat",
-         "send":["{3tr:null}"]},
-         "r":{"status":0, "3tr":5.08}
+        "before":["G21","{3tr:5.08}"],
+        "send":["{3tr:null}"]},
+    "r":{"status":0, "3tr":5.08}
 }
 #
 {
     "t":{"label":"Read 3tr in MM - nested",
-         "send":["{3:{tr:null}}"]},
-         "r":{"status":0, "3":{"tr":5.08}}
+        "before":["G21","{3tr:5.08}"],
+        "send":["{3:{tr:null}}"]},
+    "r":{"status":0, "3":{"tr":5.08}}
 }
 #
 {
     "t":{"label":"Write 3tr - ridiculous value - should still pass",
-         "send":["{3tr:499.99}"]},
-        "r":{"status":0, "3tr":499.99}
+        "before":["G21"],
+        "send":["{3tr:499.99}"]},
+    "r":{"status":0, "3tr":499.99}
 }
 #
 {
     "t":{"label":"Write 3tr - reasonable value (again)",
-         "send":["{3tr:5.08}"]},
-        "r":{"status":0, "3tr":5.08}
+        "before":["G21"],
+        "send":["{3tr:5.08}"]},
+    "r":{"status":0, "3tr":5.08}
 }
 #
 {
-    "t":{"label":"Read 3tr in Inches",
-         "before":["G20"],
-         "send":["{3tr:null}"]},
-         "r":{"status":0, "3tr":0.20}
+    "t":{"label":"Read 3tr in Inches - should convert as it's a linear axis",
+        "before":["G21","{3tr:5.08}","G20"],
+        "send":["{3tr:null}"]},
+     "r":{"status":0, "3tr":0.20}
 }
-# Rotary Axis SU Tests
+# Rotary Axis TR Tests
 {
     "t":{"label":"Write 4tr - reasonable value",
-         "send":["{4tr:360}"]},
-        "r":{"status":0, "4tr":360}
+        "before":["G21"],
+        "send":["{4tr:360}"]},
+    "r":{"status":0, "4tr":360}
 }
 #
 {
     "t":{"label":"Read 4tr in MM - flat",
-         "send":["{4tr:null}"]},
-         "r":{"status":0, "4tr":360}
+        "before":["G21","{4tr:360}"],
+        "send":["{4tr:null}"]},
+    "r":{"status":0, "4tr":360}
 }
 #
 {
     "t":{"label":"Read 4tr in MM - nested",
-         "send":["{4:{tr:null}}"]},
-         "r":{"status":0, "4":{"tr":360}}
+        "before":["G21","{4tr:360}"],
+        "send":["{4:{tr:null}}"]},
+    "r":{"status":0, "4":{"tr":360}}
 }
 #
 {
     "t":{"label":"Write 4tr - ridiculous value - should still pass",
-         "send":["{4tr:20000}"]},
-        "r":{"status":0, "4tr":20000}
+        "before":["G21"],
+        "send":["{4tr:20000}"]},
+    "r":{"status":0, "4tr":20000}
 }
 #
 {
     "t":{"label":"Write 4tr - reasonable value (again)",
-         "send":["{4tr:7.5}"]},
-        "r":{"status":0, "4tr":7.5}
+        "before":["G21"],
+        "send":["{4tr:7.5}"]},
+    "r":{"status":0, "4tr":7.5}
 }
 #
 {
-    "t":{"label":"Read 4tr in Inches",
-         "before":["G20"],
-         "send":["{4tr:null}"]},
-         "r":{"status":0, "4tr":7.5}
+    "t":{"label":"Read 4tr in Inches - should not convert as it's a rotary axis",
+        "before":["G21","{4tr:7.5}","G20"],
+        "send":["{4tr:null}"]},
+    "r":{"status":0, "4tr":7.5}
 }
 # EXCEPTIONS
 {
     "t":{"label":"EXCEPTION: Write 3tr - zero value",
-         "send":["{3tr:0}"]},
-        "r":{"status":108, "3tr":null}
+        "before":["G21"],
+        "send":["{3tr:0}"]},
+    "r":{"status":108, "3tr":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write 3tr - negative value",
-         "send":["{3tr:-1.8}"]},
-        "r":{"status":108, "3tr":null}
+        "before":["G21"],
+        "send":["{3tr:-1.8}"]},
+    "r":{"status":108, "3tr":null}
 }
 # SKIP
 {
     "t":{"label":"EXCEPTION: Write 3tr with boolean",
-         "send":["{3tr:t}"]},
-        "r":{"status":117, "3tr":null}
+        "send":["{3tr:t}"]},
+    "r":{"status":117, "3tr":null}
 }
 # SKIP
 {
     "t":{"label":"EXCEPTION: Write 3tr with string",
-         "send":["{3tr:\"5.08\"}"]},
-        "r":{"status":117, "3tr":null}
+        "before":["G21"],
+        "send":["{3tr:\"5.08\"}"]},
+    "r":{"status":117, "3tr":null}
 }

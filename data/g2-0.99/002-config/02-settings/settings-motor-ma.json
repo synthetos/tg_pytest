@@ -6,60 +6,63 @@
 #
 {
     "t":{"label":"Write 1ma with valid value",
-         "send":["{1ma:4}"]},
-        "r":{"status":0, "1ma":4}
+        "send":["{1ma:4}"]},
+    "r":{"status":0, "1ma":4}
 }
 #
 {
     "t":{"label":"Read 1ma - flat",
-         "send":["{1ma:null}"]},
-        "r":{"status":0, "1ma":4}
+        "before":["{1ma:4}"],
+        "send":["{1ma:null}"]},
+    "r":{"status":0, "1ma":4}
 }
 #
 {
     "t":{"label":"Read 1ma - nested",
-         "send":["{1:{ma:null}}"]},
-        "r":{"status":0, "1":{"ma":4}}
+        "before":["{1ma:4}"],
+        "send":["{1:{ma:null}}"]},
+    "r":{"status":0, "1":{"ma":4}}
 }
 #
 {
     "t":{"label":"Read 2ma",
-         "send":["{2ma:null}"]},
-        "r":{"status":0, "2ma":"*"}
+        "before":["{2ma:1}"],
+        "send":["{2ma:null}"]},
+    "r":{"status":0, "2ma":"*"}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write 2ma - value too large",
-         "send":["{2ma:10}"]},
-        "r":{"status":109, "2ma":null}
+        "send":["{2ma:10}"]},
+    "r":{"status":109, "2ma":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write 2ma - with negative value",
-         "send":["{2ma:-1}"]},
-        "r":{"status":108, "2ma":null}
+        "send":["{2ma:-1}"]},
+    "r":{"status":108, "2ma":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Read 7ma - unrecognized command",
-         "send":["{7ma:null}"]},
-        "r":{"status":100,"7ma":null}
+        "send":["{7ma:null}"]},
+    "r":{"status":100,"7ma":null}
 }
 # SKIP
 {
-    "t":{"label":"write 3ma with boolean - EXCEPTION",
-         "send":["{3ma:t}"]},
-        "r":{"status":117, "3ma":null}
+    "t":{"label":"EXCEPTION: write 3ma with boolean",
+        "send":["{3ma:t}"]},
+    "r":{"status":117, "3ma":null}
 }
 # SKIP
 {
-    "t":{"label":"write 3ma with float - EXCEPTION",
-         "send":["{3ma:4.1}"]},
-        "r":{"status":117, "3ma":null}
+    "t":{"label":"EXCEPTION: write 3ma with float",
+        "send":["{3ma:4.1}"]},
+    "r":{"status":117, "3ma":null}
 }
 # SKIP
 {
-    "t":{"label":"write 3ma with string - EXCEPTION",
-         "send":["{3ma:\"3\"}"]},
-        "r":{"status":117, "3ma":null}
+    "t":{"label":"EXCEPTION: write 3ma with string",
+        "send":["{3ma:\"3\"}"]},
+    "r":{"status":117, "3ma":null}
 }

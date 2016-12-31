@@ -10,124 +10,130 @@
     "before":["{1ma:0}, {2ma:1}, {3ma:2}, {4ma:3}"]
   }
 }
-#
-{
-  "before_each":{
-    "label":"Reset to MM mode",
-    "before":["G21"]
-  }
-}
-#
 # Linear Axis SU Tests
 #
 {
     "t":{"label":"Write 1su - to 45 steps per MM - 1 is a linear axis",
-         "send":["{1su:45}"]},
-        "r":{"status":0, "1su":45}
+        "before":["G21"],
+        "send":["{1su:45}"]},
+    "r":{"status":0, "1su":45}
 }
 #
 {
     "t":{"label":"Read 1su in MM",
-         "send":["{1su:null}"]},
-         "r":{"status":0, "1su":45}
+        "before":["G21","{1su:45}"],
+        "send":["{1su:null}"]},
+    "r":{"status":0, "1su":45}
 }
 #
 {
     "t":{"label":"Write 1su - to 1000 steps per INCH - 1 is a linear axis",
-         "before":["G20"],
-         "send":["{1su:1000}"]},
-        "r":{"status":0, "1su":1000}
+        "before":["G20"],
+        "send":["{1su:1000}"]},
+    "r":{"status":0, "1su":1000}
 }
 #
 {
     "t":{"label":"Read 1su in INCHES",
-        "before":["G20"],
-         "send":["{1su:null}"]},
-         "r":{"status":0, "1su":1000}
+        "before":["G20","{1su:1000}"],
+        "send":["{1su:null}"]},
+    "r":{"status":0, "1su":1000}
 }
 #
 {
     "t":{"label":"Read 1su in MM",
-         "send":["{1su:null}"]},
-         "r":{"status":0, "1su":39.37008}
+        "before":["G20","{1su:1000}","G21"],
+        "send":["{1su:null}"]},
+    "r":{"status":0, "1su":39.37008}
 }
 #
 {
     "t":{"label":"Write 1su in MM as an object",
-         "send":["{1:{su:40}}"]},
-         "r":{"status":0, "1":{"su":40}}
+        "before":["G21"],
+        "send":["{1:{su:40}}"]},
+    "r":{"status":0, "1":{"su":40}}
 }
 #
 {
     "t":{"label":"Read 1su in MM as an object",
+        "before":["G21","{1:{su:40}}"],
          "send":["{1:{su:null}}"]},
-         "r":{"status":0, "1":{"su":40}}
+    "r":{"status":0, "1":{"su":40}}
 }
 # Boundary Condition Tests
 {
     "t":{"label":"Write 3su - ridiculous value - should still pass",
-         "send":["{3su:50000}"]},
-        "r":{"status":0, "3su":50000}
+        "before":["G21"],
+        "send":["{3su:50000}"]},
+    "r":{"status":0, "3su":50000}
 }
 #
 {
     "t":{"label":"Write 3su - reasonable value (again)",
-         "send":["{3su:42}"]},
-        "r":{"status":0, "3su":42}
+        "before":["G21"],
+        "send":["{3su:42}"]},
+    "r":{"status":0, "3su":42}
 }
 #
 {
     "t":{"label":"Write 3su - zero value is OK, returns actual value",
-         "send":["{3su:0}"]},
-        "r":{"status":0, "3su":42}
+        "before":["G21"],
+        "send":["{3su:0}"]},
+    "r":{"status":0, "3su":42}
 }
 #
 {
     "t":{"label":"Write 3su - negative value is OK, returns actual value",
-         "send":["{3su:-4.4444}"]},
-        "r":{"status":0, "3su":42}
+        "before":["G21"],
+        "send":["{3su:-4.4444}"]},
+    "r":{"status":0, "3su":42}
 }
 # SKIP
 {
     "t":{"label":"write 3su with boolean - EXCEPTION",
-         "send":["{3su:t}"]},
-        "r":{"status":117, "3su":null}
+        "before":["G21"],
+        "send":["{3su:t}"]},
+    "r":{"status":117, "3su":null}
 }
 # SKIP
 {
     "t":{"label":"write 3su with string - EXCEPTION",
-         "send":["{3su:\"5.08\"}"]},
-        "r":{"status":117, "3su":null}
+        "before":["G21"],
+        "send":["{3su:\"5.08\"}"]},
+    "r":{"status":117, "3su":null}
 }
 # Rotary Axis SU Tests
 {
-    "t":{"label":"Write 4su rotary axis in INCHES G20",
-         "before":["G20"],
-         "send":["{4su:4.5}"]},
-        "r":{"status":0, "4su":4.5}
-}
-#
-{
-    "t":{"label":"Read 4su rotary axis in INCHES G20",
-        "before":["G20"],
-         "send":["{4su:null}"]},
-         "r":{"status":0, "4su":4.5}
+    "t":{"label":"Write 4su as a nested object in MM",
+        "before":["G21"],
+        "send":["{4:{su:5.0}}"]},
+    "r":{"status":0, "4":{"su":5}}
 }
 #
 {
     "t":{"label":"Read 4su rotary axis in MM G21",
-         "send":["{4su:null}"]},
-         "r":{"status":0, "4su":4.5}
-}
-#
-{
-    "t":{"label":"Write 4su as a nested object",
-         "send":["{4:{su:5.0}}"]},
-         "r":{"status":0, "4":{"su":5}}
+        "before":["G21","{4:{su:4.5}}"],
+        "send":["{4su:null}"]},
+    "r":{"status":0, "4su":4.5}
 }
 #
 {
     "t":{"label":"Read 4su as a nested object",
-         "send":["{4:{su:null}}"]},
-         "r":{"status":0, "4":{"su":5}}
+        "before":["G21","{4:{su:5.0}}"],
+        "send":["{4:{su:null}}"]},
+    "r":{"status":0, "4":{"su":5}}
+}
+#
+{
+    "t":{"label":"Write 4su rotary axis in INCHES G20",
+        "before":["G20"],
+        "send":["{4su:4.5}"]},
+    "r":{"status":0, "4su":4.5}
+}
+#
+{
+    "t":{"label":"Read 4su rotary axis in INCHES G20",
+        "before":["G20","{4su:4.5}"],
+        "send":["{4su:null}"]},
+    "r":{"status":0, "4su":4.5}
 }

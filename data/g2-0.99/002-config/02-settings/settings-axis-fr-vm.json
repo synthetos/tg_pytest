@@ -7,105 +7,105 @@
 # Velocity Max
 {
     "t":{"label":"Write yvm in MM",
-         "before":["G21"],
-         "send":["{yvm:1000}"]},
-        "r":{"status":0, "yvm":1000}
+        "before":["G21"],
+        "send":["{yvm:1000}"]},
+    "r":{"status":0, "yvm":1000}
 }
 #
 {
     "t":{"label":"Read yvm in MM",
-         "send":["{yvm:null}"]},
-        "r":{"status":0, "yvm":1000}
+        "before":["G21","{yvm:1000}"],
+        "send":["{yvm:null}"]},
+    "r":{"status":0, "yvm":1000}
 }
 #
 {
     "t":{"label":"Read yvm in Inches",
-         "before":["G20"],
-         "send":["{yvm:null}"]},
-         "r":{"status":0, "yvm":39}
+        "before":["G21","{yvm:1000}","G20"],
+        "send":["{yvm:null}"]},
+    "r":{"status":0, "yvm":39}
 }
 #
 {
     "t":{"label":"Write yvm in Inches",
-         "before":["G20"],
-         "send":["{yvm:30.1}"],
-         "after":["G21"]},
-         "r":{"status":0, "yvm":30}
+        "before":["G20"],
+        "send":["{yvm:30.1}"],
+        "after":["G21"]},
+    "r":{"status":0, "yvm":30}
 }
 # Test rotary axes are not unit converted
 {
     "t":{"label":"Write avm in degrees, in Inches mode",
-         "before":["G20"],
-         "send":["{avm:18000}"]},
-         "r":{"status":0, "avm":18000}
+        "before":["G20"],
+        "send":["{avm:18000}"]},
+    "r":{"status":0, "avm":18000}
 }
 #
 {
     "t":{"label":"Read avm in degrees, in Inches mode",
-         "before":["G20"],
-         "send":["{avm:18000}"]},
-         "r":{"status":0, "avm":18000}
+        "before":["G20","{avm:18000}"],
+        "send":["{avm:18000}"]},
+    "r":{"status":0, "avm":18000}
 }
 #
 {
     "t":{"label":"Read avm in degrees, in MM mode",
-         "before":["G21"],
-         "send":["{avm:18000}"]},
-         "r":{"status":0, "avm":18000}
+        "before":["G21","{avm:18000}"],
+        "send":["{avm:18000}"]},
+    "r":{"status":0, "avm":18000}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write yvm - with illegal value",
-         "send":["{yvm:-1}"]},
-        "r":{"status":108, "yvm":null}
+        "send":["{yvm:-1}"]},
+    "r":{"status":108, "yvm":null}
 }
 # SKIP
 {
     "t":{"label":"Test type errors - EXCEPTION",
-         "send":["{yvm:t}",
-                 "{yvm:\"1000.5\"}"]},
-        "r":{"status":117, "yvm":null}
+        "send":["{yvm:t}","{yvm:\"1000.5\"}"]},
+    "r":{"status":117, "yvm":null}
 }
 #
 # Feed Rate
 #
 {
     "t":{"label":"Write yfr in MM",
-         "before":["G21"],
-         "send":["{yfr:1000}"]},
-        "r":{"status":0, "yfr":1000}
+        "before":["G21"],
+        "send":["{yfr:1000}"]},
+    "r":{"status":0, "yfr":1000}
 }
 #
 {
     "t":{"label":"Read yfr in MM",
-         "send":["{yfr:null}"]},
-        "r":{"status":0, "yfr":1000}
+        "before":["G21","{yfr:1000}"],
+        "send":["{yfr:null}"]},
+    "r":{"status":0, "yfr":1000}
 }
 #
 {
     "t":{"label":"Read yfr in Inches",
-         "before":["G20"],
-         "send":["{yfr:null}"]},
-         "r":{"status":0, "yfr":39}
+        "before":["G21","{yfr:1000}","G20"],
+        "send":["{yfr:null}"]},
+    "r":{"status":0, "yfr":39}
 }
 #
 {
     "t":{"label":"Write yfr in Inches",
-         "before":["G20"],
-         "send":["{yfr:30.1}"],
-         "after":["G21"]},
-         "r":{"status":0, "yfr":30}
+        "before":["G20"],
+        "send":["{yfr:30.1}"],
+        "after":["G21"]},
+    "r":{"status":0, "yfr":30}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write yfr with illegal value",
-         "send":["{yfr:-1}"]},
-        "r":{"status":108, "yfr":null}
+        "send":["{yfr:-1}"]},
+    "r":{"status":108, "yfr":null}
 }
 # SKIP
 {
     "t":{"label":"Test type errors - EXCEPTION",
-         "send":["{yfr:t}",
-                 "{yfr:\"1000.5\"}"]},
-        "r":{"status":117, "yfr":null}
+        "send":["{yfr:t}","{yfr:\"1000.5\"}"]},
+    "r":{"status":117, "yfr":null}
 }

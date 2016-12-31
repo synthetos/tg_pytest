@@ -2,73 +2,77 @@
 #
 #   settings-axis-homing.json - homing for 0.99 config
 #
+#  **** INCOMPLETE - this file is not complete for all homing values yet ****
+#
 # include 000-init/init-json.json
 #
 # Homing Input
 {
     "t":{"label":"Set homing input",
-         "send":["{yhi:1}"]},
-         "r":{"status":0, "yhi":1}
+        "send":["{yhi:1}"]},
+    "r":{"status":0, "yhi":1}
 }
 #
 {
     "t":{"label":"Set homing input",
-         "send":["{yhi:9}"]},
-         "r":{"status":0, "yhi":9}
+        "send":["{yhi:9}"]},
+    "r":{"status":0, "yhi":9}
 }
 #
 {
     "t":{"label":"Turn homing input off = 0",
-         "send":["{yhi:0}"]},
-         "r":{"status":0, "yhi":0}
+        "send":["{yhi:0}"]},
+    "r":{"status":0, "yhi":0}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set homing input - too small",
-         "send":["{yhi:-1}"]},
-         "r":{"status":108, "yhi":null}
+        "send":["{yhi:-1}"]},
+    "r":{"status":108, "yhi":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set homing input - too large",
-         "send":["{yhi:16}"]},
-         "r":{"status":109, "yhi":null}
+        "send":["{yhi:32}"]},
+    "r":{"status":109, "yhi":null}
 }
 # Homing Direction
 {
     "t":{"label":"Set homing direction",
-         "send":["{yhd:1}"]},
-         "r":{"status":0, "yhd":1}
+        "send":["{yhd:1}"]},
+    "r":{"status":0, "yhd":1}
 }
 #
 {
     "t":{"label":"Set homing direction",
-         "send":["{yhd:0}"]},
-         "r":{"status":0, "yhd":0}
+        "send":["{yhd:0}"]},
+    "r":{"status":0, "yhd":0}
 }
 #
 {
     "t":{"label":"EXCEPTION: homing direction too small",
-         "send":["{yhd:-1}"]},
-         "r":{"status":108, "yhd":null}
+        "send":["{yhd:-1}"]},
+    "r":{"status":108, "yhd":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: homing direction too large",
-         "send":["{yhd:2}"]},
-         "r":{"status":109, "yhd":null}
+        "send":["{yhd:2}"]},
+    "r":{"status":109, "yhd":null}
 }
 # Search Velocity
 {
     "t":{"label":"Write y search velocity",
-         "send":["{ysv:1000}"]},
-         "r":{"status":0, "ysv":1000}
+        "before":["G21"],
+        "send":["{ysv:1000}"]},
+    "r":{"status":0, "ysv":1000}
 }
 #
 {
     "t":{"label":"Read ysv",
-         "send":["{ysv:null}"]},
-         "r":{"status":0, "ysv":1000}
+        "before":["G21","{ysv:1000}"],
+        "send":["{ysv:null}"]},
+    "r":{"status":0, "ysv":1000}
 }
 #
 {

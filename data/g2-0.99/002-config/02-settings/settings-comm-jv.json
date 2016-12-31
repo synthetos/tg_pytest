@@ -7,56 +7,57 @@
 # JSON Verbosity
 {
     "t":{"label":"Set JV to 1 (FOOTER only) - returns null r object",
-        "send":["{jv:1}"]},
-        "after":["{jv:5}"],
-        "r":{"status":0}
+        "send":["{jv:1}"],
+        "after":["{jv:5}"]},
+    "r":{"status":0}
 }
 #
 {
     "t":{"label":"Set JV to 2 (MESSAGES) - returns null r object",
-         "send":["{jv:2}"]},
-         "after":["{jv:5}"],
-        "r":{"status":0}
+        "send":["{jv:2}"],
+        "after":["{jv:5}"]},
+    "r":{"status":0}
 }
 #
 {
     "t":{"label":"Set JV to 3 (CONFIGS)",
-         "send":["{jv:3}"]},
-         "after":["{jv:5}"],
-        "r":{"status":0, "jv":3}
+        "send":["{jv:3}"],
+        "after":["{jv:5}"]},
+    "r":{"status":0, "jv":3}
 }
 #
 {
     "t":{"label":"Set JV to 4 (LINENUM)",
-         "send":["{jv:4}"]},
-         "after":["{jv:5}"],
-         "r":{"status":0, "jv":4}
+        "send":["{jv:4}"]},
+        "after":["{jv:5}"],
+    "r":{"status":0, "jv":4}
 }
 #
 {
     "t":{"label":"Set JV to 5 (VERBOSE)",
-         "send":["{jv:5}"]},
-         "r":{"status":0, "jv":5}
+        "send":["{jv:5}"]},
+    "r":{"status":0, "jv":5}
 }
 #
 {
     "t":{"label":"Read JV (5)",
-         "send":["{jv:n}"]},
-         "r":{"status":0, "jv":5}
+        "before":["{jv:5}"],
+        "send":["{jv:n}"]},
+    "r":{"status":0, "jv":5}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set JV to -1 - value too low",
-         "send":["{jv:-1}"]},
-         "after":["{jv:5}"],
-         "r":{"status":108, "jv":null}
+        "send":["{jv:-1}"],
+        "after":["{jv:5}"]},
+    "r":{"status":108, "jv":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set JV to 10 - value too high",
-         "send":["{jv:10}"]},
-         "after":["{jv:5}"],
-         "r":{"status":109, "jv":null}
+        "send":["{jv:10}"],
+        "after":["{jv:5}"]},
+    "r":{"status":109, "jv":null}
 }
 # SKIP
 {
@@ -67,5 +68,5 @@
                  "{jv:1.1}",
                  "{jv:\"1\"}"
                 ]},
-        "r":{"status":117, "jv":null}
+    "r":{"status":117, "jv":null}
 }

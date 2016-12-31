@@ -4,53 +4,54 @@
 #
 # include 000-init/init-json.json
 #
-# hard Limit Enable
+# Safety Interlock Enable
 {
     "t":{"label":"Set saf enable false",
-         "send":["{saf:false}"]},
-        "r":{"status":0, "saf":false}
+        "send":["{saf:false}"]},
+    "r":{"status":0, "saf":false}
 }
 #
 {
     "t":{"label":"Set saf enable true",
-         "send":["{saf:true}"]},
-        "r":{"status":0, "saf":true}
+        "send":["{saf:true}"]},
+    "r":{"status":0, "saf":true}
 }
 #
 {
     "t":{"label":"Read saf enable",
-         "send":["{saf:null}"]},
-        "r":{"status":0, "saf":true}
+        "before":["{saf:true}"],
+        "send":["{saf:null}"]},
+    "r":{"status":0, "saf":true}
 }
 #
 {
     "t":{"label":"Set saf enable false using '0'",
-         "send":["{saf:0}"]},
-        "r":{"status":0, "saf":0}
+        "send":["{saf:0}"]},
+    "r":{"status":0, "saf":0}
 }
 #
 {
     "t":{"label":"Set saf enable true using '1'",
-         "send":["{saf:1}"]},
-        "r":{"status":0, "saf":1}
+        "send":["{saf:1}"]},
+    "r":{"status":0, "saf":1}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set saf to 2",
-         "send":["{saf:2}"]},
-        "r":{"status":109, "saf":null}
+        "send":["{saf:2}"]},
+    "r":{"status":109, "saf":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set saf to -1",
-         "send":["{saf:-1}"]},
-        "r":{"status":108, "saf":null}
+        "send":["{saf:-1}"]},
+    "r":{"status":108, "saf":null}
 }
 # SKIP
 {
     "t":{"label":"Test various type errors",
-         "send":["{saf:1.0}",
-                 "{saf:\"1\"}"
+        "send":["{saf:1.0}",
+                "{saf:\"1\"}"
                 ]},
-        "r":{"status":117, "saf":null}
+    "r":{"status":117, "saf":null}
 }

@@ -7,82 +7,84 @@
 # Status Report Verbosity
 {
     "t":{"label":"Set SV to 0 (SILENT)",
-         "send":["{sv:0}"]},
-        "r":{"status":0, "sv":0}
+        "send":["{sv:0}"]},
+    "r":{"status":0, "sv":0}
 }
 #
 {
     "t":{"label":"Set SV to 1 (FILTERED)",
-         "send":["{sv:1}"]},
-        "r":{"status":0, "sv":1}
+        "send":["{sv:1}"]},
+    "r":{"status":0, "sv":1}
 }
 #
 {
     "t":{"label":"Set SV to 2 (VERBOSE)",
-         "send":["{sv:2}"]},
-        "r":{"status":0, "sv":2}
+        "send":["{sv:2}"]},
+    "r":{"status":0, "sv":2}
 }
 #
 {
     "t":{"label":"Read SV",
-         "send":["{sv:null}"]},
-        "r":{"status":0, "sv":2}
+        "before":["{sv:2}"],
+        "send":["{sv:null}"]},
+    "r":{"status":0, "sv":2}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set SV too low",
-         "send":["{sv:-1}"]},
-        "r":{"status":108, "sv":null}
+        "send":["{sv:-1}"]},
+    "r":{"status":108, "sv":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set SV too high",
-         "send":["{sv:3}"]},
-        "r":{"status":109, "sv":null}
+        "send":["{sv:3}"]},
+    "r":{"status":109, "sv":null}
 }
 # SKIP
 {
     "t":{"label":"EXCEPTION: Test various type errors",
-         "send":["{sv:true}",
-                 "{sv:false}",
-                 "{sv:1.0}",
-                 "{sv:1.1}",
-                 "{sv:\"1\"}"
+        "send":["{sv:true}",
+                "{sv:false}",
+                "{sv:1.0}",
+                "{sv:1.1}",
+                "{sv:\"1\"}"
                 ]},
-        "r":{"status":117, "sv":null}
+    "r":{"status":117, "sv":null}
 }
 # Status Report Interval
 {
     "t":{"label":"Set SI to 1 - nomimal value",
-         "send":["{si:250}"]},
-        "r":{"status":0, "si":250}
+        "send":["{si:250}"]},
+    "r":{"status":0, "si":250}
 }
 #
 {
     "t":{"label":"Set SI to something very large",
-         "send":["{si:20000}"]},
-        "r":{"status":0, "si":20000}
+        "send":["{si:20000}"]},
+    "r":{"status":0, "si":20000}
 }
 #
 {
     "t":{"label":"Read SI",
-         "send":["{si:null}"]},
-        "r":{"status":0, "si":20000}
+        "before":["{si:20000}"],
+        "send":["{si:null}"]},
+    "r":{"status":0, "si":20000}
 }
 #
 {
     "t":{"label":"EXCEPTION: Set SI to 0 - below minumum",
-         "send":["{si:0}"]},
-        "r":{"status":108, "si":null}
+        "send":["{si:0}"]},
+    "r":{"status":108, "si":null}
 }
 # SKIP
 {
     "t":{"label":"Test various type errors",
-         "send":["{si:true}",
-                 "{si:false}",
-                 "{si:1.0}",
-                 "{si:1.1}",
-                 "{si:\"1\"}"
+        "send":["{si:true}",
+                "{si:false}",
+                "{si:1.0}",
+                "{si:1.1}",
+                "{si:\"1\"}"
                 ]},
-        "r":{"status":117, "si":null}
+    "r":{"status":117, "si":null}
 }

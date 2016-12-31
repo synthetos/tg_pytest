@@ -6,33 +6,33 @@
 #
 {
     "t":{"label":"Set enable JSON to JSON mode",
-         "send":["{ej:1}"]},
-        "r":{"status":0, "ej":1}
+        "send":["{ej:1}"]},
+    "r":{"status":0, "ej":1}
 }
 #
 {
     "t":{"label":"Set enable JSON to AUTO mode",
-         "send":["{ej:2}"]},
-        "r":{"status":0, "ej":2}
+        "send":["{ej:2}"]},
+    "r":{"status":0, "ej":2}
 }
 #
 {
     "t":{"label":"Read enable JSON",
-         "send":["{ej:n}"],
-         "after":["ej:1"]},
-        "r":{"status":0, "ej":2}
+        "send":["{ej:n}"],
+        "after":["ej:1"]},
+    "r":{"status":0, "ej":2}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write enable JSON too low -1 ",
-         "send":["{ej:-1}"]},
-        "r":{"status":108, "ej":null}
+        "send":["{ej:-1}"]},
+    "r":{"status":108, "ej":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write enable JSON too high 3 ",
-         "send":["{ej:3}"]},
-        "r":{"status":109, "ej":null}
+        "send":["{ej:3}"]},
+    "r":{"status":109, "ej":null}
 }
 # EOF
 #  Note:
@@ -42,8 +42,8 @@
 # Run this and see if it returns Text mode:
 {
     "t":{"label":"Set EJ to Text mode",
-         "send":["{ej:0}"]},
-        "r":{"status":0, "ej":0}
+        "send":["{ej:0}"]},
+    "r":{"status":0, "ej":0}
 }
 
 - Set {jv:5}

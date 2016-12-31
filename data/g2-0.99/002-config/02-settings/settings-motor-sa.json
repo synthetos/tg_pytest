@@ -6,42 +6,51 @@
 #
 {
     "t":{"label":"Write 2sa - reasonable value",
-         "send":["{2sa:0.9}"]},
-        "r":{"status":0, "2sa":0.9}
+        "send":["{2sa:0.9}"]},
+    "r":{"status":0, "2sa":0.9}
 }
 #
 {
-    "t":{"label":"Read 2sa - flat",
-         "send":["{2sa:null}"]},
-        "r":{"status":0, "2sa":0.9}
+    "t":{"label":"Read 2sa - flat - G21 units",
+        "before":["G21","{2sa:0.9}"],
+        "send":["{2sa:null}"]},
+    "r":{"status":0, "2sa":0.9}
+}
+#
+{
+    "t":{"label":"Read 2sa - flat - G20 units",
+        "before":["G20","{2sa:0.9}"],
+        "send":["{2sa:null}"]},
+    "r":{"status":0, "2sa":0.9}
 }
 #
 {
     "t":{"label":"Read 2sa - nested",
-         "send":["{2:{sa:null}}"]},
-        "r":{"status":0, "2":{"sa":0.9}}
+        "before":["G21","{2sa:0.9}"],
+        "send":["{2:{sa:null}}"]},
+    "r":{"status":0, "2":{"sa":0.9}}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write 2sa - zero value",
-         "send":["{2sa:0}"]},
-        "r":{"status":108, "2sa":null}
+        "send":["{2sa:0}"]},
+    "r":{"status":108, "2sa":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write 2sa - negative value",
-         "send":["{2sa:-1.8}"]},
-        "r":{"status":108, "2sa":null}
+        "send":["{2sa:-1.8}"]},
+    "r":{"status":108, "2sa":null}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write 2sa - Value > 360 degrees",
-         "send":["{2sa:499.99}"]},
-        "r":{"status":109, "2sa":null}
+        "send":["{2sa:499.99}"]},
+    "r":{"status":109, "2sa":null}
 }
 # SKIP
 {
     "t":{"label":"EXCEPTION: Write 2sa with boolean",
-         "send":["{2sa:t}"]},
-        "r":{"status":117, "2sa":null}
+        "send":["{2sa:t}"]},
+    "r":{"status":117, "2sa":null}
 }

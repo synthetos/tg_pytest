@@ -8,45 +8,46 @@
 {
     "t":{"label":"Write chordal tolerance in MM",
         "before":["g21"],
-         "send":["{ct:0.42}"]},
-        "r":{"status":0, "ct":0.42}
+        "send":["{ct:0.42}"]},
+    "r":{"status":0, "ct":0.42}
 }
 #
 {
     "t":{"label":"Read chordal tolerance in MM",
-         "send":["{ct:n}"]},
-        "r":{"status":0, "ct":0.42}
+        "before":["g21","{ct:0.42}"],
+        "send":["{ct:n}"]},
+    "r":{"status":0, "ct":0.42}
 }
 #
 {
     "t":{"label":"Read chordal tolerance in INCHES",
-         "before":["g20"],
-         "send":["{ct:n}"]},
-        "r":{"status":0, "ct":0.0165}
+        "before":["g21","{ct:0.42}","g20"],
+        "send":["{ct:n}"]},
+    "r":{"status":0, "ct":0.0165}
 }
 #
 {
     "t":{"label":"Write chordal tolerance in INCHES",
-         "before":["g20"],
-         "send":["{ct:0.01}"]},
-        "r":{"status":0, "ct":0.01}
+        "before":["g20"],
+        "send":["{ct:0.01}"]},
+    "r":{"status":0, "ct":0.01}
 }
 #
 {
     "t":{"label":"Read chordal tolerance in INCHES",
-         "before":["g20"],
-         "send":["{ct:n}"]},
-        "r":{"status":0, "ct":0.01}
+        "before":["g20","{ct:0.01}"],
+        "send":["{ct:n}"]},
+    "r":{"status":0, "ct":0.01}
 }
 #
 {
     "t":{"label":"Write chordal tolerance zero - OK",
-         "send":["{ct:0}"]},
-        "r":{"status":0, "ct":0}
+        "send":["{ct:0}"]},
+    "r":{"status":0, "ct":0}
 }
 #
 {
     "t":{"label":"EXCEPTION: Write chordal tolerance negative number",
-         "send":["{ct:-1}"]},
-        "r":{"status":108, "ct":null}
+        "send":["{ct:-1}"]},
+    "r":{"status":108, "ct":null}
 }
