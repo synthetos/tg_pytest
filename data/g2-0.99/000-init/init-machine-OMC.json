@@ -20,67 +20,67 @@
 #
 # DEFAULTS OBJECT
 {
-  "defaults":{
-    "fail":"hard",
-    "delay":0.05,
-    "precision":0.0001
-  }
+    "defaults":{
+        "fail":"hard",
+        "delay":0.05,
+        "precision":0.0001
+    }
 }
 # Machine setup
 {
     "t":{"label":"Restore Othermill default settings",
-         "setup":true,
-         "send":["{defa:1}"]
+        "setup":true,
+        "send":["{defa:1}"]
     }
 }
 #
 {
     "t":{"label":"Set baseline configs",
-         "delay":0.100,
-         "setup":true,
-         "send":["{js:1}","{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"]
+        "delay":0.100,
+        "setup":true,
+        "send":["{js:1}","{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"]
     }
 }
 #
 {
     "t":{"label":"Clear status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
-         "setup":true,
-         "send":["{srs:{clear:t}}"]
+        "setup":true,
+        "send":["{srs:{clear:t}}"]
     }
 }
 #
 {
     "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-         "setup":true,
-         "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]
+        "setup":true,
+        "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]
      }
 }
 #
 {
     "t":{"label":"Set gcode defaults",
-         "setup":true,
-         "send":["G21 G94 G90 G91.1",
-                 "G10 L2 P1 X0 Y0 Z0",
-                 "G10 L2 P2 X0 Y0 Z0",
-                 "G10 L2 P3 X0 Y0 Z0",
-                 "G10 L2 P4 X0 Y0 Z0",
-                 "G10 L2 P5 X0 Y0 Z0",
-                 "G10 L2 P6 X0 Y0 Z0",
-                 "G54"
+        "setup":true,
+        "send":["G21 G94 G90 G91.1",
+                "G10 L2 P1 X0 Y0 Z0",
+                "G10 L2 P2 X0 Y0 Z0",
+                "G10 L2 P3 X0 Y0 Z0",
+                "G10 L2 P4 X0 Y0 Z0",
+                "G10 L2 P5 X0 Y0 Z0",
+                "G10 L2 P6 X0 Y0 Z0",
+                "G54"
                ]
     }
 }
 # SKIP
 {
     "t":{"label":"Home Othermill",
-         "setup":true,
-         "send":["g28.2 x0 y0 z0"]
+        "setup":true,
+        "send":["g28.2 x0 y0 z0"]
     }
 }
 # EOF
 {
     "t":{"label":"Restore Othermill default settings",
-         "send":["{defa:1}"],
-         "setup":true},
+        "send":["{defa:1}"],
+        "setup":true},
     "r":{"status":15}
 }

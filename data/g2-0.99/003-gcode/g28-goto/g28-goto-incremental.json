@@ -1,0 +1,127 @@
+################################################################################
+#
+#  g28-goto-incremental.json - test g28/g30 with incremental distance mode
+#
+# Do not run any preamble before this file
+#
+# This file sets up the board to behave as an Othermachine Othermill:
+#   X min/max travel                0, 145.6 (mm)
+#   Y min/max travel                0, 119.1 (mm)
+#   Z min/max travel                -60.1, 0 (mm)
+#
+#   XYZ maximum velocity            1500 mm/min
+#   XYZ maximum jerk                 500 mm/min^3 (* 1,000,000)
+#   JT junction integration time    0.75
+#
+#   Other parameters such as limit enables, motor power, etc. are not changed
+#   Motor mapping is assumed to be correct and not messed with.
+#
+#   Position the head at machine origin or some other unobstructed start position
+*   Ensure that clearance from start position is at least (60,60,-30)
+#   The origin position will be set to (0,0,0) by the G28.3 command
+#
+# SETUP ROUTINES
+#
+{
+    "defaults": {
+        "fail":"hard"
+    }
+}
+#
+{
+    "t":{"label":"Restore default settings",
+        "before":["{defa:1}"],
+        "send":["G21"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set baseline configs",
+        "send":["{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"],
+        "delay":0.100},
+    "r":{"status":0}
+}
+# SKIP - not yet implemented
+{
+    "t":{"label":"Clear status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
+        "send":["{srs:{clear:t}}"]},
+    "r":{"status":0}
+}
+# SKIP - not yet implemented
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
+    "r":{"status":0}
+}
+# Use old-style status report setup line
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set gcode defaults - clear coordinate offsets",
+        "send":["G21 G94 G90 G91.1",
+                "G10 L2 P1 X0 Y0 Z0",
+                "G10 L2 P2 X0 Y0 Z0",
+                "G10 L2 P3 X0 Y0 Z0",
+                "G10 L2 P4 X0 Y0 Z0",
+                "G10 L2 P5 X0 Y0 Z0",
+                "G10 L2 P6 X0 Y0 Z0",
+                "G54"
+               ]},
+    "r":{"status":0}
+}
+#
+# START TESTS
+#
+# G28 / G54 TEST WITH INCREMENTAL DISTANCE MODE
+#
+{
+    "t":{"label":"Set current point as machine origin (0,0,0)",
+        "send":["g28.3 x0 y0 z0"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Move to test position in G54, incremental mode",
+        "before":["G21 G54 G91"],
+        "send":["g0 x40 y40 z-20"]},
+    "r":{"status":0},
+    "sr":{"posx": 40, "posy": 40, "posz": -20}
+}
+#
+{
+    "t":{"label":"Save G28 test position",
+        "send":["G28.1"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Move to third position",
+        "send":["g0 x10 y10 z-5"]},
+    "r":{"status":0},
+    "sr":{"posx": 50, "posy": 50, "posz": -25}
+}
+#
+{
+    "t":{"label":"Return to G28 test position",
+        "send":["G28"]},
+    "r":{"status":0},
+    "sr":{"posx": 40, "posy": 40, "posz": -20}
+}
+#
+{
+    "t":{"label":"Move to third position again",
+        "send":["g0 x10 y10 z-5"]},
+    "r":{"status":0},
+    "sr":{"posx": 50, "posy": 50, "posz": -25}
+}
+#
+{
+    "t":{"label":"Return to G28 test position XY first, then Z",
+        "send":["G28 X-10 Y-10"]},
+    "r":{"status":0},
+    "sr":{"posx": 40, "posy": 40, "posz": -20}
+}
