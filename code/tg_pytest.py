@@ -436,7 +436,7 @@ def main():
         try:
             in_fd = open(test_file, 'r')
         except:
-            print("CANNOT OPEN: {0}".format(test_file))
+            print("FAIL HARD: CANNOT OPEN: {0}".format(test_file))
             exit(1)
             
         print("RUN: {0}/{1}".format(TEST_DATA_DIR, test_file))

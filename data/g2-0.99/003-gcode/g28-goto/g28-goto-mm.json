@@ -98,7 +98,7 @@
 #
 {
     "t":{"label":"Move to test position in G54 coordinates",
-        "before":["G21","G54"],
+        "before":["G21 G54"],
         "send":["g0 x40 y40 z-20"]},
     "r":{"status":0},
     "sr":{"posx": 40, "posy": 40, "posz": -20}
@@ -140,7 +140,7 @@
 #
 {
     "t":{"label":"Move to test position in G54 coordinates",
-        "before":["G21","G54"],
+        "before":["G21 G54"],
         "send":["g0 x40 y40 z-20"]},
     "r":{"status":0},
     "sr":{"posx": 40, "posy": 40, "posz": -20}
@@ -182,7 +182,7 @@
 #
 {
     "t":{"label":"Move to test position in G54 coordinates",
-        "before":["G21","G54"],
+        "before":["G21 G54"],
         "send":["g0 x40 y40 z-20"]},
     "r":{"status":0},
     "sr":{"posx": 40, "posy": 40, "posz": -20}
@@ -220,7 +220,7 @@
 #
 {
     "t":{"label":"Move to test position in G54 coordinates",
-        "before":["G21","G54"],
+        "before":["G21 G54"],
         "send":["g0 x40 y40 z-20"]},
     "r":{"status":0},
     "sr":{"posx": 40, "posy": 40, "posz": -20}

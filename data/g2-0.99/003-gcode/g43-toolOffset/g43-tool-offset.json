@@ -23,17 +23,10 @@
 }
 #
 {
-  "before_each":{
-    "XXX_before":["{clear:n}","G28"]
-  }
-}
-#
-
-{
-  "after_all":{
-    "label":"Return to home",
-    "after":["{clear:n}","G28"]
-  }
+    "after_all":{
+        "label":"Return to home",
+        "after":["{clear:n}","G28"]
+    }
 }
 #
 # TESTS BEGIN HERE
@@ -42,37 +35,37 @@
 #
 {
     "t":{"label":"Select T0 (zero offsets)",
-         "send":["T0"]},
+        "send":["T0"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Select T1",
-         "send":["T1"]},
+        "send":["T1"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Select T16",
-         "send":["T16"]},
+        "send":["T16"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Select T33 - should fail",
-         "send":["T33"]},
+        "send":["T33"]},
     "r":{"status":181}
 }
 # "Change Tool" tests
 {
     "t":{"label":"Select T1",
-         "send":["T1"]},
+        "send":["T1"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Change tool",
-         "send":["M6"]},
+        "send":["M6"]},
     "r":{"status":0}
 }
 ####################
@@ -84,8 +77,8 @@
 # Set tool to 0 so no offsets are uses. Read TL offsets to make sure 0 is returned
 {
     "t":{"label":"Read current offsets (T0)",
-         "before":["T0 M6 G49"],
-         "send":["{tl:n}"]},
+        "before":["T0 M6 G49"],
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
 }
 # Set T1 offsets to something non-zero
@@ -93,23 +86,23 @@
 # Read TL offsets to make sure they are still zero
 {
     "t":{"label":"Set T1 offsets, select T1, but do not change tool",
-         "before":["{tt1:{x:1.1,y:1.1,z:1.1}}", "T1"],
-         "send":["{tl:n}"]},
+        "before":["{tt1:{x:1.1,y:1.1,z:1.1}}", "T1"],
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
 }
 # Now change the tool to T1.
 # It should still report back 0 offsets because G43 H1 was not invoked
 {
     "t":{"label":"Change tool to T1, but do not execute G43 H1",
-         "before":["M6"],
-         "send":["{tl:n}"]},
+        "before":["M6"],
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
 }
 # Now select T1 offsets and see it change
 {
     "t":{"label":"Execute G43 H1, offsets should change",
-         "before":["G43 H1"],
-         "send":["{tl:n}"]},
+        "before":["G43 H1"],
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":1.1,"y":1.1,"z":1.1}}
 }
 #
@@ -118,32 +111,32 @@
 # Set T2 offsets and efect them in a single Gcode line
 {
     "t":{"label":"Set T2 offsets, select T1, but do not change tool",
-         "before":["{tt2:{x:2.2,y:2.2,z:2.2}}", "T2 M6 G43 H2"],
-         "send":["{tl:n}"]},
+        "before":["{tt2:{x:2.2,y:2.2,z:2.2}}", "T2 M6 G43 H2"],
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":2.2,"y":2.2,"z":2.2}}
 }
 # EOF
 {
     "t":{"label":"Read T1 offsets",
-         "send":["{tt1:n}"]},
+        "send":["{tt1:n}"]},
     "r":{"status":0, "tt1":{"x":1.1,"y":1.1,"z":1.1}}
 }
 #
 {
     "t":{"label":"Read current offsets (Still T0)",
-         "send":["{tl:n}"]},
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
 }
 #
 {
     "t":{"label":"Use T1 offsets",
-         "send":["g43 h1"]},
+        "send":["g43 h1"]},
     "r":{"status":0},
     "sr":{"stat":3}
 }
 #
 {
     "t":{"label":"Read current offsets (T1)",
-         "send":["{tl:n}"]},
+        "send":["{tl:n}"]},
     "r":{"status":0, "tl":{"x":1.1,"y":1.1,"z":1.1}}
 }

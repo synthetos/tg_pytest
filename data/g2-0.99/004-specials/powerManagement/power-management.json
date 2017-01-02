@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   power-management-fb100-001.json - Power Management functions
+#   power-management.json - Power Management functions
 #
 # Test assumptions:
 #   SERIAL_TIMEOUT is 1 second or more (tg_utils.py)
@@ -16,8 +16,8 @@
     "label":"Setup for power management tests",
     "before":["{ej:1}", "{jv:5}", "{qv:0}", "{sv:2}", "{si:200}",
             "{sr:{pwr1:t, pwr2:t, pwr3:t}}",
-            "{1pm:2}, {2pm:2}, {3pm:2}",
-            "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}",
+            "{1pm:2}, {2pm:2}, {3pm:2}, {4pm:2}",
+            "{1pl:0.4}, {2pl:0.4}, {3pl:0.4}, {3pl:0.4}",
             "{mt:0.5}",
             "{md:0}",
             "G21" ]
@@ -49,7 +49,6 @@
 #
 # TESTS BEGIN HERE
 #
-#
 {
     "t":{"label":"Confirm that all motors are disabled",
         "send":["{sr:n}"]},
@@ -59,6 +58,59 @@
 #
 {
     "t":{"label":"Enable all motors",
+        "delay":0.75,
+        "send":["{me:0}"]},
+    "r":{"status":0, "me":0}
+}
+#
+{
+    "t":{"label":"Disable motor 1",
+        "delay":0.75,
+        "before":["{me:2}"],
+        "send":["{md:1}"]},
+    "r":{"status":0, "md":1}
+}
+#
+{
+    "t":{"label":"Disable motor 2",
+        "delay":0.75,
+        "before":["{me:2}"],
+        "send":["{md:2}"]},
+    "r":{"status":0, "md":2}
+}
+#
+{
+    "t":{"label":"Disable motor 3",
+        "delay":0.75,
+        "before":["{me:2}"],
+        "send":["{md:3}"]},
+    "r":{"status":0, "md":3}
+}
+#
+{
+    "t":{"label":"Disable motor 4",
+        "delay":0.75,
+        "before":["{me:2}"],
+        "send":["{md:4}"]},
+    "r":{"status":0, "md":4}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Disable motor 9",
+        "delay":0.75,
+        "send":["{md:9}"]},
+    "r":{"status":109, "md":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Disable motor -1",
+        "delay":0.75,
+        "send":["{md:-1}"]},
+    "r":{"status":108, "md":null}
+}
+#
+{
+    "t":{"label":"Enable all motors again",
         "before":["{mt:5}"],
         "send":["{me:0}"]},
     "r":{"status":0},
@@ -73,10 +125,10 @@
 }
 #
 {
-    "t":{"label":"Disable all motors incorrectly, with a NULL",
+    "t":{"label":"Disable all motors correctly, with 0",
         "before":["{mt:5}"],
-        "send":["{md:n}"]},
-    "r":{"status":3}
+        "send":["{md:0}"]},
+    "r":{"status":0}
 }
 #
 {

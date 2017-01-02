@@ -55,8 +55,7 @@
     "t":{"label":"Bad Gcode command",
          "send":["G7x34.23"],
          "after":["{clear:n}"]},
-    "r":{"status":131},
-    "sr":{"stat":2}
+    "r":{"status":131}
 }
 #EOF
 # Example of how to stop the file
@@ -65,6 +64,5 @@
     "t":{"label":"Bad Gcode command",
          "send":["G7x34.23"],
          "fail":"soft"},
-    "r":{"status":131},
-    "sr":{"stat":2}
+    "r":{"status":131}
 }
