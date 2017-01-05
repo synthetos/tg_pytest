@@ -2,12 +2,15 @@
 #
 #  settings-motor-mt.json - Motor TImer settings tests
 #
+# include 000-init/init-standard-json.json
+#
 # See 004-specials/powerManagement to exercise the timer functions (not just the syntax)
 #
 # The timeout tests are sensitive to the following system settings
 #define MOTOR_TIMEOUT_SECONDS_MIN   0.1
 #define MOTOR_TIMEOUT_SECONDS_MAX   4294967
 #
+# SKIP
 {
     "t":{"label":"Set configs for JSON tests",
         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}"],

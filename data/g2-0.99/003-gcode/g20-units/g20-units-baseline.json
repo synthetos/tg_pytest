@@ -2,10 +2,7 @@
 #
 #   g20-units-baseline.json - G20/G21 units tests
 #
-#  Run these tests with no setup file, as setup is handled here
-#
-# USE COMMON GCODE SETUP
-# include 000-init/init-gcode.json
+# include 000-init/init-standard-gcode.json
 #
 # G20 UNITS TESTS BEGIN HERE
 {

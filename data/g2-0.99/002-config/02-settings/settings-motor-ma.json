@@ -2,7 +2,7 @@
 #
 #   settings-motor-ma.json - Test motor Map Axis settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 {
     "t":{"label":"Write 1ma with valid value",

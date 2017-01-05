@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   init-json.json - Initialize for g2 json settings tests
+#   init-standard-json.json - Initialize for g2 json settings tests
 {
   "defaults":{
     "fail":"hard",
@@ -18,10 +18,10 @@
 #
 {
     "t":{"label":"Set configs for settings tests",
-         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"]},
+         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}","G21"]},
     "r":{"status":0}
 }
-#
+# SKIP
 {
     "t":{"label":"Set Gcode to MM mode",
          "send":["G21"]},

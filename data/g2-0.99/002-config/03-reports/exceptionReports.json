@@ -2,6 +2,8 @@
 #
 #   exceptionReports-001.json
 #
+# include 000-init/init-standard-json.json
+#
 {
   "defaults":{
     "fail":"hard"

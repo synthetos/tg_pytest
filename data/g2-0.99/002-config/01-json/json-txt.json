@@ -2,7 +2,7 @@
 #
 #   json-txt.json - JSON TXT container tests
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # TXT mixed with TIDs
 # Stuff other than TXT on a line

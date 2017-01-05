@@ -2,7 +2,7 @@
 #
 #  reports-global-state.json - Test common state values returned by status reports
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # System State - stat
 {

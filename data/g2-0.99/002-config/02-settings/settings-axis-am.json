@@ -2,7 +2,7 @@
 #
 #   settings-axis-am.json - Test axis settings Axis Mode
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 {
     "t":{"label":"Zero X axis",
@@ -65,7 +65,7 @@
         "send":["g0 x10"],
         "after":["g0 x0"]},
     "r":{"status":0},
-    "sr":{"posx":0, "posy":0}
+    "sr":{"posx":0, "posx":0}
 }
 #
 {
@@ -75,11 +75,11 @@
 }
 #
 {
-    "t":{"label":"Try to move X axis while inhibited",
+    "t":{"label":"Move X axis while inhibited - Position changes, but axis should not move",
         "send":["g0 x10"],
         "after":["g0 x0"]},
     "r":{"status":0},
-    "sr":{"posx":10, "posy":0}
+    "sr":{"posx":10, "posx":10}
 }
 #
 {
@@ -93,5 +93,5 @@
         "send":["g0 x0"],
         "after":["g0 x0"]},
     "r":{"status":0},
-    "sr":{"posx":0, "posy":0}
+    "sr":{"posx":0, "posx":0}
 }

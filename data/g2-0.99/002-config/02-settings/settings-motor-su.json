@@ -2,7 +2,7 @@
 #
 #   settings-motor-su.json - Test Motor Steps-Per-Unit settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 {
   "before_all":{

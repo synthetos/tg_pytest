@@ -2,7 +2,7 @@
 #
 #   settings-axis-homing-0.97.json
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # Switches
 #

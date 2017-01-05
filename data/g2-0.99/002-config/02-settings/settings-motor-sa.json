@@ -2,7 +2,7 @@
 #
 # settings-motor-sa.json - Test Motor Step Angle settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 {
     "t":{"label":"Write 2sa - reasonable value",

@@ -2,6 +2,8 @@
 #
 #  g28-goto-mm.json - test g28/g30 go-to-home in millimeter units mode
 #
+# include 000-init/init-standard-gcode.json
+#
 # This file sets up the board to behave as an Othermachine Othermill:
 #   X min/max travel                0, 145.6 (mm)
 #   Y min/max travel                0, 119.1 (mm)
@@ -18,9 +20,7 @@
 *   Ensure that clearance from start position is at least (60,60,-30)
 #   The origin position will be set to (0,0,0) by the G28.3 command
 #
-# USE COMMON GCODE SETUP
-# include 000-init/init-gcode.json
-#
+# Set some offsets to test against
 {
     "t":{"label":"Set G55 & G56 offsets for testing G28/G30 mm mode",
         "send":["G10 L20 P2 X-40 Y-40 Z20",

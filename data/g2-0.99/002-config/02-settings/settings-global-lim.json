@@ -2,7 +2,7 @@
 #
 #  settings-global-lim.json - Hard Limit settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # hard Limit Enable
 {

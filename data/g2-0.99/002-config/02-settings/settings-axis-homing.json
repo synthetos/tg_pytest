@@ -4,7 +4,7 @@
 #
 #  **** INCOMPLETE - this file is not complete for all homing values yet ****
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # Homing Input
 {

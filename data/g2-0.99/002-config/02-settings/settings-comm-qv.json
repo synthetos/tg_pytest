@@ -2,7 +2,7 @@
 #
 #  settings-comm-qv.json - Test queue report verbosity settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # Queue Report Verbosity
 {

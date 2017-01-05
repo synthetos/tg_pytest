@@ -2,6 +2,8 @@
 #
 #  g28-goto-G92.json - test g28/g30 tests with G92 offsets
 #
+# include 000-init/init-standard-gcode.json
+#
 # This file sets up the board to behave as an Othermachine Othermill:
 #   X min/max travel                0, 145.6 (mm)
 #   Y min/max travel                0, 119.1 (mm)
@@ -18,13 +20,9 @@
 *   Ensure that clearance from start position is at least (60,60,-30)
 #   The origin position will be set to (0,0,0) by the G28.3 command
 #
-# USE COMMON GCODE SETUP
-# include 000-init/init-gcode.json
-#
 # START TESTS
 #
 # G28 / G54 TEST WITH G92 OFFSETS ENABLED
-#
 {
     "t":{"label":"Move to test position in G54 coordinates",
         "before":["G21","G54"],

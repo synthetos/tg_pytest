@@ -2,7 +2,7 @@
 #
 #  settings-comm-jv.json - Test JSON verbosity communications settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # JSON Verbosity
 {

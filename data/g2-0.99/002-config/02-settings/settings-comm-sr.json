@@ -2,7 +2,7 @@
 #
 #  settings-comm-sr.json - Test status report settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 # Status Report Verbosity
 {

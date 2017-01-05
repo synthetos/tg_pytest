@@ -2,7 +2,7 @@
 #
 #   settings-motor-pm.json - Test Motor Power Management settings
 #
-# include 000-init/init-json.json
+# include 000-init/init-standard-json.json
 #
 {
     "t":{"label":"Write 2pm - MOTOR_DISABLED",
