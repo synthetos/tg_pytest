@@ -1,8 +1,6 @@
 ################################################################################
 #
-#   units-baseline-001.json - units tests
-#
-#  Run these tests with no setup file, as setup is handled here
+#   units-radius.json - test units in radius mode (See Issue #74)
 #
 # USE COMMON SETUP
 #

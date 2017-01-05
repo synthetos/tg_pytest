@@ -13,7 +13,7 @@
   }
 }
 #
-# include 000-init/init-example-incl.json
+# include 000-init/example-include.json
 
 # EOF
 # BEFORE AND AFTERS
