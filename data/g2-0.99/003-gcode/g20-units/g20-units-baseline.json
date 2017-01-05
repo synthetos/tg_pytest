@@ -1,0 +1,44 @@
+################################################################################
+#
+#   g20-units-baseline.json - G20/G21 units tests
+#
+#  Run these tests with no setup file, as setup is handled here
+#
+# USE COMMON GCODE SETUP
+# include 000-init/init-gcode.json
+#
+# G20 UNITS TESTS BEGIN HERE
+{
+    "t":{"label":"Move 2.54 mm off zero",
+        "send":["g21 g0 x25.4 y25.4"]},
+    "r":{"status":0},
+    "sr":{"posx":25.4,"posy":25.4,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Readout in inches",
+        "send":["g20"]},
+    "r":{"status":0},
+    "sr":{"posx":1.0,"posy":1.0,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Move 1 more inch to 2 inches",
+        "send":["g20 g0 x2 y2"]},
+    "r":{"status":0},
+    "sr":{"posx":2.0,"posy":2.0,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Readout in mm",
+        "send":["g21"]},
+    "r":{"status":0},
+    "sr":{"posx":50.8,"posy":50.8,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Return to home",
+        "send":["g28"]},
+    "r":{"status":0},
+    "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}
+}

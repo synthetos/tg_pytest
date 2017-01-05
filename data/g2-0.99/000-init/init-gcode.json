@@ -2,6 +2,13 @@
 #
 #   init-gcode.json - common initialization for gcode tests
 #
+#   Sets:
+#   - standard JSON & comms parameters assumed by ty_pytest
+#   - standard status report assumed by ty_pytest
+#   - standard Gcode and global value settings - see Standard Gcode test
+#   - zeros or homes machine (depending on SKIPs selected)
+#   - saves home position as g28
+#
 # DEFAULTS
 {
   "defaults":{
@@ -59,16 +66,15 @@
 }
 #
 {
-    "t":{"label":"Set gcode defaults - clear coordinate offsets",
-        "send":["{ct:0.1}","{jt:2.0}","{sl:t}",
-                "G21 G17 G49 G80 G90 G91.1 G94",
+    "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
+        "send":["{ct:0.1}","{sl:t}","{lim:f}",
+                "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
                 "G10 L2 P1 X0 Y0 Z0",
                 "G10 L2 P2 X0 Y0 Z0",
                 "G10 L2 P3 X0 Y0 Z0",
                 "G10 L2 P4 X0 Y0 Z0",
                 "G10 L2 P5 X0 Y0 Z0",
-                "G10 L2 P6 X0 Y0 Z0",
-                "G54"
+                "G10 L2 P6 X0 Y0 Z0"
                ]},
     "r":{"status":0}
 }
@@ -87,13 +93,13 @@
 }
 #
 {
-    "t":{"label":"Set origin as (-40,-40,20) in G55",
-        "send":["G10 L20 P2 X-40 Y-40 Z20"]},
+    "t":{"label":"Save G28 position",
+        "send":["G28.1"]},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Set origin as (-20,-20,10) in G56",
-        "send":["G10 L20 P3 X-20 Y-20 Z10"]},
+    "t":{"label":"Set origins for testing G55 (-40,-40,20), G56 (-20,-20,10)",
+        "send":["G10 L20 P2 X-40 Y-40 Z20"]},
     "r":{"status":0}
 }

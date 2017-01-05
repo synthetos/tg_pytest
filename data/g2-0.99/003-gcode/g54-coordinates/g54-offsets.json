@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  g54-offsets.json - test G53 - G59 coordinate system functions
+#  gXX-offsets.json - test G53 - G59 coordinate system functions
 #
 # Do not run any preamble before this file
 #
@@ -16,9 +16,9 @@
 #   Other parameters such as limit enables, motor power, etc. are not changed
 #   Motor mapping is assumed to be correct and not messed with.
 #
-#   Position the machine at home or in the center of travel in XYZ (g0 x70 y60 z-30)
-*   Ensure that there is clearance in fhe following dimensions: (60,50,-20)
-#   The starting ppsition will be set (0,0,0) by the G28.3 command
+#   Position the head at machine origin or some other unobstructed start position
+*   Ensure that clearance from start position is at least (60,60,-30)
+#   The origin position will be set to (0,0,0) by the G28.3 command
 #
 # SETUP ROUTINES
 #
@@ -75,7 +75,7 @@
 }
 #
 {
-    "t":{"label":"Set curent point as home (0.0.0)",
+    "t":{"label":"Set current point as machine origin (0,0,0)",
         "send":["g28.3 x0 y0 z0"]},
     "r":{"status":0}
 }
@@ -92,7 +92,7 @@
 }
 #
 {
-    "t":{"label":"Return to home in G54",
+    "t":{"label":"Return to origin in G54",
         "send":["g0 x0 y0 z0"]},
     "r":{"status":0},
     "sr":{"posx": 0, "posy": 0, "posz": 0}
@@ -104,15 +104,15 @@
     "r":{"status":0},
     "sr":{"posx": 40, "posy": 40, "posz": -20}
 }
-#
+# G10 L20 G55
 {
     "t":{"label":"Set test position as (0,0,0) in G55",
-        "send":["G10 L20 P2 X1 Y1 Z1"]},
+        "send":["G10 L20 P2 X0 Y0 Z0"]},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Return to home in G54",
+    "t":{"label":"Return to origin in G54",
         "send":["g0 x0 y0 z0"]},
     "r":{"status":0},
     "sr":{"posx": 0, "posy": 0, "posz": 0}
@@ -131,6 +131,27 @@
         "send":["g0 x0 y0 z0"]},
     "r":{"status":0},
     "sr":{"posx": 0, "posy": 0, "posz": 0}
+}
+# G10 L2 G59
+{
+    "t":{"label":"Set test position as (20,20,-10) in G59",
+        "send":["G10 L2 P6 X20 Y20 Z-10"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Change to G59 and report position",
+        "send":["G59"]},
+    "r":{"status":0},
+    "sr":{"posx": 20, "posy": 20, "posz": -10}
+}
+#
+{
+    "t":{"label":"Return to origin in G59",
+        "before":["G59"],
+        "send":["g0 x-20 y-20 z10"]},
+    "r":{"status":0},
+    "sr":{"posx": -20, "posy": -20, "posz": 10}
 }
 
 # EOF
