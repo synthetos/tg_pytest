@@ -2,8 +2,6 @@
 #
 #  g28-goto-incremental.json - test g28/g30 with incremental distance mode
 #
-# Do not run any preamble before this file
-#
 # This file sets up the board to behave as an Othermachine Othermill:
 #   X min/max travel                0, 145.6 (mm)
 #   Y min/max travel                0, 119.1 (mm)
@@ -20,69 +18,12 @@
 *   Ensure that clearance from start position is at least (60,60,-30)
 #   The origin position will be set to (0,0,0) by the G28.3 command
 #
-# SETUP ROUTINES
-#
-{
-    "defaults": {
-        "fail":"hard"
-    }
-}
-#
-{
-    "t":{"label":"Restore default settings",
-        "before":["{defa:1}"],
-        "send":["G21"]},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Set baseline configs",
-        "send":["{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}"],
-        "delay":0.100},
-    "r":{"status":0}
-}
-# SKIP - not yet implemented
-{
-    "t":{"label":"Clear status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
-        "send":["{srs:{clear:t}}"]},
-    "r":{"status":0}
-}
-# SKIP - not yet implemented
-{
-    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
-    "r":{"status":0}
-}
-# Use old-style status report setup line
-{
-    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Set gcode defaults - clear coordinate offsets",
-        "send":["G21 G94 G90 G91.1",
-                "G10 L2 P1 X0 Y0 Z0",
-                "G10 L2 P2 X0 Y0 Z0",
-                "G10 L2 P3 X0 Y0 Z0",
-                "G10 L2 P4 X0 Y0 Z0",
-                "G10 L2 P5 X0 Y0 Z0",
-                "G10 L2 P6 X0 Y0 Z0",
-                "G54"
-               ]},
-    "r":{"status":0}
-}
+# USE COMMON GCODE SETUP
+# include 000-init/init-gcode.json
 #
 # START TESTS
 #
 # G28 / G54 TEST WITH INCREMENTAL DISTANCE MODE
-#
-{
-    "t":{"label":"Set current point as machine origin (0,0,0)",
-        "send":["g28.3 x0 y0 z0"]},
-    "r":{"status":0}
-}
 #
 {
     "t":{"label":"Move to test position in G54, incremental mode",

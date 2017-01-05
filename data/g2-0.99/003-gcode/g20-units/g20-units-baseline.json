@@ -16,7 +16,7 @@
 }
 #
 {
-    "t":{"label":"Readout in inches",
+    "t":{"label":"Readout in inches mode",
         "send":["g20"]},
     "r":{"status":0},
     "sr":{"posx":1.0,"posy":1.0,"posz":0.0,"posa":0.0}
@@ -30,7 +30,7 @@
 }
 #
 {
-    "t":{"label":"Readout in mm",
+    "t":{"label":"Readout in mm mode",
         "send":["g21"]},
     "r":{"status":0},
     "sr":{"posx":50.8,"posy":50.8,"posz":0.0,"posa":0.0}
@@ -39,6 +39,27 @@
 {
     "t":{"label":"Return to home",
         "send":["g28"]},
+    "r":{"status":0},
+    "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Move A 90 degrees off zero, in G21",
+        "send":["g21 g0 a90"]},
+    "r":{"status":0},
+    "sr":{"posx":0,"posy":0,"posz":0,"posa":90}
+}
+#
+{
+    "t":{"label":"Readout in inches mode - should still be in degrees",
+        "send":["g20"]},
+    "r":{"status":0},
+    "sr":{"posx":0,"posy":0,"posz":0,"posa":90}
+}
+#
+{
+    "t":{"label":"Return to home",
+        "send":["g21 g28"]},
     "r":{"status":0},
     "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}
 }
