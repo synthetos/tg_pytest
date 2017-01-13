@@ -11,33 +11,33 @@
 #
 # DEFAULTS
 {
-  "defaults":{
-    "fail":"hard",
-    "delay":0.100,
-    "precision":0.00001
-  }
+    "defaults":{
+        "fail":"hard",
+        "delay":0.100,
+        "precision":0.00001
+    }
 }
 # BEFORE AND AFTERS
 {
-  "before_all":{
-    "label":"Reset default settings - Always run this one by itself",
-    "after":["{defa:t}"]
-  }
+    "before_all":{
+        "label":"Reset default settings & cancel cycles - Always run this one by itself",
+        "after":["g80","{defa:t}"]
+    }
 }
 # SKIP
 {
-  "before_each":{
-    "label":"clear alarms",
-    "before":["{clear:n}"],
-    "delay":0.100
-  }
+    "before_each":{
+        "label":"clear alarms, cancel cycles",
+        "before":["{clear:n}","g80"],
+        "delay":0.100
+    }
 }
 #
 {
-  "after_all":{
-    "label":"Return to start and M30 program end (also clears alarms)",
-    "after":["g0 x0 y0 z0 a0","M30"]
-  }
+    "after_all":{
+        "label":"Return to start and M30 program end (also clears alarms)",
+        "after":["g0 x0 y0 z0 a0","M30"]
+    }
 }
 # SETUP ROUTINES
 #

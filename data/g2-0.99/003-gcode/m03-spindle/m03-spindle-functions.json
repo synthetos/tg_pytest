@@ -1,0 +1,49 @@
+################################################################################
+#
+#   m03-spindle-functions.json - M3/M4/M5 spindle functions
+#
+# FYI:  M3 - turn on spindle, clockwise
+#       M4 - turn on spindle, counterclockwise
+#       M5 - turn off spindle (does not affect direction line)
+#
+#       spep:0  set spindle enable polarity active low
+#       spdp:0  set spindle direction polarity active low
+#       spph:1  enable spindle pause on hold
+#       spdw:2  enable spindle dwell in seconds (or zero to disable)
+#       ssoe:1  enable spindle speed override
+#       sso:0.5 set spindle speed override factor
+#
+# These tests assume dwell is working so you can actually see the results
+#
+# XXX include 000-init/init-standard-gcode.json
+#
+{
+    "t":{"label":"Setup for spindle tests",
+        "before":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+                  "{spep:1}",
+                  "{spdp:1}",
+                  "{spph:1}",
+                  "{spdw:2}"
+                ]
+        }
+}
+#
+# SPINDLE TESTS BEGIN HERE
+#
+{
+    "t":{"label":"Turn spindle on clockwise (CW) for 2 seconds",
+        "send":["M3","G4 P2"],
+        "after":["M5"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Flash spindle ON at 2 Hz for a few seconds",
+        "send":["M3 G4 P0.5", "M5 G4 P0.5",
+                "M3 G4 P0.5", "M5 G4 P0.5",
+                "M3 G4 P0.5", "M5 G4 P0.5",
+                "M3 G4 P0.5", "M5 G4 P0.5"
+               ],
+        "after":["M5"]},
+    "r":{"status":0}
+}

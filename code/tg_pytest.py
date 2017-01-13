@@ -143,7 +143,6 @@ def analyze_r(t_data, r_datae, params):
                 
     return result
 
-
 def analyze_sr(t_data, r_datae, params):
     """
     Analyze last status report for completion conditions

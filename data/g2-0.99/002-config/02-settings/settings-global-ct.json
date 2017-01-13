@@ -41,9 +41,9 @@
 }
 #
 {
-    "t":{"label":"Write chordal tolerance zero - OK",
+    "t":{"label":"EXCEPTION: Write chordal tolerance zero",
         "send":["{ct:0}"]},
-    "r":{"status":0, "ct":0}
+    "r":{"status":108, "ct":null}
 }
 #
 {

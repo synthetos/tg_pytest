@@ -1,0 +1,234 @@
+################################################################################
+#
+#   settings-spindle.json - spindle settings
+#
+# include 000-init/init-standard-json.json
+#
+# Spindle Mode
+{
+    "t":{"label":"Write spindle mode - SPINDLE_DISABLED",
+        "send":["{spmo:0}"]},
+    "r":{"status":0, "spmo":0}
+}
+#
+{
+    "t":{"label":"Write spindle mode - SPINDLE_PLAN_TO_STOP",
+        "send":["{spmo:1}"]},
+    "r":{"status":0, "spmo":1}
+}
+#
+{
+    "t":{"label":"Write spindle mode - SPINDLE_CONTINUOUS",
+        "send":["{spmo:2}"]},
+    "r":{"status":0, "spmo":2}
+}
+#
+{
+    "t":{"label":"Read spindle mode - SPINDLE_CONTINUOUS",
+        "send":["{spmo:n}"]},
+    "r":{"status":0, "spmo":2}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle mode - too small",
+        "send":["{spmo:-1}"]},
+    "r":{"status":108, "spmo":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle mode - too large",
+        "send":["{spmo:3}"]},
+    "r":{"status":109, "spmo":null}
+}
+#
+# Spindle Enable Polarity
+#
+{
+    "t":{"label":"Write spindle enable polarity - ACTIVE_LOW (0)",
+        "send":["{spep:0}"]},
+    "r":{"status":0, "spep":0}
+}
+#
+{
+    "t":{"label":"Write spindle enable polarity - ACTIVE_HIGH (1)",
+        "send":["{spep:1}"]},
+    "r":{"status":0, "spep":1}
+}
+#
+{
+    "t":{"label":"Read spindle enable polarity - ACTIVE_HIGH (1)",
+        "send":["{spep:n}"]},
+    "r":{"status":0, "spep":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle enable polarity - too small",
+        "send":["{spep:-1}"]},
+    "r":{"status":108, "spep":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle enable polarity - too large",
+        "send":["{spep:2}"]},
+    "r":{"status":109, "spep":null}
+}
+#
+# Spindle Direction Polarity
+#
+{
+    "t":{"label":"Write spindle direction polarity - ACTIVE_LOW (0)",
+        "send":["{spdp:0}"]},
+    "r":{"status":0, "spdp":0}
+}
+#
+{
+    "t":{"label":"Write spindle direction polarity - ACTIVE_HIGH (1)",
+        "send":["{spdp:1}"]},
+    "r":{"status":0, "spdp":1}
+}
+#
+{
+    "t":{"label":"Read spindle direction polarity - ACTIVE_HIGH (1)",
+        "send":["{spdp:n}"]},
+    "r":{"status":0, "spdp":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle direction polarity - too small",
+        "send":["{spdp:-1}"]},
+    "r":{"status":108, "spdp":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle direction polarity - too large",
+        "send":["{spdp:2}"]},
+    "r":{"status":109, "spdp":null}
+}
+#
+# Spindle Pause On Hold
+#
+{
+    "t":{"label":"Write spindle pause on hold - false (0)",
+        "send":["{spph:0}"]},
+    "r":{"status":0, "spph":0}
+}
+#
+{
+    "t":{"label":"Write spindle pause on hold - true (1)",
+        "send":["{spph:1}"]},
+    "r":{"status":0, "spph":1}
+}
+#
+{
+    "t":{"label":"Read spindle pause on hold - true (1)",
+        "send":["{spph:n}"]},
+    "r":{"status":0, "spph":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle pause on hold - too small",
+        "send":["{spph:-1}"]},
+    "r":{"status":108, "spph":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle pause on hold - too large",
+        "send":["{spph:2}"]},
+    "r":{"status":109, "spph":null}
+}
+#
+# Spindle Dwell Time
+#
+{
+    "t":{"label":"Write spindle dwell time - Disabled (0)",
+        "send":["{spdw:0}"]},
+    "r":{"status":0, "spdw":0}
+}
+#
+{
+    "t":{"label":"Write spindle dwell time - reasonable value (3.1)",
+        "send":["{spdw:3.1}"]},
+    "r":{"status":0, "spdw":3.1}
+}
+#
+{
+    "t":{"label":"Read spindle dwell time",
+        "send":["{spdw:n}"]},
+    "r":{"status":0, "spdw":3.1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle dwell time - too small",
+        "send":["{spdw:-1}"]},
+    "r":{"status":108, "spdw":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle dwell time - too large",
+        "send":["{spdw:100000000}"]},
+    "r":{"status":109, "spdw":null}
+}
+#
+# Spindle Speed Minimum
+#
+{
+    "t":{"label":"Write spindle speed minimum - small (0)",
+        "send":["{spsn:0}"]},
+    "r":{"status":0, "spsn":0}
+}
+#
+{
+    "t":{"label":"Write spindle speed minimum - reasonable value (50)",
+        "send":["{spsn:50}"]},
+    "r":{"status":0, "spsn":50}
+}
+#
+{
+    "t":{"label":"Read spindle speed minimum",
+        "send":["{spsn:n}"]},
+    "r":{"status":0, "spsn":50}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle speed minimum - too small",
+        "send":["{spsn:-1}"]},
+    "r":{"status":108, "spsn":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle speed minimum - too large",
+        "send":["{spsn:100000000}"]},
+    "r":{"status":109, "spsn":null}
+}
+#
+# Spindle Speed Maximum
+#
+{
+    "t":{"label":"Write spindle speed maximum - small (0)",
+        "send":["{spsm:0}"]},
+    "r":{"status":0, "spsm":0}
+}
+#
+{
+    "t":{"label":"Write spindle speed maximum - reasonable value (10000)",
+        "send":["{spsm:10000}"]},
+    "r":{"status":0, "spsm":10000}
+}
+#
+{
+    "t":{"label":"Read spindle speed maximum",
+        "send":["{spsm:n}"]},
+    "r":{"status":0, "spsm":10000}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle speed maximum - too small",
+        "send":["{spsm:-1}"]},
+    "r":{"status":108, "spsm":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write spindle speed maximum - too large",
+        "send":["{spsm:100000000}"]},
+    "r":{"status":109, "spsm":null}
+}

@@ -10,10 +10,10 @@
 }
 #
 {
-  "before_all":{
-    "label":"Reset default settings",
-    "before":["{defa:t}"]
-  }
+    "before_all":{
+        "label":"Reset default settings & cancel cycles - Always run this one by itself",
+        "after":["g80","{defa:t}"]
+    }
 }
 #
 {

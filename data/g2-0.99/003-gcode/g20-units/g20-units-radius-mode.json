@@ -1,0 +1,84 @@
+################################################################################
+#
+#   g20-units-radius.json - test units in radius mode (See Issue #74)
+#
+# include 000-init/init-standard-gcode.json
+#
+{
+    "t":{"label":"Read A axis in standard mode - should read in degrees",
+        "send":["{sr:n}"]},
+    "r":{"status":0},
+    "sr":{"posa":0.0}
+}
+#
+{
+    "t":{"label":"Set A axis to radius mode",
+        "send":["{aam:3}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set current point in A as 25.4 mm",
+        "before":["G21"],
+        "send":["g28.3 a25.4"]},
+    "r":{"status":0},
+    "sr":{"posa":25.4}
+}
+#
+{
+    "t":{"label":"Change to inches mode and read A position",
+        "send":["G21"]},
+    "r":{"status":0},
+    "sr":{"posa":1.0}
+}
+
+
+# EOF
+{
+    "t":{"label":"Readout in inches mode",
+        "send":["g20"]},
+    "r":{"status":0},
+    "sr":{"posx":1.0,"posy":1.0,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Move 1 more inch to 2 inches",
+        "send":["g20 g0 x2 y2"]},
+    "r":{"status":0},
+    "sr":{"posx":2.0,"posy":2.0,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Readout in mm mode",
+        "send":["g21"]},
+    "r":{"status":0},
+    "sr":{"posx":50.8,"posy":50.8,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Return to home",
+        "send":["g28"]},
+    "r":{"status":0},
+    "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}
+}
+#
+{
+    "t":{"label":"Move A 90 degrees off zero, in G21",
+        "send":["g21 g0 a90"]},
+    "r":{"status":0},
+    "sr":{"posx":0,"posy":0,"posz":0,"posa":90}
+}
+#
+{
+    "t":{"label":"Readout in inches mode - should still be in degrees",
+        "send":["g20"]},
+    "r":{"status":0},
+    "sr":{"posx":0,"posy":0,"posz":0,"posa":90}
+}
+#
+{
+    "t":{"label":"Return to home",
+        "send":["g21 g28"]},
+    "r":{"status":0},
+    "sr":{"posx":0.0,"posy":0.0,"posz":0.0,"posa":0.0}
+}

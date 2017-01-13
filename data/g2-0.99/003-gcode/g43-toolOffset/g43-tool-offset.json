@@ -78,8 +78,8 @@
 {
     "t":{"label":"Read current offsets (T0)",
         "before":["T0 M6 G49"],
-        "send":["{tl:n}"]},
-    "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
+        "send":["{tof:n}"]},
+    "r":{"status":0, "tof":{"x":0.0,"y":0.0,"z":0.0}}
 }
 # Set T1 offsets to something non-zero
 # Select but to not change tool to T1
@@ -87,23 +87,23 @@
 {
     "t":{"label":"Set T1 offsets, select T1, but do not change tool",
         "before":["{tt1:{x:1.1,y:1.1,z:1.1}}", "T1"],
-        "send":["{tl:n}"]},
-    "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
+        "send":["{tof:n}"]},
+    "r":{"status":0, "tof":{"x":0.0,"y":0.0,"z":0.0}}
 }
 # Now change the tool to T1.
 # It should still report back 0 offsets because G43 H1 was not invoked
 {
     "t":{"label":"Change tool to T1, but do not execute G43 H1",
         "before":["M6"],
-        "send":["{tl:n}"]},
-    "r":{"status":0, "tl":{"x":0.0,"y":0.0,"z":0.0}}
+        "send":["{tof:n}"]},
+    "r":{"status":0, "tof":{"x":0.0,"y":0.0,"z":0.0}}
 }
 # Now select T1 offsets and see it change
 {
     "t":{"label":"Execute G43 H1, offsets should change",
         "before":["G43 H1"],
-        "send":["{tl:n}"]},
-    "r":{"status":0, "tl":{"x":1.1,"y":1.1,"z":1.1}}
+        "send":["{tof:n}"]},
+    "r":{"status":0, "tof":{"x":1.1,"y":1.1,"z":1.1}}
 }
 #
 ##### Test multiple commands in a line
@@ -112,8 +112,8 @@
 {
     "t":{"label":"Set T2 offsets, select T1, but do not change tool",
         "before":["{tt2:{x:2.2,y:2.2,z:2.2}}", "T2 M6 G43 H2"],
-        "send":["{tl:n}"]},
-    "r":{"status":0, "tl":{"x":2.2,"y":2.2,"z":2.2}}
+        "send":["{tof:n}"]},
+    "r":{"status":0, "tof":{"x":2.2,"y":2.2,"z":2.2}}
 }
 # EOF
 {
