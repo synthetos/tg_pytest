@@ -137,36 +137,36 @@
     "r":{"status":109, "spph":null}
 }
 #
-# Spindle Dwell Time
+# Spindle Spinup Delay
 #
 {
-    "t":{"label":"Write spindle dwell time - Disabled (0)",
-        "send":["{spdw:0}"]},
-    "r":{"status":0, "spdw":0}
+    "t":{"label":"Write spindle spinup delay - Disabled (0)",
+        "send":["{spde:0}"]},
+    "r":{"status":0, "spde":0}
 }
 #
 {
-    "t":{"label":"Write spindle dwell time - reasonable value (3.1)",
-        "send":["{spdw:3.1}"]},
-    "r":{"status":0, "spdw":3.1}
+    "t":{"label":"Write spindle spinup delay - reasonable value (3.1)",
+        "send":["{spde:3.1}"]},
+    "r":{"status":0, "spde":3.1}
 }
 #
 {
-    "t":{"label":"Read spindle dwell time",
-        "send":["{spdw:n}"]},
-    "r":{"status":0, "spdw":3.1}
+    "t":{"label":"Read spindle spinup delay",
+        "send":["{spde:n}"]},
+    "r":{"status":0, "spde":3.1}
 }
 #
 {
-    "t":{"label":"EXCEPTION: Write spindle dwell time - too small",
-        "send":["{spdw:-1}"]},
-    "r":{"status":108, "spdw":null}
+    "t":{"label":"EXCEPTION: Write spindle spinup delay - too small",
+        "send":["{spde:-1}"]},
+    "r":{"status":108, "spde":null}
 }
 #
 {
-    "t":{"label":"EXCEPTION: Write spindle dwell time - too large",
-        "send":["{spdw:100000000}"]},
-    "r":{"status":109, "spdw":null}
+    "t":{"label":"EXCEPTION: Write spindle spinup delay - too large",
+        "send":["{spde:100000000}"]},
+    "r":{"status":109, "spde":null}
 }
 #
 # Spindle Speed Minimum

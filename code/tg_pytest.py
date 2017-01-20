@@ -71,7 +71,8 @@ def compare_r(key, test_val, resp_val, response_string, params):
     elif resp_val == None:              # happens when board returns Null for a bad command
         test = False
             
-    elif type(test_val) == int:         # Test a numeric value against precision
+    elif ((type(test_val) == int) or (type(test_val) == float)):         
+        # Test a numeric value against precision
         if abs(test_val - resp_val) <= precision:
             test = True
         else:
@@ -171,7 +172,8 @@ def analyze_sr(t_data, r_datae, params):
         if k in build_sr:
 
             test = False
-            if type(t_data["sr"][k]) == int:         # Test a numeric value against precision
+            # Test a numeric value against precision
+            if ((type(t_data["sr"][k]) == int) or (type(t_data["sr"][k]) == float)): 
                 if abs(t_data["sr"][k] - build_sr[k]) <= precision:
                     test = True
                 else:

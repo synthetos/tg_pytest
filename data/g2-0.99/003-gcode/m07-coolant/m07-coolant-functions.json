@@ -1,0 +1,113 @@
+################################################################################
+#
+#   m07-coolant-functions.json - M7/M8/M9 coolant functions
+#
+# FYI:  M7          turn on mist coolant
+#       M8          turn on flood coolant
+#       M9          turn off coolants
+#
+#       com:N       set / get mist coolant      0=OFF, 1=ON, 2=PAUSE, 3=RESUME
+#       cof:N       set / get flood coolant     0=OFF, 1=ON, 2=PAUSE, 3=RESUME
+#
+#       coph:1      coolant pause on hold,      0=disable, 1=enable
+#       comp:1      mist coolant polarity       0=ACTIVE_LOW, 1=ACTIVE_HIGH
+#       cofp:1      flood coolant polarity      0=ACTIVE_LOW, 1=ACTIVE_HIGH
+#
+# See also: 002-config/02-settings/settings-coolant.json
+#
+# // include 000-init/init-standard-gcode.json
+#
+# SETUP FOR COOLANT TESTS
+{
+    "t":{"label":"Setup for coolant tests",
+        "before":["G28.3 X0 Y0 Z0 ; Should be first",
+                  "G21 G90 G94",
+                  "G10 L20 P2 X0 Y0 Z0",
+                  "G55",
+                  "G28.1",
+                  "F500",
+                  "M3",
+                  "M5"
+                ],
+        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}",
+                 "{coph:1}",
+                 "{comp:1}",
+                 "{cofp:1}"
+                ],
+    "r":{"status":0}
+    }
+}
+# Use old-style status report setup line
+{
+    "t":{"label":"Set status report - OLD STYLE STATUS REPORT LINE",
+        "send":["{sr:{line:t,posx:t,posy:t,posz:t,com:t,cof:t,stat:t}}"]},
+    "r":{"status":0}
+}
+#
+# BASIC M CODE TESTS
+#
+#   Note: In some configurations the mist coolant and flood coolant are mapped to the same bit.
+#         So the LEDs will indicate eitehr coolant.
+{
+    "t":{"label":"Turn on mist coolant from off",
+        "before":["M9"],
+        "send":["M7"]},
+    "sr":{"com":1, "cof":0},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Turn on flood coolant from off",
+        "before":["M9"],
+        "send":["M8"]},
+    "sr":{"com":0, "cof":1},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Turn on mist coolant w/flood already on",
+        "before":["M8"],
+        "send":["M7"]},
+    "sr":{"com":1, "cof":1},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Turn off both coolants",
+        "send":["M9"]},
+    "sr":{"com":0, "cof":0},
+    "r":{"status":0}
+}
+#
+# BASIC JSON CONTROL TESTS
+#
+{
+    "t":{"label":"Turn on mist coolant",
+        "before":["M9"],
+        "send":["{com:1}"]},
+    "sr":{"com":1, "cof":0},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Turn on flood coolant",
+        "before":["M9"],
+        "send":["{cof:1}"]},
+    "sr":{"com":0, "cof":1},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Turn on mist coolant w/flood already on",
+        "before":["M8"],
+        "send":["{com:1}"]},
+    "sr":{"com":1, "cof":1},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Turn off both coolants",
+        "send":["{com:0}","{cof:0}"]},
+    "sr":{"com":0, "cof":0},
+    "r":{"status":0}
+}

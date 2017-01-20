@@ -9,12 +9,12 @@
 #   - zeros or homes machine (depending on SKIPs selected)
 #   - saves home position as g28
 #
-# DEFAULTS
+# DEFAULTS (precision was 5 digits, reduced to 3)
 {
     "defaults":{
         "fail":"hard",
         "delay":0.100,
-        "precision":0.00001
+        "precision":0.001
     }
 }
 # BEFORE AND AFTERS
@@ -69,7 +69,7 @@
         "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
     "r":{"status":0}
 }
-# HOMING - Choose on or ther other of these next 2 tests
+# HOMING - Choose one or the other of these next 2 tests
 # SKIP
 {
     "t":{"label":"Home machine to limit switches",

@@ -1,0 +1,98 @@
+################################################################################
+#
+#   settings-coolant.json - coolant settings
+#
+#   See 003-gcode/m07 for coolant action tests
+#
+#   include 000-init/init-standard-json.json
+#
+# Coolant Pause
+{
+    "t":{"label":"Write coolant pause = 0",
+        "send":["{coph:0}"]},
+    "r":{"status":0, "coph":0}
+}
+#
+{
+    "t":{"label":"Write coolant pause = 1",
+        "send":["{coph:1}"]},
+    "r":{"status":0, "coph":1}
+}
+#
+{
+    "t":{"label":"Read coolant pause",
+        "send":["{coph:n}"]},
+    "r":{"status":0, "coph":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write coolant pause - too small",
+        "send":["{coph:-1}"]},
+    "r":{"status":108, "coph":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write coolant pause - too large",
+        "send":["{coph:3}"]},
+    "r":{"status":109, "coph":null}
+}
+# Mist Coolant Polarity
+{
+    "t":{"label":"Write mist coolant polarity = 0",
+        "send":["{comp:0}"]},
+    "r":{"status":0, "comp":0}
+}
+#
+{
+    "t":{"label":"Write mist coolant polarity = 1",
+        "send":["{comp:1}"]},
+    "r":{"status":0, "comp":1}
+}
+#
+{
+    "t":{"label":"Read mist coolant polarity",
+        "send":["{comp:n}"]},
+    "r":{"status":0, "comp":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write mist coolant polarity - too small",
+        "send":["{comp:-1}"]},
+    "r":{"status":108, "comp":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write mist coolant polarity - too large",
+        "send":["{comp:3}"]},
+    "r":{"status":109, "comp":null}
+}
+# Flood Coolant Polarity
+{
+    "t":{"label":"Write flood coolant polarity = 0",
+        "send":["{comp:0}"]},
+    "r":{"status":0, "comp":0}
+}
+#
+{
+    "t":{"label":"Write flood coolant polarity = 1",
+        "send":["{cofp:1}"]},
+    "r":{"status":0, "cofp":1}
+}
+#
+{
+    "t":{"label":"Read flood coolant polarity",
+        "send":["{cofp:n}"]},
+    "r":{"status":0, "cofp":1}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write flood coolant polarity - too small",
+        "send":["{cofp:-1}"]},
+    "r":{"status":108, "cofp":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write flood coolant polarity - too large",
+        "send":["{cofp:3}"]},
+    "r":{"status":109, "cofp":null}
+}
