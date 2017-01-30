@@ -38,13 +38,15 @@
 #
 {
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
-        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}",
-                "{ct:0.1}","{sl:t}","{lim:f}",
+        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+                "G21","M30",
+                "{ct:0.1}",
+                "{sl:f}",
+                "{lim:f}",
                 "{coph:1}",
                 "{spph:1}",
                 "{spde:1.1}",
                 "{zl:5}",
-                "M30",
                 "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
                 "G10 L2 P1 X0 Y0 Z0",
                 "G10 L2 P2 X0 Y0 Z0",

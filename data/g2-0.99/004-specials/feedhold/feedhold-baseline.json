@@ -42,12 +42,14 @@
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
         "send":["{clear:n}",
                 "{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
-                "{ct:0.1}","{sl:t}","{lim:f}",
+                "G21","M30",
+                "{ct:0.1}",
+                "{sl:f}",
+                "{lim:f}",
                 "{coph:1}",
                 "{spph:1}",
                 "{spde:0}",
                 "{zl:5}",
-                "M30",
                 "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
                 "G10 L20 P1 X0 Y0 Z0",
                 "G10 L20 P2 X0 Y0 Z0",
@@ -131,7 +133,7 @@
         "delay":0.75,
         "precision":1},
         "r":{"status":0},
-        "sr":{"stat":3,"posx":12,"com":1,"cof":1,"spc":1}
+        "sr":{"stat":3,"com":1,"cof":1,"spc":1}
 }
 #
 # Test sequence !~%  This one is supposed to queue flush
@@ -144,7 +146,7 @@
         "delay":0.75,
         "precision":1},
         "r":{"status":0},
-        "sr":{"stat":3,"posx":12,"com":1,"cof":1,"spc":1}
+        "sr":{"stat":3,"com":1,"cof":1,"spc":1}
 }
 #
 # Test sequence !%~  This one is supposed to queue flush
@@ -157,7 +159,7 @@
         "delay":0.75,
         "precision":1},
         "r":{"status":0},
-        "sr":{"stat":3,"posx":12,"com":1,"cof":1,"spc":1}
+        "sr":{"stat":3,"com":1,"cof":1,"spc":1}
 }
 #
 # Run a bunch of commands in seqeunce

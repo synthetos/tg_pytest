@@ -40,7 +40,7 @@
 {
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
-                "G21",
+                "G21","M30",
                 "{ct:0.1}",
                 "{sl:f}",
                 "{lim:f}",
@@ -48,7 +48,6 @@
                 "{spph:1}",
                 "{spde:0}",
                 "{zl:5}",
-                "M30",
                 "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
                 "G10 L2 P1 X0 Y0 Z0",
                 "G10 L2 P2 X0 Y0 Z0",
@@ -75,7 +74,7 @@
 #
 # TESTS START HERE
 # Run a feedhold and resume cycle in a square move - MM
-# SKIP
+#
 {
     "t":{"label":"Square move test in MM - start 4 moves and do a feedhold",
         "before":["~","g21 g0 x0 y0"],
@@ -105,19 +104,20 @@
     "r":{"status":0},
     "sr":{"stat":6,"com":3,"cof":3,"spc":3}
 }
-# EOF
+#
 {
     "t":{"label":"Resume from feedhold",
-        "send":["~"]},
+        "send":["~"],
+        "after":["G21"]},
     "r":{"status":0},
-    "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
+    "sr":{"stat":3,"posx":0,"com":1,"cof":1,"spc":1}
 }
 #
 #
 # Run a feedhold and resume cycle on a single move
 {
     "t":{"label":"Single move test to 30 - start movement and do a feedhold",
-        "before":["g0 x0 y0","~"],
+        "before":["g21 g0 x0 y0","~"],
         "send":["m3 m7 m8",
                 "G1 F500 X30", "!"],
         "delay":0.5},
@@ -133,7 +133,7 @@
 }
 #
 # Run it again - back to zero, this time with movementin the feedhold
-# EOF
+#
 {
     "t":{"label":"Single move test to 0 - start movement and do a feedhold",
         "before":["~"],
@@ -170,7 +170,7 @@
     "r":{"status":0},
     "sr":{"stat":3,"posx":0,"posy":0,"com":1,"cof":1,"spc":1}
 }
-# EOF
+#
 # Run a feedhold and resume cycle on a multi move sequence
 #
 {
