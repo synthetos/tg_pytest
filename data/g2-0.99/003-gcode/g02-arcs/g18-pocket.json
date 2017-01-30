@@ -19,6 +19,14 @@
 #   Record current position as G28 home
 #   Set feed rate for tests
 #   (Uses 100 ms delay to allow G10 persistence for Xmega)
+#
+{
+    "defaults":{
+        "fail":"hard",
+        "precision":0.001
+    }
+}
+#
 {
     "t":{"label":"Restore Othermill default settings",
         "before":["{defa:1}"]},

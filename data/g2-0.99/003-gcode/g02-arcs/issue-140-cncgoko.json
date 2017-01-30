@@ -2,11 +2,14 @@
 #
 #   issue-140-cncgoko.json - github issue #140 - bad initial status report on arc
 #
+#
 {
-  "defaults":{
-    "fail":"hard"
-  }
+    "defaults":{
+        "fail":"hard",
+        "precision":0.001
+    }
 }
+#
 #
 {
     "t":{"label":"Restore Othermill default settings",

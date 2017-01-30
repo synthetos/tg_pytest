@@ -13,10 +13,17 @@
 #   Clearance must be at least 100mm positive and negative in each dimension.
 #   This position will be set (0,0,0) by setup-centered's G28.3 command
 #
-##################
-### TEST SETUP ###
-##################
-
+### TEST SETUP
+#
+# DEFAULTS
+{
+    "defaults":{
+        "fail":"hard",
+        "delay":0.100,
+        "precision":0.001
+    }
+}
+#
 {
     "t":{"label":"Setup for arc dynamics tests",
          "send":["{ct:0.1}","{jt:2.0}",
@@ -62,6 +69,12 @@
     "t":{"label":"CW 360 degree circle at F40,000",
          "send":["G28","G2 I50 F40000"]},
     "sr":{"posx": 100, "posy": 100},
+    "r":{"status":0}
+}
+# Test a non-arc move while in arc motion mode
+{
+    "t":{"label":"Test a non-arc move while in arc motion mode",
+         "send":["m3"]},
     "r":{"status":0}
 }
 

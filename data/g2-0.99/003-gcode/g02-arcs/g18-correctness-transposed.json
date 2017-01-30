@@ -29,7 +29,14 @@
 ##################
 ### TEST SETUP ###
 ##################
-
+#
+{
+    "defaults":{
+        "fail":"hard",
+        "precision":0.001
+    }
+}
+#
 {
     "t":{"label":"Setup for G18 tests",
         "send":["{2ma:2}",

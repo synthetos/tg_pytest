@@ -16,7 +16,7 @@
 ##################
 ### TEST SETUP ###
 ##################
-
+#
 {
   "before_all":{
     "label":"Setup for straights tests",
@@ -55,23 +55,32 @@
 {
     "t":{"label":"Straight traverse to x100",
          "send":["G0 X100"]},
-    "sr":{"posx": 100, "posy": 0},
+    "sr":{"posx": 100, "posy": 0, "stat":3},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Straight traverse to x100 y100",
          "send":["G0 X100 Y100"]},
-    "sr":{"posx": 100, "posy": 100},
+    "sr":{"posx": 100, "posy": 100, "stat":3},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"Straight traverse and return",
          "send":["G0 X100 Y100", "G0 X0 Y0"]},
-    "sr":{"posx": 0, "posy": 0},
+    "sr":{"posx": 0, "posy": 0, "stat":3},
     "r":{"status":0}
 }
+#
+{
+    "t":{"label":"Straight traverse to same loaction (zero length move)",
+        "before":["G0 X0 Y0"],
+        "send":["G0 X0 Y0"]},
+    "sr":{"posx": 0, "posy": 0, "stat":3},
+    "r":{"status":0}
+}
+#
 # Simple Feeds
 {
     "t":{"label":"Straight feed to x100",
@@ -115,6 +124,15 @@
     "sr":{"posx": 0.2, "posy": 0.2},
     "r":{"status":0}
 }
+#
+{
+    "t":{"label":"Straight feed to same loaction (zero length move)",
+        "before":["G0 X0 Y0"],
+        "send":["G1 X0 Y0 F1000"]},
+    "sr":{"posx": 0, "posy": 0, "stat":3},
+    "r":{"status":0}
+}
+#
 # Mixed Feeds
 {
     "t":{"label":"Mixed G1 feed to x100 - 2 segments",

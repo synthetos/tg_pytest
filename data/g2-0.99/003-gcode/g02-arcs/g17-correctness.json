@@ -25,12 +25,12 @@
 ##################
 ### TEST SETUP ###
 ##################
-
+#
 {
-  "defaults":{
-    "fail":"hard",
-    "precision":0.01
-  }
+    "defaults":{
+        "fail":"hard",
+        "precision":0.001
+    }
 }
 #
 {
