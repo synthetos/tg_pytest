@@ -27,9 +27,9 @@
 }
 #
 {
-    "t":{"label":"EXCEPTION: Write xjm too large (100K max)",
+    "t":{"label":"EXCEPTION: Write xjm too large (1M max)",
         "before":["G21"],
-        "send":["{xjm:100001}"]},
+        "send":["{xjm:1000001}"]},
     "r":{"status":109, "xjm":null}
 }
 #

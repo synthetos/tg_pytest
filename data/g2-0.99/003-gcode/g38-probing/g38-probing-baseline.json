@@ -20,120 +20,70 @@
 #     (25,25,0)
 #   On the Othermachine homing followed by g0 x50 y50 z-30 works well
 #
-# DEFAULTS
-{
-    "defaults":{
-        "fail":"hard",
-        "precision":0.001
-    }
-}
-# BEFORE AND AFTERS
-{
-    "before_all":{"label":"Reset default settings & cancel cycles - Always run this one by itself",
-        "before":["g80","{defa:t}"]
-    }
-}
-# SETUP ROUTINES
-{
-    "t":{"label":"Set Standard Gcode defaults - set G55 offsets to (50,50)",
-        "send":["{clear:n}",
-                "{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
-                "G21","M30",
-                "{ct:0.1}",
-                "{sl:t}",
-                "{lim:t}",
-                "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
-                "G0 X50 Y50",
-                "G10 L20 P2 X0 Y0 Z0",
-                "G55",
-                "G28.1"
-               ]},
-    "r":{"status":0}
-}
-# Use old-style status report setup line
-{
-    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{sr:{prbe:t,prbx:t,prby:t,prbz:t,line:t,posx:t,posy:t,posz:t,feed:t,vel:t,coor:t,unit:t,stat:t}}"]},
-    "r":{"status":0}
-}
+# The init file must set G55 to (50,50,-30)
+# include 003-gcode/g38-probing/g38-probing-init.json
 #
 # PROBE TESTS START HERE
 #
+# Probes that should contact
 {
-    "t":{"label":"Simple Z probe - should be successful",
-        "before":["{clear:n}","G28"],
-        "send":["G55",
-              "G38.2 F400 Z-40"]},
+    "t":{"label":"G38.2 Z probe - probe operation should be successful",
+        "before":["{clear:n}","G28 G55"],
+        "send":["G38.2 F400 Z-40"]},
     "r":{"status":0},
-    "sr":{"stat":3,"prbe":1}
+    "sr":{"stat":3,"prbe":1,"prbx":50,"prby":50,"posx":0,"posy":0}
 }
 #
 {
-    "t":{"label":"Probe after an arc - probing on a full belly",
-        "before":["{clear:n}","G28"],
-        "send":["G55 G2 F2000 I25 X25 Y25",
+    "t":{"label":"G38.2 Probe after an arc - probing on a full belly",
+        "before":["{clear:n}","G28 G55"],
+        "send":["G2 F2000 I25 X25 Y25",
                "G38.2 F400 Z-40"]},
     "r":{"status":0},
+    "sr":{"stat":3,"prbe":1,"prbx":75,"prby":75,"posx":25,"posy":25}
+}
+#
+{
+    "t":{"label":"G38.2 Mult-axis probe",
+        "before":["{clear:n}","G28 G55"],
+        "send":["G38.2 F400 X10 Y15 Z-40"]},
+    "r":{"status":0},
     "sr":{"stat":3,"prbe":1}
 }
 #
 {
-    "t":{"label":"Fails to contact - should report success, though",
-        "before":["G28"],
-        "send":["G38.2 F400 Z-5"]},
+    "t":{"label":"G38.2 Probe in inches - probe operation should be successful",
+        "before":["{clear:n}","G20 G28 G55"],
+        "send":["G38.2 F20 Z-2"],
+        "after":["G21"]},
     "r":{"status":0},
-    "sr":{"prbe":0}
-}
-#
-# EXCEPTIONS: PROBE CONFIGURATION AND CALLING FAILURES
-#
-{
-    "t":{"label":"EXCEPTION: Zero feed rate",
-        "before":["{clear:n}","G28"],
-        "send":["G38.2 F0 Z-40"]},
-    "r":{"status":142}
+    "sr":{"stat":3,"prbe":1,"prbx":50,"prby":50,"posx":0,"posy":0}
 }
 #
 {
-    "t":{"label":"EXCEPTION: No axes specified",
-        "before":["{clear:n}","G28"],
-        "send":["G38.2 F400"]},
-    "r":{"status":134}
+    "t":{"label":"G38.3 Z probe - probe operation should be successful",
+        "before":["{clear:n}","G28 G55"],
+        "send":["G38.3 F400 Z-40"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"prbe":1,"prbx":50,"prby":50,"posx":0,"posy":0}
 }
 #
 {
-    "t":{"label":"EXCEPTION: Missing probe input",
-        "before":["{clear:n}","G28",
-                "{di5fn:0}"],
-        "send":["G38.2 F400 Z-40"],
-        "after":["{di5fn:4}"]},
-    "r":{"status":252}
-}
-#
-{
-    "t":{"label":"EXCEPTION: Invalid probe starting state - fake out by reversing switch sense",
+    "t":{"label":"G38.4 Z probe - fake out by reversing probe input polarity",
         "before":["{clear:n}","G28",
                 "{di5mo:1}"],
-        "send":["G38.2 F400 Z-40"],
+        "send":["G38.4 F400 Z-40"],
         "after":["{di5fn:4}"]},
-    "r":{"status":0}
+    "r":{"status":0},
+    "sr":{"stat":3,"prbe":1,"prbx":50,"prby":50,"posx":0,"posy":0}
 }
 #
 {
-    "t":{"label":"EXCEPTION: Travel too short",
-        "before":["{clear:n}","G28"],
-        "send":["G38.2 F400 Z-0.250"]},
+    "t":{"label":"G38.5 Z probe - fake out by reversing probe input polarity",
+        "before":["{clear:n}","G28",
+                "{di5mo:1}"],
+        "send":["G38.5 F400 Z-40"],
+        "after":["{di5fn:4}"]},
     "r":{"status":0},
-    "sr":{"stat":3,"prbe":0}
-}
-# EOF
-# SKIP
-{
-    "t":{"label":"Set new XY zero in G55 and set G28 return",
-        "send":["G21 G0 X50 Y50",
-                "G10 L20 P2 X0 Y0 Z0",
-                "G55",
-                "G28.1"
-                ]},
-    "r":{"status":0}
+    "sr":{"stat":3,"prbe":1,"prbx":50,"prby":50,"posx":0,"posy":0}
 }

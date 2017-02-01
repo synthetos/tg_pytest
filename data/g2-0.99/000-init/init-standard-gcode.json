@@ -21,7 +21,7 @@
 {
     "before_all":{
         "label":"Reset default settings & cancel cycles - Always run this one by itself",
-        "after":["g80","{defa:t}"]
+        "before":["{clear:}","{defa:t}","g80"]
     }
 }
 # SKIP

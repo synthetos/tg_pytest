@@ -1,0 +1,114 @@
+################################################################################
+#
+#   g38-probing-exceptions.json
+#
+# MACHINE REQUIREMENTS
+#   These tests are set up for the Othermill but should work with most any machine
+#   XY must have > 50mm clearance from zero in the positive direction
+#   Z must have > 50mm clearance in the neqative direction from zero
+#   Machine must have a contacting probe to be used in the Z axis
+#
+# MACHINE SETUP: Prior to running this file:
+#   Verify a probe tool is inserted and a probe surface is present
+#   Verify a probing input has been configured - typically Zmin (5)
+#   Verify that input has been setup for probing INPUT_FUNCTION_PROBE
+#
+#   Home machine to (0,0,0) where Z zero is maximum positive
+#   Position Z probe tip ~30mm above the probe contact surface (will become z=0)
+#   Probes from the following positions should contact the probe surface:
+#     (0,0,0)
+#     (25,25,0)
+#   On the Othermachine homing followed by g0 x50 y50 z-30 works well
+#
+# include 003-gcode/g38-probing/g38-probing-init.json
+#
+# PROBE TESTS START HERE
+#
+# Probes that fail to contact
+# Note: these tests are used to test offsets between prb and pos, as you know the endpoints
+#
+{
+    "t":{"label":"G38.2 probe fails to contact - prbe=0 and stat=2 (alarmed)",
+        "before":["{clear:n}","G55 G28"],
+        "send":["G38.2 F400 Z-5"],
+        "after":["{clear:n}"]},
+    "r":{"status":0},
+    "sr":{"stat":2,"prbe":0,"prbz":-35,"posx":0,"posy":0,"posz":-5}
+}
+#
+{
+    "t":{"label":"G38.3 probe fails to contact - prbe=0 and stat=3 (stopped)",
+        "before":["{clear:n}","G55 G28"],
+        "send":["G38.3 F400 Z-5"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"prbe":0,"prbz":-35,"posx":0,"posy":0,"posz":-5}
+}
+#
+{
+    "t":{"label":"G38.4 probe fails to contact - prbe=0 and stat=2 (alarmed)",
+        "before":["{clear:n}","G55 G28",
+                "{di5mo:1}"],
+        "send":["G38.4 F400 Z-5"],
+        "after":["{di5fn:4}"]},
+    "r":{"status":0},
+    "sr":{"stat":2,"prbe":0,"prbz":-35,"posx":0,"posy":0,"posz":-5}
+}
+#
+{
+    "t":{"label":"G38.5 probe fails to contact - prbe=0 and stat=3 (stopped)",
+        "before":["{clear:n}","G55 G28",
+                "{di5mo:1}"],
+        "send":["G38.5 F400 Z-5"],
+        "after":["{di5fn:4}"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"prbe":0,"prbz":-35,"posx":0,"posy":0,"posz":-5}
+}
+#
+# EXCEPTIONS: PROBE CONFIGURATION AND CALLING FAILURES
+#
+{
+    "t":{"label":"EXCEPTION: Zero feed rate",
+        "before":["{clear:n}","G28"],
+        "send":["G38.3 F0 Z-40"],
+        "after":["{clear:n}"]},
+    "r":{"status":142},
+    "sr":{"stat":2,"prbe":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: No axes specified",
+        "before":["{clear:n}","G28"],
+        "send":["G38.3 F400"],
+        "after":["{clear:n}"]},
+    "r":{"status":134},
+    "sr":{"stat":2,"prbe":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Missing probe input",
+        "before":["{clear:n}","G28",
+                "{di5fn:0}"],
+        "send":["G38.3 F400 Z-40"],
+        "after":["{clear:n}","{di5fn:4}"]},
+    "r":{"status":252},
+    "sr":{"stat":2,"prbe":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Probe already tripped at start - fake out by reversing switch sense",
+        "before":["{clear:n}","G28",
+                "{di5mo:1}"],
+        "send":["G38.3 F400 Z-40"],
+        "after":["{clear:n}","{di5mo:0}"]},
+    "r":{"status":0},
+    "sr":{"stat":2,"prbe":0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Travel too short",
+        "before":["{clear:n}","G28"],
+        "send":["G38.3 F400 Z-0.250"],
+        "after":["{clear:n}"]},
+    "r":{"status":0},
+    "sr":{"stat":2,"prbe":0}
+}

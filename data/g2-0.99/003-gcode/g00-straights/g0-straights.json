@@ -21,7 +21,7 @@
   "before_all":{
     "label":"Setup for straights tests",
     "fail":"hard",
-    "before":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+    "before":["{clear:n}","{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
             "{ct:0.1}","{jt:2.0}",
             "{xvm:40000}","{xjm:20000}",
             "{yvm:40000}","{yjm:20000}",
@@ -52,6 +52,7 @@
 ########################
 
 # Simple Traverses
+#
 {
     "t":{"label":"Straight traverse to x100",
          "send":["G0 X100"]},
@@ -74,7 +75,7 @@
 }
 #
 {
-    "t":{"label":"Straight traverse to same loaction (zero length move)",
+    "t":{"label":"Straight traverse to same location (zero length move)",
         "before":["G0 X0 Y0"],
         "send":["G0 X0 Y0"]},
     "sr":{"posx": 0, "posy": 0, "stat":3},
@@ -126,7 +127,7 @@
 }
 #
 {
-    "t":{"label":"Straight feed to same loaction (zero length move)",
+    "t":{"label":"Straight feed to same location (zero length move)",
         "before":["G0 X0 Y0"],
         "send":["G1 X0 Y0 F1000"]},
     "sr":{"posx": 0, "posy": 0, "stat":3},

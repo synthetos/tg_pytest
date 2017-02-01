@@ -1,0 +1,58 @@
+################################################################################
+#
+#   g38-probing-init.json
+#
+# MACHINE REQUIREMENTS
+#   These tests are set up for the Othermill but should work with most any machine
+#   XY must have > 50mm clearance from zero in the positive direction
+#   Z must have > 50mm clearance in the neqative direction from zero
+#   Machine must have a contacting probe to be used in the Z axis
+#
+# MACHINE SETUP: Prior to running this file:
+#   Verify a probe tool is inserted and a probe surface is present
+#   Verify a probing input has been configured - typically Zmin (5)
+#   Verify that input has been setup for probing INPUT_FUNCTION_PROBE
+#
+#   Home machine to (0,0,0) where Z zero is maximum positive
+#   Position Z probe tip ~30mm above the probe contact surface (will become z=0)
+#   Probes from the following positions should contact the probe surface:
+#     (0,0,0)
+#     (25,25,0)
+#   On the Othermachine homing followed by g0 x50 y50 z-30 works well
+#
+# DEFAULTS
+{
+    "defaults":{
+        "fail":"hard",
+        "precision":0.001
+    }
+}
+# BEFORE AND AFTERS
+{
+    "before_all":{"label":"Reset default settings & cancel cycles - Always run this one by itself",
+        "before":["g80","{defa:t}"]
+    }
+}
+# SETUP ROUTINES
+{
+    "t":{"label":"Set Standard Gcode defaults - set G55 offsets to (50,50,-30)",
+        "send":["{clear:n}",
+                "{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+                "G21","M30",
+                "{ct:0.1}",
+                "{sl:t}",
+                "{lim:t}",
+                "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
+                "G0 X50 Y50 Z-30",
+                "G10 L20 P2 X0 Y0 Z0",
+                "G55",
+                "G28.1"
+               ]},
+    "r":{"status":0}
+}
+# Use old-style status report setup line
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{prbe:t,prbx:t,prby:t,prbz:t,line:t,posx:t,posy:t,posz:t,feed:t,vel:t,coor:t,unit:t,stat:t}}"]},
+    "r":{"status":0}
+}

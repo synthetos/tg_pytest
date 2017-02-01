@@ -41,6 +41,12 @@
 }
 #
 {
+    "t":{"label":"This test will fail is A is not set to AXIS_STANDARD mode",
+        "send":["{aam:n}"]},
+    "r":{"status":0, "aam":1}
+}
+#
+{
     "t":{"label":"Move A 90 degrees off zero, in G21",
         "send":["g21 g0 a90"]},
     "r":{"status":0},

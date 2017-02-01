@@ -39,7 +39,8 @@
         "send":["{ct:n}"]},
     "r":{"status":0, "ct":0.01}
 }
-#
+# SKIP
+# This one works in new feedhold refactored code, but not currently on edge 100.xx
 {
     "t":{"label":"EXCEPTION: Write chordal tolerance zero",
         "send":["{ct:0}"]},
