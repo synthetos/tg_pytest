@@ -1,0 +1,41 @@
+################################################################################
+#
+#   feedhold-inches.json - feedhold
+#
+#   See feedhold-init file for machine setup instructions
+#
+# include 004-specials/feedhold/feedhold-init.json
+#
+# TESTS START HERE
+#
+# Square move test in inches - feedhold should occur early in X acceleration
+# SKIP
+{
+    "t":{"label":"Square move test in inches - start 4 moves and do a feedhold",
+        "before":["~","g20 g0 x0 y0"],
+        "send":["m3 m7 m8",
+                "G1 X2 F120",
+                "G1 Y2",
+                "G1 X0",
+                "G1 Y0",
+                "!"],
+        "delay":0.9},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+# Square move test in inches - feedhold should occur late in X acceleration
+{
+    "t":{"label":"Square move test in inches - start 4 moves and do a feedhold",
+        "before":["~","g20 g0 x0 y0"],
+        "send":["m3 m7 m8",
+                "G1 X2 F120",
+                "G1 Y2",
+                "G1 X0",
+                "G1 Y0",
+                "!"],
+        "delay":0.9},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
