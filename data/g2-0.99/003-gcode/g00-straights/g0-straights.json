@@ -46,11 +46,9 @@
     "after":["{clear:n}","G28"]
   }
 }
-
-########################
-### TESTS START HERE ###
-########################
-
+#
+# TESTS START HERE
+#
 # Simple Traverses
 #
 {
@@ -155,12 +153,11 @@
     "sr":{"posx": 100, "posy": 0},
     "r":{"status":0}
 }
-
-# EOF
+# Gcode wrapped in JSON
 #
 {
-  "after_each":{
-    "label":"no action",
-    "after":[""]
-  }
+    "t":{"label":"JSON wrapped gcode",
+         "send":["{gc:\"G0 X100\"}"]},
+    "sr":{"posx": 100, "posy": 0, "stat":3},
+    "r":{"status":0}
 }
