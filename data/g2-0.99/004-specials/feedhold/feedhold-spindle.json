@@ -1,0 +1,142 @@
+################################################################################
+#
+#   feedhold-spindle.json - tests for feedhold spindle operations
+#
+#   See feedhold-init file for machine setup instructions
+#
+# include 004-specials/feedhold/feedhold-init.json
+#
+# More tests:
+#   Test spindle delay durations, 0 (off), various delay times
+#   Change spindle settings while in p2. Try all combinations - spph:t/f, ON/OFF, S word
+#   Change spindle S words while in p2
+#   Change coolant settings while in p2. Try all combinations - coph:t/f, ON/OFF, mist, flood
+#
+# TESTS START HERE
+#
+# Standard spindle actions - no spinup delay
+{
+    "t":{"label":"Turn on spindle, verify spindle pause into feedhold",
+        "before":["{clear:n}",
+                "{spph:1}",
+                "{spde:0}",
+                "{zl:0}"],
+        "send":["m3",
+                "G1 X30 F1000",
+                "!"],
+        "delay":0.7},
+    "r":{"status":0},
+    "sr":{"stat":6,"spc":3}
+}
+#
+{
+    "t":{"label":"Exit feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":30,"spc":1}
+}
+#
+# Standard spindle actions - with spinup delay
+{
+    "t":{"label":"Turn on spindle, verify spindle pause into feedhold",
+        "before":["{clear:n}",
+                "{spph:1}",
+                "{spde:1}",
+                "{zl:0}"],
+        "send":["m3",
+                "G1 X30 F1000",
+                "!"],
+        "delay":0.7},
+    "r":{"status":0},
+    "sr":{"stat":6,"spc":3}
+}
+#
+{
+    "t":{"label":"Exit feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":30,"spc":1}
+}
+#
+
+# EOF
+#
+# Run a feedhold and resume cycle on a single move
+{
+    "t":{"label":"Single move test to 30 - start movement and do a feedhold",
+        "before":["g21 g0 x0 y0","~"],
+        "send":["m3 m7 m8",
+                "G1 F500 X30", "!"],
+        "delay":0.5},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+{
+    "t":{"label":"Resume from feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
+}
+#
+# Run it again - back to zero, this time with movementin the feedhold
+#
+{
+    "t":{"label":"Single move test to 0 - start movement and do a feedhold",
+        "before":["~"],
+        "send":["m3 m7 m8",
+                "G1 F500 X0", "!"],
+        "delay":0.75,
+        "after":["g0 x2 y20"]},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+{
+    "t":{"label":"Resume from feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":0,"com":1,"cof":1,"spc":1}
+}
+#
+# Feedhold and resume an arc move
+#
+{
+    "t":{"label":"Feedhold a CW 360 degree arc move",
+         "before":["g0 x0 y0"],
+         "send":["m3 m7 m8",
+                 "G2 I25 F4000", "!"],
+         "delay":0.75,
+         "after":["g0 x10 y10"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Resume from feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":0,"posy":0,"com":1,"cof":1,"spc":1}
+}
+#
+# Run a feedhold and resume cycle on a multi move sequence
+#
+{
+    "t":{"label":"Start multi-move movement and do a feedhold",
+        "before":["g0 x0 y0", "~"],
+        "send":["m3 m7 m8",
+                "g1 f200 x5",
+                "x7.5 y7.7",
+                "x8.9 y7.9",
+                "x9.1 y8.2",
+                "!"],
+        "delay":0.5},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+{
+    "t":{"label":"Resume from feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":9.1,"posy":8.2,"com":1,"cof":1,"spc":1}
+}

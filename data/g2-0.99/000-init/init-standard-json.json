@@ -12,7 +12,7 @@
 {
     "before_all":{
         "label":"Reset default settings & cancel cycles - Always run this one by itself",
-        "before":["{clear:}","{defa:t}","g80"]
+        "before":["{clear:n}","{defa:t}","g80"]
     }
 }
 #

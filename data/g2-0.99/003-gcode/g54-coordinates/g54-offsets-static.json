@@ -27,14 +27,8 @@
 # g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
 # g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
 #
-# include 000-init/init-standard-gcode.json
-#
-# Override precision default for these tests
-{
-    "defaults":{
-        "precision":0.01
-    }
-}
+# xxxxinclude 000-init/init-standard-gcode.json
+# include 003-gcode/g54-coordinates/g54-offsets-init.json
 #
 #### G10 TESTS ###
 #

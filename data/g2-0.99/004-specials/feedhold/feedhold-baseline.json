@@ -6,6 +6,18 @@
 #
 # include 004-specials/feedhold/feedhold-init.json
 #
+# More tests:
+#   Send ~ and % while feedhold entry actions are occurring (Z, spindle, coolant)
+#   Send ~ and % while feedhold exit actions are occurring (coolant, spindle, delay, Z)
+#   Send ~ and % while p2movement is occurring
+#   Test spindle delay durations, 0 (off), various delay times
+#   Change spindle settings while in p2. Try all combinations - spph:t/f, ON/OFF, S word
+#   Change spindle S words while in p2
+#   Change coolant settings while in p2. Try all combinations - coph:t/f, ON/OFF, mist, flood
+#   Feedhold request received during dwell
+#   Feedhold request received during homing (what's the proper handling?)
+#   Feedhold request received during probing (what's the proper handling?)
+#
 # TESTS START HERE
 # Enter feedhold and exit ~ immediately
 #
@@ -106,12 +118,19 @@
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
 }
 #
-# Run a bunch of commands in seqeunce
-# 
+# Shotgun - Run a bunch of commands in seqeunce
+# EOF
 {
-    "t":{"label":"FEEDHOLD TEST - hold, resume, hold-resume, hold, flush",
+    "t":{"label":"Shotgun test - hold, resume, hold-resume, hold, flush",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X40", "!", "~", "!~", "!", "%"],
+        "delay":0.75},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Sanity moves following shotgun test",
+        "send":["G0 X0","G0 X40","G0 X0"],
         "delay":0.75},
     "r":{"status":0}
 }

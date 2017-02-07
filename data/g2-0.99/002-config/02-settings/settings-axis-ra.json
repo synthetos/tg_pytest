@@ -1,0 +1,43 @@
+###############################################################################
+#
+#   settings-axis-ra.json - Test rotary axis Radius settings
+#
+# include 000-init/init-standard-json.json
+#
+{
+    "t":{"label":"Zero X axis",
+        "send":["g28.3 x0"]},
+    "r":{"status":0},
+    "sr":{"posx":0}
+}
+#
+{
+    "t":{"label":"Write ara",
+        "send":["{ara:1.0}"]},
+    "r":{"status":0, "ara":1.0}
+}
+#
+{
+    "t":{"label":"Read ara",
+        "before":["{ara:1.0}"],
+        "send":["{ara:null}"]},
+    "r":{"status":0, "ara":1.0}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write ara with illegal value",
+        "send":["{ara:0}"]},
+    "r":{"status":108, "ara":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write ara with illegal value",
+        "send":["{ara:-1}"]},
+    "r":{"status":108, "ara":null}
+}
+#
+{
+    "t":{"label":"EXCEPTION: Write ara with illegal value",
+        "send":["{ara:1000001}"]},
+    "r":{"status":109, "ara":null}
+}

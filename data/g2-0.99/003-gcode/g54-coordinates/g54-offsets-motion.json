@@ -27,14 +27,7 @@
 # g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
 # g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
 #
-# include 000-init/init-standard-gcode.json
-#
-# Override precision default for these tests
-{
-    "defaults":{
-        "precision":0.01
-    }
-}
+# include 003-gcode/g54-coordinates/g54-offsets-init.json
 #
 # MOTION TESTS
 #
@@ -114,7 +107,7 @@
 #
 {
     "t":{"label":"Move to starting position in G54 coordinates",
-        "before":["G21"],
+        "before":["G21 G54"],
         "send":["g0 x50 y50 z-30"]},
     "r":{"status":0},
     "sr":{"posx": 50, "posy": 50, "posz": -30}

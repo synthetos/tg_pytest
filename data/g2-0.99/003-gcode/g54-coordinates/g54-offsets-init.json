@@ -1,20 +1,38 @@
 ################################################################################
 #
-#   init-gcode.json - common initialization for gcode tests
+#  g54-offsets-init.json - setup for G53 - G59 coordinate system tests
 #
-#   Sets:
-#   - standard JSON & comms parameters assumed by ty_pytest
-#   - standard status report assumed by ty_pytest
-#   - standard Gcode and global value settings - see Standard Gcode test
-#   - zeros or homes machine (depending on SKIPs selected)
-#   - saves home position as g28
+# This file sets up the board to behave as an Othermachine Othermill:
+#   X min/max travel                0, 145.6
+#   Y min/max travel                0, 119.1
+#   Z min/max travel                -60.1, 0
 #
-# DEFAULTS (precision was 5 digits, reduced to 3)
+#   XYZ maximum velocity            1500 mm/min
+#   XYZ maximum jerk                 500 mm/min^3 (* 1,000,000)
+#   JT junction integration time    0.75
+#
+#   Other parameters such as limit enables, motor power, etc. are not changed
+#   Motor mapping is assumed to be correct and not messed with.
+#
+#   Position the head at machine origin or some other unobstructed start position
+*   Ensure that clearance from start position is at least (60,60,-30)
+#   The origin position will be set to (0,0,0) by the G28.3 command
+#
+#   Values used for testing:
+# 	    x-mm     y-mm     z-mm		x-in	y-in	z-in
+# g54   0.0000   0.0000   0.0000    0.0000  0.0000  0.0000
+# g55  25.4000  25.4000 -12.7000    1.0000  1.0000 -0.5000
+# g56  20.0000  19.0000 -10.0000    0.7874  0.7480 -0.3937
+# g57  14.0000  14.1000  -8.7000    0.5512  0.5551 -0.3425
+# g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
+# g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
+#
+# DEFAULTS
 {
     "defaults":{
         "fail":"hard",
         "delay":0.100,
-        "precision":0.001
+        "precision":0.01
     }
 }
 # BEFORE AND AFTERS
@@ -22,21 +40,6 @@
     "before_all":{
         "label":"Reset default settings & cancel cycles - Always run this one by itself",
         "before":["{clear:n}","{defa:t}","g80"]
-    }
-}
-# SKIP
-{
-    "before_each":{
-        "label":"clear alarms, cancel cycles",
-        "before":["{clear:n}","g80"],
-        "delay":0.100
-    }
-}
-#
-{
-    "after_all":{
-        "label":"Return to start and M30 program end (also clears alarms)",
-        "after":["g0 x0 y0 z0 a0","M30"]
     }
 }
 # SETUP ROUTINES
@@ -55,26 +58,10 @@
                ]},
     "r":{"status":0}
 }
-# SETUP STATUS REPORTS FOR TG_PYTEST
-# SKIP - SRS not yet implemented
-{
-    "t":{"label":"Clear and set status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
-        "send":["{srs:{clear:t}}",
-                "{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
-    "r":{"status":0}
-}
-# Use old-style status report setup line
+#
 {
     "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
         "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
-    "r":{"status":0}
-}
-# HOMING - Choose one or the other of these next 2 tests
-# SKIP
-{
-    "t":{"label":"Home machine to limit switches",
-        "send":["g28.2 x0 y0 z0"],
-        "setup":true},
     "r":{"status":0}
 }
 #
@@ -83,7 +70,7 @@
         "send":["g28.3 x0 y0 z0 a0"]},
     "r":{"status":0}
 }
-# SET A RETURN POSITION
+#
 {
     "t":{"label":"Save G28 position",
         "send":["G28.1"]},
