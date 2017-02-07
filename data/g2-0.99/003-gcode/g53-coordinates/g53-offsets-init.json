@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  g54-offsets-init.json - setup for G53 - G59 coordinate system tests
+#  g53-offsets-init.json - setup for G53 - G59 coordinate system tests
 #
 # This file sets up the board to behave as an Othermachine Othermill:
 #   X min/max travel                0, 145.6
