@@ -2,21 +2,8 @@
 #
 #  g53-offsets-static.json - test G53 - G59 coordinate system settings
 #
-# This file sets up the board to behave as an Othermachine Othermill:
-#   X min/max travel                0, 145.6
-#   Y min/max travel                0, 119.1
-#   Z min/max travel                -60.1, 0
-#
-#   XYZ maximum velocity            1500 mm/min
-#   XYZ maximum jerk                 500 mm/min^3 (* 1,000,000)
-#   JT junction integration time    0.75
-#
-#   Other parameters such as limit enables, motor power, etc. are not changed
-#   Motor mapping is assumed to be correct and not messed with.
-#
-#   Position the head at machine origin or some other unobstructed start position
-*   Ensure that clearance from start position is at least (60,60,-30)
-#   The origin position will be set to (0,0,0) by the G28.3 command
+# See the following include file for machine setup instructions:
+# include 003-gcode/g53-coordinates/g53-offsets-init.json
 #
 #   Values used for testing:
 # 	    x-mm     y-mm     z-mm		x-in	y-in	z-in
@@ -26,8 +13,6 @@
 # g57  14.0000  14.1000  -8.7000    0.5512  0.5551 -0.3425
 # g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
 # g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
-#
-# include 003-gcode/g53-coordinates/g53-offsets-init.json
 #
 #### G10 TESTS ###
 #
@@ -130,7 +115,7 @@
         "before":["g21 g54","g0 x0 y0 z0"],
         "send":["{g59x:11.5}","{g59y:6.6}","{g59z:-4.3}"]},
     "r":{"status":0},
-    "sr":{"g55":{"x":0, "y":0, "z":0}}
+    "sr":{"g59":{"x":0, "y":0, "z":0}}
 }
 #
 {

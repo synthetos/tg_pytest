@@ -30,7 +30,7 @@
         "send":["{line:1}"]},
     "r":{"status":104, "line":null}
 }
-# SKIP
+#
 {
     "t":{"label":"Read model line number 'n'",
         "send":["{n:null}"]},
@@ -38,9 +38,9 @@
 }
 #
 {
-    "t":{"label":"EXCEPTION: Write model line number 'n'",
+    "t":{"label":"EXCEPTION: Write model line number 'n'\nThis one is returns 0 even when for this illegal operation\nThis is to allow setting groups to function properly",
         "send":["{n:1}"]},
-    "r":{"status":104, "n":null}
+    "r":{"status":0, "n":null}
 }
 #
 # Velocity - vel

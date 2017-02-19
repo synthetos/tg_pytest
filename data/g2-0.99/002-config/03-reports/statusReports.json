@@ -13,7 +13,7 @@
 #
 {
     "t":{"label":"Set configs for Status Report tests",
-         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:100}", "g28.3 x0 y0 z0 a0"],
+         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}", "g28.3 x0 y0 z0 a0"],
          "delay":0.05},
     "r":{"status":0}
 }

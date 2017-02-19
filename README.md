@@ -13,17 +13,17 @@ ongoing results. It's a batch tester, not streaming.
 ### How It works
  - The tester opens the test-master.cfg file and runs each uncommented JSON file in sequence.
  - Each JSON file contains one or more tests structured as standalone JSON objects.
- - Each test is run by sending all the strings in the `send` array, then waiting for all the JSON responses to be returned from the board. Responses may consist of `r`, `sr` and `er` JSON objects. Responses are decoded and put in a list of decoded JSON objects.
+ - Each test is run by sending all the strings in the `send` array, then waiting for all the JSON responses to be returned from the board. Responses may consist of `r`, `sr` and `er` JSON objects. Responses are decoded and put in a list of decoded JSON objects. Sent strings are displayed as `--->`, responses as `<---`
  - After a 1 second timeout (settable in tg_utils.py) the tester stops listening and analyzes the response list. A separate analyzer is called for `r`, `sr` and `er` responses. Results are sent to the screen (and in the future to an optional file).
- - Note: `sr` responses are rolled up into a "synthetic" status report, which is the union of all elements received by all status reports. The last instance of an element is what sticks (although it's still useful set status reports to verbose).
+ - Note: `sr` responses are rolled up into a "synthetic" status report, which is the union of all elements received by all status reports. The last instance of an element is what sticks (although it still can be useful set status reports to verbose).
 
- - See `/data/000-setup/example-001.json` for examples of items in this readme.
+ - See `/data/000-init/example-init.json` for examples of items in this readme.
 
 ### Usage
 
   - Make sure you have a TinyG v8 or g2core powered and plugged in and it's
       not already connected to some other USB host (like Coolterm or g2core-api)
-  - Edit the /data/test-master.cfg file for the tests you want to run
+  - Edit the `/data/.../test-master.cfg` file for the tests you want to run
   - Make sure each JSON test file is correct (see below)
   - Run tg_pytest from your Python environment
   - _Note: For v8, the board must be in strict JSON mode or the Python JSON parser will fail_
@@ -68,6 +68,8 @@ ongoing results. It's a batch tester, not streaming.
     - `delay` delay in seconds between sends. Values < 1.0 are OK
     - `precision` is the precision to match for numerical values
     - `fail` can be `hard` or `soft`. Hard (default) quits the test run if failure
+    - `fail_returned_er` fail if an `er` exception report is in the response
+    - `fail_missing_sr` fail if an `sr` element specified in `sr` object is missing from response
     - `before` array of strings to send before the test - will not be analyzed
     - `after` array of strings to send after the test - will not be analyzed
     - `setup` if `true`, prevent before's and after's from executing in a given test
@@ -141,9 +143,10 @@ Additional JSON objects can be provided in a file that will run before and after
 ### Defaults
 A `defaults` JSON object can be included in a test file. Defaults are read and applied in the location they are found in the file, so it's good to list these first, or sometimes after the before_all. The default settings will be applied to all subsequent tests. Local, per-test settings for the same variables will override the defaults. Values supported include:
 - `fail` set as `soft` or `hard`. Hard fail will stop tests immediately on a failure, Defaults to `hard`
+- `fail_returned_er` fail if an `er` exception report is in the response
+- `fail_missing_sr` fail if an `sr` element specified in `sr` object is missing from response
 - `delay` delay in seconds between sends. Values < 1 are OK
-- `display` enable/disable results displays (future)
-- `file` enable/disable writing results to files (future)
+- `precision` for matching numeric values can be set in the defaults
 
 ### Notes on Running Tests
    - Tests are run in the order listed in `/data/test-master.cfg`

@@ -28,6 +28,14 @@
                 "G10 L20 P3 X-1 Y-1 Z0.5"]},
     "r":{"status":0}
 }
+# Loosen precision for these tests
+{
+    "defaults":{
+        "fail":"hard",
+        "delay":0.100,
+        "precision":0.01
+    }
+}
 #
 # START TESTS
 #

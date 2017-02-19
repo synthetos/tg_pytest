@@ -38,7 +38,7 @@
 {
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
         "send":["{clear:n}",
-                "{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+                "{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:1}", "{si:200}",
                 "G21","M30",
                 "{ct:0.1}",
                 "{sl:f}",
@@ -61,7 +61,7 @@
 # Use old-style status report setup line
 {
     "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,com:t,cof:t,spc:t,sps:t,dw:t,stat:t}}"]},
+        "send":["{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,com:t,cof:t,spc:t,sps:t,hold:t,stat:t}}"]},
     "r":{"status":0}
 }
 #

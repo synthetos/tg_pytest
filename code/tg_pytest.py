@@ -6,12 +6,13 @@ __version__ = '$Revision: 0.2 $'[11:-2]
 __copyright__ = 'Copyright (c) 2016 Alden Hart'
 __license__ = 'Python'
 
-#### CONSTANTS ####
+#### CONSTANTS AND SWITCHES ####
 
 TEST_DATA_DIR = "../data/g2-0.99"
 #TEST_DATA_DIR = "../data/v8-0.97"
 TEST_MASTER_FILE = "test-master.cfg"
 OUTFILE_ENABLED = False     # True or False
+SHOW_RESPONSES = True
 
 #### PACKAGES ####
 
@@ -82,13 +83,13 @@ def compare_r(key, test_val, resp_val, response_string, params):
             test = True
 
     if test == True:
-        print("  passed: {0}: {1} {2}".format(key, test_val, response_string))
+        print("  OK: {0}: {1} {2}".format(key, test_val, response_string))
         return (0)
     
     else:
-        print("  FAILED: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
+        print("  FAIL: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
         return (1)
-        
+
 
 ################################################################################
 #
@@ -156,6 +157,11 @@ def analyze_sr(t_data, r_datae, params):
     last_sr = None                  # record the last SR
     precision = params["use_precision"]
 
+    try:
+        fail_missing_sr = params["fail_missing_sr"]
+    except:
+        fail_missing_sr = False
+
     for r_data in r_datae:
         if "sr" in r_data:
             last_sr = r_data
@@ -182,13 +188,15 @@ def analyze_sr(t_data, r_datae, params):
                 if t_data["sr"][k] == build_sr[k]:
                     test = True
             if test == True:
-                print("  passed: {0}: {1}".format(k, build_sr[k]))
+                print("  OK: {0}: {1}".format(k, build_sr[k]))
             else:
-                print("  FAILED: {0}: {1} should be {2}".format(k, build_sr[k], t_data["sr"][k]))
+                print("  FAIL: {0}: {1} should be {2}".format(k, build_sr[k], t_data["sr"][k]))
                 result -= 1
 
         else:
             print("  MISSING: \"{0}\" is missing from response".format(k))
+            if fail_missing_sr:
+                result -= 1
 
     return result
 
@@ -196,19 +204,24 @@ def analyze_sr(t_data, r_datae, params):
 def analyze_er(t_data, r_datae, params):
     """
     Analyze exception reports
-    Disable using "display":false
-    Does not current match any keys - just displays the exception
+    Does not match any keys, just display and optionally fail the exception
+      if "fail_returned_er" is true
     """
-    if "er" in t_data:
-        if "display" in t_data["er"]:
-            if t_data["er"]["display"] == False:
-                return
 
+    try:
+        fail_returned_er = params["fail_returned_er"]
+    except:
+        fail_returned_er = False
+
+    exceptions = 0
+    
     for r_data in r_datae:
         if "er" in r_data:
-            print("  EXCEPTION: {0}".format(r_data["response"]))
+            print("  ER: {0}".format(r_data["response"]))
+            if fail_returned_er:
+                exceptions = -1
 
-    return 0
+    return exceptions
 
 
 ################################################################################
@@ -336,7 +349,7 @@ def run_test(t_data, before_data, after_data, params):
     send = [x.encode("utf8") for x in t_data["t"]["send"]]
     first_line = send[0]                # used later in no-response cases    
     for line in send:
-        print("  sending: {0}".format(line))
+        print("  ---> {0}".format(line))
         tg.write(line+"\n")
         time.sleep(delay)
 
@@ -344,6 +357,8 @@ def run_test(t_data, before_data, after_data, params):
     r_datae = []
     for line in tg.readlines():
         line = line.strip()
+        if SHOW_RESPONSES:
+            print("  <--- {0}".format(line))
         if line == "":
             print("  EXCEPTION: Blank line")
             continue        

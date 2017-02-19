@@ -9,7 +9,10 @@
   "defaults":{
     "fail":"hard",
     "delay":0.05,
-    "precision":0.0001
+    "precision":0.0001,
+    "fail_returned_er":true,
+    "fail_missing_sr":true
+    }
   }
 }
 #

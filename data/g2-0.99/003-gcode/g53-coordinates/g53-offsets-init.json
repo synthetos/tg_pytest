@@ -47,7 +47,7 @@
 {
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
-                "{ct:0.1}","{sl:t}","{lim:f}",
+                "{ct:0.1}","{sl:f}","{lim:f}",
                 "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
                 "G10 L2 P1 X0 Y0 Z0",
                 "G10 L2 P2 X0 Y0 Z0",

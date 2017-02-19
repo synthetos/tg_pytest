@@ -1,12 +1,14 @@
 ################################################################################
 #
-#   exceptionReports-001.json
+#   exceptionReports.json
 #
 # include 000-init/init-standard-json.json
 #
 {
   "defaults":{
-    "fail":"hard"
+    "fail":"hard",
+    "fail_returned_er":false,
+    "fail_missing_sr":true
   }
 }
 #
