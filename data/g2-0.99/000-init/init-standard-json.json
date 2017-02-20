@@ -2,11 +2,14 @@
 #
 #   init-standard-json.json - Initialize for g2 json settings tests
 {
-  "defaults":{
-    "fail":"hard",
-    "delay":0.100,
-    "precision":0.001
-  }
+    "defaults":{
+        "fail":"hard",
+        "fail_hard":true,
+        "fail_returned_er":true,
+        "fail_missing_sr":true,
+        "delay":0.100,
+        "precision":0.001
+    }
 }
 #
 {

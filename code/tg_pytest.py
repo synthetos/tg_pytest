@@ -40,6 +40,14 @@ from inspect import getmembers
 from tg_utils import TinyG          # Serial ports and board initialization
 from tg_utils import split_json_file
 
+# TODO:
+#
+# - Normalize the {params} dictionary in run_test() so all possible defaults
+#   are in the dict. This way all downstream commands can rely on a complete 
+#   params dictionary
+#
+# - Change fail hard/soft to simply "fail". If true, fail hard
+# - Add "show_responses" to params
 
 ################################################################################
 #
@@ -76,18 +84,17 @@ def compare_r(key, test_val, resp_val, response_string, params):
         # Test a numeric value against precision
         if abs(test_val - resp_val) <= precision:
             test = True
-        else:
-            print("  approx: resp: {0}, test: {1}, precision: {2}".format(resp_val, test_val, precision))
     else:                               # Test all non-numeric types for exact match
         if test_val == resp_val:
             test = True
 
     if test == True:
-        print("  OK: {0}: {1} {2}".format(key, test_val, response_string))
+        print("  OK:   {0}: {1} {2}".format(key, test_val, response_string))
         return (0)
     
     else:
-        print("  FAIL: {0}: {1} should be {2} {3}".format(key, resp_val, test_val, response_string))
+        print("  FAIL: {0}: {1} should be {2}, precision {3}: {4}".format
+              (key, resp_val, test_val, precision, response_string))
         return (1)
 
 
@@ -122,9 +129,9 @@ def analyze_r(t_data, r_datae, params):
                 test_val = t_data["r"][key]    # data value to check from test data
                 resp_val = r_data["r"][key]    # data value returned for this key from response
                 
-#                if resp_val == None:
-#                    print("  MISSING: no child elements in response")
-#                    return -1
+                if resp_val == None:
+                    print("  MISSING: no child elements in response")
+                    return -1
                     
                 # compare and display nested responses
                 if isinstance(test_val, dict):
@@ -140,7 +147,8 @@ def analyze_r(t_data, r_datae, params):
                 # compare and display non-nested responses
                 result -= compare_r(key, test_val, resp_val, r_data["response"], params)
             else:
-                print("  MISSING: \"{0}\" is missing from response {1}".format(key, r_data["response"]))
+                print("  MISSING: \"{0}\" is missing from response {1}".format
+                      (key, r_data["response"]))
                 result -= 1
                 
     return result
@@ -182,15 +190,14 @@ def analyze_sr(t_data, r_datae, params):
             if ((type(t_data["sr"][k]) == int) or (type(t_data["sr"][k]) == float)): 
                 if abs(t_data["sr"][k] - build_sr[k]) <= precision:
                     test = True
-                else:
-                    print("  approx: test: {0}, resp: {1}, precision: {2}".format(t_data["sr"][k], build_sr[k], precision))
             else:
                 if t_data["sr"][k] == build_sr[k]:
                     test = True
             if test == True:
-                print("  OK: {0}: {1}".format(k, build_sr[k]))
+                print("  OK:   {0}: {1}".format(k, build_sr[k]))
             else:
-                print("  FAIL: {0}: {1} should be {2}".format(k, build_sr[k], t_data["sr"][k]))
+                print("  FAIL: {0}: {1} should be {2}, precision {3}".format
+                      (k, build_sr[k], t_data["sr"][k], precision))
                 result -= 1
 
         else:
@@ -349,7 +356,7 @@ def run_test(t_data, before_data, after_data, params):
     send = [x.encode("utf8") for x in t_data["t"]["send"]]
     first_line = send[0]                # used later in no-response cases    
     for line in send:
-        print("  ---> {0}".format(line))
+        print("  ----> {0}".format(line))
         tg.write(line+"\n")
         time.sleep(delay)
 
@@ -358,7 +365,8 @@ def run_test(t_data, before_data, after_data, params):
     for line in tg.readlines():
         line = line.strip()
         if SHOW_RESPONSES:
-            print("  <--- {0}".format(line))
+#        if "show_responses" in params:
+            print("  <---- {0}".format(line))
         if line == "":
             print("  EXCEPTION: Blank line")
             continue        

@@ -1,0 +1,46 @@
+################################################################################
+#
+#  zero-length-moves.json - tests for moves that don't move
+#
+# See planner-init file for machine setup instructions
+# include 004-specials/planner/planner-init.json
+#
+{
+    "t":{"label":"ZERO LENGTH MOVE: Traverse 0.1 mm, then zero length move",
+        "send":["G0 X0",
+                "G0 X0.1",
+                "G0 X0.1"]},
+    "sr":{"posx": 0.1, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"ZERO LENGTH MOVE: Feed 0.1 mm, then zero length move",
+        "send":["G1 F1000 X0",
+                "G1 F1000 X0.1",
+                "G1 F1000 X0.1"]},
+    "sr":{"posx": 0.1, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"ZERO LENGTH MOVE: Traverse 0.1 mm, then multiple zero length moves",
+        "send":["G0 X0",
+                "G0 X0.1",
+                "G0 X0.1",
+                "G0 X0.1",
+                "G0 X0.1"]},
+    "sr":{"posx": 0.1, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"ZERO LENGTH MOVE: Traverse 0.1 mm, then multiple zero length moves",
+        "send":["G1 F1000 X0",
+                "G1 F1000 X0.1",
+                "G1 F1000 X0.1",
+                "G1 F1000 X0.1",
+                "G1 F1000 X0.1"]},
+    "sr":{"posx": 0.1, "stat":3},
+    "r":{"status":0}
+}

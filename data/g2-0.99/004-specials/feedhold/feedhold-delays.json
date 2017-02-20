@@ -26,7 +26,9 @@
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
 #
-# Run it again - back to zero, this time with movementin the feedhold
+# Run it again - back to zero, this time with movement in the feedhold
+# The after in test 1 should shopw up as the position in test 2,
+# as it was held and then run after the ~ in test 2
 #
 {
     "t":{"label":"Single move test to 0 - start movement and do a feedhold",
@@ -40,10 +42,10 @@
 }
 #
 {
-    "t":{"label":"Resume from feedhold",
+    "t":{"label":"Resume from feedhold - take on the position from the above AFTER",
         "send":["~"]},
     "r":{"status":0},
-    "sr":{"stat":3,"posx":0,"com":1,"cof":1,"spc":1}
+    "sr":{"stat":3,"posx":2,"com":1,"cof":1,"spc":1}
 }
 #
 # Feedhold and resume an arc move
@@ -62,7 +64,7 @@
     "t":{"label":"Resume from feedhold",
         "send":["~"]},
     "r":{"status":0},
-    "sr":{"stat":3,"posx":0,"posy":0,"com":1,"cof":1,"spc":1}
+    "sr":{"stat":3,"posx":10,"posy":10,"com":1,"cof":1,"spc":1}
 }
 #
 # Run a feedhold and resume cycle on a multi move sequence

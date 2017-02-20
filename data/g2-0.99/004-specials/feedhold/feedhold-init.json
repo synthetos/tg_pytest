@@ -23,6 +23,8 @@
 {
     "defaults":{
         "fail":"hard",
+        "fail_returned_er":true,
+        "fail_missing_sr":false,
         "delay":0.100,
         "precision":0.001
     }
@@ -30,15 +32,29 @@
 # BEFORE AND AFTERS
 {
     "before_all":{
-        "label":"Reset default settings & cancel cycles - Always run this one by itself",
-        "after":["g80","{defa:t}"]
+        "label":"Clear alarm coinditions, reset default settings & cancel cycles - Always run this one by itself",
+        "before":["{clear:n}, {defa:t}, g80"]
     }
 }
 # SETUP ROUTINES
+#
+# Use old-style status report setup line
+#
+{
+    "t":{"label":"Set status report - RUN AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{stat:t,hold:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,com:t,cof:t,spc:t}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set machine zero - Must be run by itself",
+        "send":["g28.3 x0 y0 z-95 a0"]},
+    "r":{"status":0}
+}
+#
 {
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
-        "send":["{clear:n}",
-                "{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:1}", "{si:200}",
+        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
                 "G21","M30",
                 "{ct:0.1}",
                 "{sl:f}",
@@ -54,19 +70,8 @@
                 "G10 L20 P4 X0 Y0 Z0",
                 "G10 L20 P5 X0 Y0 Z0",
                 "G10 L20 P6 X0 Y0 Z0",
-                "g55"
+                "g55",
+                "G28.1"
                ]},
-    "r":{"status":0}
-}
-# Use old-style status report setup line
-{
-    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{sr:{line:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,com:t,cof:t,spc:t,sps:t,hold:t,stat:t}}"]},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Set machine zero and return point",
-        "send":["g28.3 x0 y0 z-95 a0", "G28.1"]},
     "r":{"status":0}
 }

@@ -1,0 +1,105 @@
+################################################################################
+#
+#  planner-sensitivity.json - tests for edges of planner parameters
+#
+# See planner-init file for machine setup instructions
+# include 004-specials/planner/planner-init.json
+#
+#
+{
+    "t":{"label":"Parameter sensitivity - jerk 20,000",
+        "send":["{jt:2.0}",
+                "{xvm:40000}",
+                "{xjm:20000}"]},
+    "r":{"status":0}
+}
+# High jerk test
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.000021 mm - jerk 20,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.000021"]},
+    "sr":{"posx": 0.00002, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.00002 mm - jerk 20,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.00002"]},
+    "sr":{"posx": 0.00002, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.000019999 mm - jerk 20,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.000019999"]},
+    "sr":{"posx": 0.000019999, "stat":3},
+    "r":{"status":0}
+}
+# Jerk 40,000
+{
+    "t":{"label":"SENSITIVITY: Parameter sensitivity - jerk 40,000",
+        "send":["{jt:2.0}",
+                "{xvm:40000}",
+                "{xjm:40000}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.000021 mm - jerk 40,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.000021"]},
+    "sr":{"posx": 0.00002, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.00002 mm - jerk 40,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.00002"]},
+    "sr":{"posx": 0.00002, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.000019999 mm - jerk 40,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.000019999"]},
+    "sr":{"posx": 0.000019999, "stat":3},
+    "r":{"status":0}
+}
+#
+# Jerk 80,000
+{
+    "t":{"label":"SENSITIVITY: Parameter sensitivity - jerk 80,000",
+        "send":["{jt:2.0}",
+                "{xvm:40000}",
+                "{xjm:80000}"]},
+    "r":{"status":0}
+}
+# SKIP
+# Fails trap line 924: "mr->segment_time < MIN_SEGMENT_TIME (body)"
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.000021 mm - jerk 80,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.000021"]},
+    "sr":{"posx": 0.00002, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.00002 mm - jerk 80,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.00002"]},
+    "sr":{"posx": 0.00002, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SENSITIVITY: Traverse 0.000019999 mm - jerk 80,000",
+        "before":["G0 X0"],
+        "send":["G0 X0.000019999"]},
+    "sr":{"posx": 0.000019999, "stat":3},
+    "r":{"status":0}
+}

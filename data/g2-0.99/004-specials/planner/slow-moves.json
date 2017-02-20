@@ -1,0 +1,27 @@
+################################################################################
+#
+# slow-moves.json - Test slow moves. These take a long time to run
+#
+# See planner-init file for machine setup instructions
+# include 004-specials/planner/planner-init.json
+#
+{
+    "t":{"label":"SLOW MOVES: Straight feed to x10",
+        "send":["G1 X10 F100"]},
+    "sr":{"posx": 10, "posy": 0},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SLOW MOVES: Straight feed at F10",
+        "send":["G1 X2 Y2 F10"]},
+    "sr":{"posx": 2, "posy": 2},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"SLOW MOVES: Straight feed at F1",
+        "send":["G1 X0.2 Y0.2 F1"]},
+    "sr":{"posx": 0.2, "posy": 0.2},
+    "r":{"status":0}
+}
