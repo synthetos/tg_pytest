@@ -73,7 +73,7 @@
 # Hardware Version
 #
 {
-    "t":{"label":"Read hv - any reponse is OK",
+    "t":{"label":"Read hv - any response is OK",
         "send":["{hv:n}"]},
     "r":{"status":0, "hv":"*"}
 }

@@ -129,9 +129,9 @@ def analyze_r(t_data, r_datae, params):
                 test_val = t_data["r"][key]    # data value to check from test data
                 resp_val = r_data["r"][key]    # data value returned for this key from response
                 
-                if resp_val == None:
-                    print("  MISSING: no child elements in response")
-                    return -1
+#                if resp_val == None:
+#                    print("  MISSING: no child elements in response")
+#                    return -1
                     
                 # compare and display nested responses
                 if isinstance(test_val, dict):
@@ -454,7 +454,7 @@ def main():
         
         # Display filename so opening or parsing errors are obvious
         print
-        print("===========================================================")
+        print("=====================================================================")
         
         # Open input file, read the file and split into 1 or more JSON objects
         try:

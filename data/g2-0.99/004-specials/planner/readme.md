@@ -1,7 +1,8 @@
 ## /004-specials/planner/
 
-These tests are best run with firmware compiled at DEBUG=2 and connected to a hardware debugger.
+This directory contains a series of planner stress tests.
+These tests are best run with firmware compiled at DEBUG=2 and connected to a hardware debugger. Many of the failed tests generate traps that you will want to examine with the debugger.
 
 These tests check:
-- certain motion planner conditions that have failed
-- boundary cases that can fire planner and related traps and other error conditions
+- Certain motion planner conditions that have failed in the past (planner cases)
+- Boundary cases that can fire planner and related traps and other error conditions

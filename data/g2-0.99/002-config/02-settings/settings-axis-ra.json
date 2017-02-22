@@ -23,19 +23,19 @@
         "send":["{ara:null}"]},
     "r":{"status":0, "ara":1.0}
 }
-#
+# SKIP +++++
 {
     "t":{"label":"EXCEPTION: Write ara with illegal value",
         "send":["{ara:0}"]},
     "r":{"status":108, "ara":null}
 }
-#
+# SKIP +++++
 {
     "t":{"label":"EXCEPTION: Write ara with illegal value",
         "send":["{ara:-1}"]},
     "r":{"status":108, "ara":null}
 }
-#
+# SKIP +++++
 {
     "t":{"label":"EXCEPTION: Write ara with illegal value",
         "send":["{ara:1000001}"]},

@@ -14,7 +14,7 @@
     "defaults":{
         "fail":"hard",
         "fail_hard":true,
-        "fail_returned_er":true,
+        "fail_returned_er":false,
         "fail_missing_sr":true,
         "delay":0.100,
         "precision":0.001
@@ -42,6 +42,22 @@
         "after":["g0 x0 y0 z0 a0","M30"]
     }
 }
+# SETUP STATUS REPORTS FOR TG_PYTEST
+# This should run before the Gcode commands, which put the system into cycle
+#
+# SKIP - SRS not yet implemented
+{
+    "t":{"label":"Clear and set status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
+        "send":["{srs:{clear:t}}",
+                "{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
+    "r":{"status":0}
+}
+# Use old-style status report setup line
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
+    "r":{"status":0}
+}
 # SETUP ROUTINES
 #
 {
@@ -56,20 +72,6 @@
                 "G10 L2 P5 X0 Y0 Z0",
                 "G10 L2 P6 X0 Y0 Z0"
                ]},
-    "r":{"status":0}
-}
-# SETUP STATUS REPORTS FOR TG_PYTEST
-# SKIP - SRS not yet implemented
-{
-    "t":{"label":"Clear and set status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
-        "send":["{srs:{clear:t}}",
-                "{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
-    "r":{"status":0}
-}
-# Use old-style status report setup line
-{
-    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
     "r":{"status":0}
 }
 # HOMING - Choose one or the other of these next 2 tests

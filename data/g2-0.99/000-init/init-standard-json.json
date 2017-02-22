@@ -5,7 +5,7 @@
     "defaults":{
         "fail":"hard",
         "fail_hard":true,
-        "fail_returned_er":true,
+        "fail_returned_er":false,
         "fail_missing_sr":true,
         "delay":0.100,
         "precision":0.001
@@ -24,7 +24,7 @@
          "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}","G21"]},
     "r":{"status":0}
 }
-# SKIP
+#
 {
     "t":{"label":"Set Gcode to MM mode",
          "send":["G21"]},
