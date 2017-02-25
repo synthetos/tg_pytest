@@ -286,7 +286,7 @@ def do_before_after(key, data, params):
         
     if key == "before_all" and "before" in data[key]:
         if "label" in data[key]:
-            print
+            print   
             print("BEFORE ALL TESTS: {0}".format(data[key]["label"]))
 
         tg.write("M2\n")            # end any motion and clear any alarms
