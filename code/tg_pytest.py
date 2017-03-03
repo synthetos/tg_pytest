@@ -319,7 +319,7 @@ def run_test(t_data, before_data, after_data, params):
     if "label" in t_data["t"]:
         print
         if not setup:
-            print("TEST: {0}".format(t_data["t"]["label"]))
+            print("TEST {0}".format(t_data["t"]["label"]))
         else:
             print("SETUP: {0}".format(t_data["t"]["label"]))
 

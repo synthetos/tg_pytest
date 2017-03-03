@@ -9,18 +9,19 @@
 # TESTS START HERE
 #
 # Run a feedhold and resume cycle on a single move
+#
 {
-    "t":{"label":"Single move test to 30 - start movement and do a feedhold",
+    "t":{"label":"FD1A: Single move test to 30 - start movement and do a feedhold",
         "before":["g0 x0 y0","~"],
         "send":["m3 m7 m8",
-                "G1 F500 X30", "!"],
+                "N1 G1 F500 X30", "!"],
         "delay":0.5},
     "r":{"status":0},
     "sr":{"stat":6,"com":3,"cof":3,"spc":3}
 }
 #
 {
-    "t":{"label":"Resume from feedhold",
+    "t":{"label":"FD1B: Resume from feedhold",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
@@ -31,23 +32,45 @@
 # as it was held and then run after the ~ in test 2
 #
 {
-    "t":{"label":"Single move test to 0 - start movement and do a feedhold",
-        "before":["~"],
+    "t":{"label":"FD2A: Single move test to 0 - start movement and do a feedhold",
+        "before":["g0 x30 y0","~"],
         "send":["m3 m7 m8",
-                "G1 F500 X0", "!"],
+                "N10 G1 F500 X0", "!"],
         "delay":0.75,
-        "after":["g0 x2 y20"]},
+        "after":["N20 g0 x2 y20"]},
     "r":{"status":0},
     "sr":{"stat":6,"com":3,"cof":3,"spc":3}
 }
-#
+# The resume should return to x0, then allow the AFTER nove to (2.20) to
+# execute, so the ultimate X position should be 2
 {
-    "t":{"label":"Resume from feedhold - take on the position from the above AFTER",
+    "t":{"label":"FD2B: Resume from feedhold - should ultimately take on the position from the above AFTER",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":2,"com":1,"cof":1,"spc":1}
 }
-#
+# EOF
+
+# MODIFIED VERSION OF THE ABOVE TEST CASE
+# SKIP
+{
+    "t":{"label":"Single move test to 0 - start movement and do a feedhold",
+        "before":["~"],
+        "send":["m3 m7 m8",
+                "N10 G1 F500 X0", "!"],
+        "delay":0.75},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+# SKIP
+{
+    "t":{"label":"Resume from feedhold - should ultimately take on the position from the above AFTER",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":0,"com":1,"cof":1,"spc":1}
+}
+
+
 # Feedhold and resume an arc move
 #
 {

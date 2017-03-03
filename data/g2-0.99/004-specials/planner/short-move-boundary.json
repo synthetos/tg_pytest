@@ -87,7 +87,7 @@
     "sr":{"posx": 0, "stat":3},
     "r":{"status":0}
 }
-# SKIP
+#
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 {
     "t":{"label":"BOUNDARY CASES: Traverse 0.00002 mm - test short-move boundary conditions",
@@ -98,7 +98,7 @@
     "r":{"status":0}
 }
 #
-# SKIP
+#
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 {
     "t":{"label":"BOUNDARY CASES: Traverse 0.00002 mm ONSET TEST - test onset to short-move boundary conditions",
@@ -108,7 +108,7 @@
     "r":{"status":0}
 }
 #
-# SKIP
+#
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 {
     "t":{"label":"BOUNDARY CASES: Traverse 0.19999 mm - test short-move boundary conditions",
@@ -118,7 +118,7 @@
     "sr":{"posx": 0, "stat":3},
     "r":{"status":0}
 }
-# SKIP
+#
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 #
 # This value fails, as it's > EPSILON (0.00001) and less than some internal tests
@@ -132,7 +132,7 @@
     "sr":{"posx": 0, "stat":3},
     "r":{"status":0}
 }
-# SKIP
+# 
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 # For this test length is at exactly EPSILON (0.00001)
 {

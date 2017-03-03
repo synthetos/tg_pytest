@@ -32,10 +32,18 @@
 # BEFORE AND AFTERS
 {
     "before_all":{
-        "label":"Clear alarm coinditions, reset default settings & cancel cycles - Always run this one by itself",
+        "label":"Clear alarm conditions, reset default settings & cancel cycles - Always run this one by itself",
         "before":["{clear:n}, {defa:t}, g80"]
     }
 }
+#
+{
+    "after_all":{
+        "label":"Clear alarm conditions, return to zero",
+        "after":["{clear:n}, g0 x0 y0 z0"]
+    }
+}
+#
 # SETUP ROUTINES
 #
 # Use old-style status report setup line
@@ -47,8 +55,8 @@
 }
 #
 {
-    "t":{"label":"Set machine zero - Must be run by itself",
-        "send":["g28.3 x0 y0 z-95 a0"]},
+    "t":{"label":"Set machine zero - Must be in MM mode and run by itself",
+        "send":["G21", "g28.3 x0 y0 z-95 a0"]},
     "r":{"status":0}
 }
 #

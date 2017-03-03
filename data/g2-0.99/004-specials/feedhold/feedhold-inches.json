@@ -32,11 +32,29 @@
 # include 004-specials/feedhold/feedhold-init.json
 #
 # TESTS START HERE
+
+#
+# Square move test in inches - no feedhold
+#
+{
+    "t":{"label":"FI00: Square move test in inches - no feedhold",
+        "before":["~","g20 g0 x0 y0"],
+        "send":["N10 m3 m7 m8",
+                "N20 G1 X2 Y0 F120",
+                "N30 G1 X2 Y2",
+                "N40 G1 X0 Y2 ",
+                "N50 G1 X0.1 Y0.1"],
+        "delay":0.6865},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":0.1,"posy":0.1,"com":1,"cof":1,"spc":1}
+}
+#
+
 #
 # Square move test in inches - feedhold should occur early in X acceleration (move 1)
-# SKIP
+#
 {
-    "t":{"label":"Square move test in inches - feedhold early in X acceleration",
+    "t":{"label":"FI01A: Square move test in inches - feedhold early in X acceleration",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -53,7 +71,7 @@
 # The y-too-fast failure occurs occasionally at 0.687. Trying 0.6865
 #
 {
-    "t":{"label":"Square move test in inches - feedhold late in X deceleration",
+    "t":{"label":"FI01B: Square move test in inches - feedhold late in X deceleration",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -66,9 +84,9 @@
     "sr":{"stat":6,"com":3,"cof":3,"spc":3}
 }
 # Square move test in inches - feedhold should occur early in Y acceleration (move 2)
-# SKIP
+#
 {
-    "t":{"label":"Square move test in inches - feedhold early in Y acceleration (move 2)",
+    "t":{"label":"FI01C: Square move test in inches - feedhold early in Y acceleration (move 2)",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -82,6 +100,6 @@
 }
 # Release from feedhold
 {
-    "t":{"label":"Release from feedhold",
+    "t":{"label":"FI01D: Release from feedhold",
         "before":["~"]}
 }

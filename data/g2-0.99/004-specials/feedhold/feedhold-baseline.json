@@ -22,7 +22,7 @@
 # Enter feedhold and exit ~ immediately
 #
 {
-    "t":{"label":"Enter feedhold and exit ~ immediately",
+    "t":{"label":"FB01: Enter feedhold and exit ~ immediately",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "!~"],
         "after":["m5 m9"],
@@ -35,7 +35,7 @@
 # Try to enter a feedhold ! when not in a cycle
 #
 {
-    "t":{"label":"Try to enter a feedhold ! when not in a cycle",
+    "t":{"label":"FB02: Try to enter a feedhold ! when not in a cycle",
         "before":["g0 x1",
                   "g0 x0",
                   "m3 m7 m8"],
@@ -48,7 +48,7 @@
 # Try to end a feedhold ~ when not in a feedhold
 #
 {
-    "t":{"label":"Try to end a feedhold ~ when not in a feedhold",
+    "t":{"label":"FB03: Try to end a feedhold ~ when not in a feedhold",
         "before":["g0 x0 m3 m7 m8"],
         "send":["~","{sr:n}"],
         "after":["m5 m9"]},
@@ -59,7 +59,7 @@
 # Try to end a feedhold % with queue flush when not in a feedhold
 #
 {
-    "t":{"label":"Try to end a feedhold % with queue flush when not in a feedhold",
+    "t":{"label":"FB04: Try to end a feedhold % with queue flush when not in a feedhold",
         "before":["g0 x0 m3 m7 m8"],
         "send":["%","{sr:n}"],
         "after":["m5 m9"]},
@@ -70,7 +70,7 @@
 # Enter feedhold and exit ~ immediately
 #
 {
-    "t":{"label":"Enter feedhold and exit ~ immediately",
+    "t":{"label":"FB05: Enter feedhold and exit ~ immediately",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "!~"],
         "after":["m5 m9"],
@@ -82,7 +82,7 @@
 # Enter feedhold and exit % immediately
 #
 {
-    "t":{"label":"Enter feedhold and queue flush % immediately",
+    "t":{"label":"FB06: Enter feedhold and queue flush % immediately",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "!%"],
         "after":["m5 m9"],
@@ -95,7 +95,7 @@
 # Test sequence !~%  This one is supposed to queue flush
 #
 {
-    "t":{"label":"Test sequence !~%  This one is supposed to queue flush",
+    "t":{"label":"FB07: Test sequence !~%  This one is supposed to queue flush",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "!~%"],
         "after":["m5 m9"],
@@ -108,7 +108,7 @@
 # Test sequence !%~  This one is supposed to queue flush
 #
 {
-    "t":{"label":"Test sequence !%~  This one is supposed to queue flush",
+    "t":{"label":"FB08: Test sequence !%~  This one is supposed to queue flush",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "!%~"],
         "after":["m5 m9"],
@@ -119,9 +119,9 @@
 }
 #
 # Shotgun - Run a bunch of commands in seqeunce
-# EOF
+#
 {
-    "t":{"label":"Shotgun test - hold, resume, hold-resume, hold, flush",
+    "t":{"label":"FB09: Shotgun test - hold, resume, hold-resume, hold, flush",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X40", "!", "~", "!~", "!", "%"],
         "delay":0.75},
@@ -129,7 +129,7 @@
 }
 #
 {
-    "t":{"label":"Sanity moves following shotgun test",
+    "t":{"label":"FB10: Sanity moves following shotgun test",
         "send":["G0 X0","G0 X40","G0 X0"],
         "delay":0.75},
     "r":{"status":0}

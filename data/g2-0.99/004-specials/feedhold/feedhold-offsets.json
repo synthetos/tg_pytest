@@ -1,8 +1,8 @@
 ################################################################################
 #
-#   feedhold-offsets.json - test for feedhold reporting with various offsets
+# feedhold-offsets.json - test for feedhold reporting with various offsets
 #
-#   See feedhold-init file for machine setup instructions
+# See feedhold-init file for machine setup instructions
 #
 # include 004-specials/feedhold/feedhold-init.json
 #
@@ -15,123 +15,22 @@
 # TESTS START HERE
 # Test G55 offsets in inches
 {
-    "t":{"label":"Single move test to 4 inches - start movement and do a feedhold",
+    "t":{"label":"FO01A: Single move test to 4 inches - start movement and do a feedhold",
         "before":["{clear:n}", "~",
                 "G20",
                 "G10 L20 P2 X-1 Y-1 Z-2",
                 "G55",
                 "g0 x0 y0"],
-        "send":["G1 F500 X30",
+        "send":["G1 F500 X4",
                 "!"],
-        "delay":0.75},
+        "delay":0.25},
     "r":{"status":0},
     "sr":{"stat":6}
 }
 #
 {
-    "t":{"label":"Exit feedhold and resume",
+    "t":{"label":"FO01B: Exit feedhold and resume",
         "send":["~"]},
     "r":{"status":0},
-    "sr":{"stat":3,"posx":30}
-}
-# EOF
-
-
-
-# Run a feedhold with a queue flush to a new location
-#
-{
-    "t":{"label":"Queue flush test - start movement to 30mm and do a feedhold",
-        "before":["~", "g0 x0 y0"],
-        "send":["m3 m7 m8",
-                "G1 F500 X30", "!"],
-        "delay":0.75},
-    "r":{"status":0},
-    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
-}
-#
-{
-    "t":{"label":"Queue flush from feedhold to 30mm",
-        "send":["%"]},
-    "r":{"status":0},
-    "sr":{"stat":3,"com":1,"cof":1,"spc":1}
-}
-#
-# Feedhold and queue flush from an arc move
-#
-{
-    "t":{"label":"Feedhold a CW 360 degree arc move",
-         "before":["g0 x0 y0"],
-         "send":["m3 m7 m8",
-                 "G2 I25 F4000", "!"],
-         "delay":0.75},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"Queue flush from feedhold from 360 degree arc",
-        "send":["%"]},
-    "r":{"status":0},
-    "sr":{"stat":3,"com":1,"cof":1,"spc":1}
-}
-#
-# Run a feedhold with a queue flush to a new location
-#
-{
-    "t":{"label":"Queue flush test - start movement to 30mm and do a feedhold",
-        "before":["~", "g0 x0 y0"],
-        "send":["m3 m7 m8",
-                "G1 F500 X30", "!"],
-        "delay":0.75},
-    "r":{"status":0},
-    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
-}
-#
-{
-    "t":{"label":"Queue flush from feedhold to 30mm",
-        "send":["%"]},
-    "r":{"status":0},
-    "sr":{"stat":3,"com":1,"cof":1,"spc":1}
-}
-#
-# EOF
-
-
-#
-# Run a feedhold with a queue flush to a new location
-#
-{
-    "t":{"label":"Queue flush test - start movement to 30 and do a feedhold",
-        "before":["~"],
-        "send":["m3 m7 m8",
-                "G1 F500 X30", "!"],
-        "delay":0.5},
-    "r":{"status":0},
-    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
-}
-#
-{
-    "t":{"label":"Queue flush from feedhold",
-        "send":["%"]},
-    "r":{"status":0},
-    "sr":{"stat":3,"com":1,"cof":1,"spc":1}
-}
-#
-# Run a feedhold with a queue flush back to zero
-#
-{
-    "t":{"label":"Queue flush test - start movement to 0 and do a feedhold",
-        "before":["~"],
-        "send":["m3 m7 m8",
-                "G1 F500 X0", "!"],
-        "delay":0.5},
-    "r":{"status":0},
-    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
-}
-#
-{
-    "t":{"label":"Queue flush from feedhold",
-        "send":["%"]},
-    "r":{"status":0},
-    "sr":{"stat":3,"com":1,"cof":1,"spc":1}
+    "sr":{"stat":3,"posx":4}
 }

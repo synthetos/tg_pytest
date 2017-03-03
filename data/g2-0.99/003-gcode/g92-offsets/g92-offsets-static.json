@@ -1,9 +1,10 @@
 ################################################################################
 #
-#  g53-offsets-static.json - test G53 - G59 coordinate system settings
+#  g92-offsets-static.json - test G92 origin offsets
 #
 # See the following include file for machine setup instructions:
-# include 003-gcode/g53-coordinates/g53-offsets-init.json
+#
+# include 003-gcode/g92-offsets/g92-offsets-init.json
 #
 #   Values used for testing:
 # 	    x-mm     y-mm     z-mm		x-in	y-in	z-in
@@ -14,18 +15,78 @@
 # g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
 # g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
 #
-#### G10 TESTS ###
-#
-# G10 L2 TESTS
+#### G92 Offset Tests ###
 #
 {
-    "t":{"label":"Set G55 offsets in millimeters",
-        "before":["g21 g54","g0 x0 y0 z0"],
-        "send":["G10 L2 P2 X25.4 Y25.4 Z-12.7"]},
+    "t":{"label":"G92-1A: Set G92 offsets in millimeters",
+        "before":["g21","g0 x10 y10 z-10"],
+        "send":["G92 X20 Y20 Z-15"]},
     "r":{"status":0},
-    "sr":{"posx":0, "posy":0, "posz":0}
+    "sr":{"posx":20, "posy":20, "posz":-15}
 }
 #
+{
+    "t":{"label":"G92-1B: Suspend G92 offsets",
+        "send":["G92.2"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":10, "posz":-10}
+}
+#
+{
+    "t":{"label":"G92-1C: Resume G92 offsets",
+        "send":["G92.3"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15}
+}
+#
+{
+    "t":{"label":"G92-1D: Reset G92 offsets",
+        "send":["G92.1"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":10, "posz":-10}
+}
+#
+#### G92 Offsets on top of G55 coordinate offsets ###
+# Assumes init has set up G55 as -40,-40,+20
+#
+{
+    "t":{"label":"G92-2A: Display G55 offsets only",
+        "before":["g21",
+                  "g0 x0 y0 z0",
+                  "g1 x20 y20 z-15"],
+        "send":["G55"]},
+    "r":{"status":0},
+    "sr":{"posx":60, "posy":60, "posz":-35}
+}
+# EOF
+{
+    "t":{"label":"G92-2A: Set G92 offsets in millimeters",
+        "before":["g21","g0 x10 y10 z-10"],
+        "send":["G92 X20 Y20 Z-15"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15}
+}
+#
+{
+    "t":{"label":"G92-1B: Suspend G92 offsets",
+        "send":["G92.2"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":10, "posz":-10}
+}
+#
+{
+    "t":{"label":"G92-1C: Resume G92 offsets",
+        "send":["G92.3"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15}
+}
+#
+{
+    "t":{"label":"G92-1D: Reset G92 offsets",
+        "send":["G92.1"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":10, "posz":-10}
+}# EOF
 {
     "t":{"label":"Read G55 position in mm",
         "send":["G21 G55"]},
