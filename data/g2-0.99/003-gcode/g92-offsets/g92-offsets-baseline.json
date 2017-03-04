@@ -1,0 +1,136 @@
+################################################################################
+#
+#  g92-offsets-baseline.json - test G92 origin offsets
+#
+# See the following include file for machine setup instructions:
+#
+# include 003-gcode/g92-offsets/g92-offsets-init.json
+#
+#### G92 Offset Tests in MM - Must be run as a set of 4 ###
+#
+{
+    "t":{"label":"G92-1A: Set G92 offsets in millimeters",
+        "before":["g21"],
+        "send":["G0  X10 Y10 Z-10",
+                "G92 X20 Y20 Z-15"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15, "mpox":10, "mpoy":10, "mpoz":-10}
+}
+#
+{
+    "t":{"label":"G92-1B: Suspend G92 offsets",
+        "send":["G92.2"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":10, "posz":-10}
+}
+#
+{
+    "t":{"label":"G92-1C: Resume G92 offsets",
+        "send":["G92.3"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15}
+}
+#
+{
+    "t":{"label":"G92-1D: Reset G92 offsets",
+        "send":["G92.1"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":10, "posz":-10}
+}
+#
+#### G92 Offset Tests in Inches - Must be run as a set of 4 ###
+#
+{
+    "t":{"label":"G92-2A: Set G92 offsets in inches",
+        "before":["g20"],
+        "send":["G0  X1 Y1 Z-1",
+                "G92 X2 Y2 Z-1.5"]},
+    "r":{"status":0},
+    "sr":{"posx":2, "posy":2, "posz":-1.5, "mpox":25.4, "mpoy":25.4, "mpoz":-25.4}
+}
+#
+{
+    "t":{"label":"G92-2B: Suspend G92 offsets",
+        "send":["G92.2"]},
+    "r":{"status":0},
+    "sr":{"posx":1, "posy":1, "posz":-1}
+}
+#
+{
+    "t":{"label":"G92-2C: Resume G92 offsets",
+        "send":["G92.3"]},
+    "r":{"status":0},
+    "sr":{"posx":2, "posy":2, "posz":-1.5}
+}
+#
+{
+    "t":{"label":"G92-2D: Reset G92 offsets",
+        "send":["G92.1"]},
+    "r":{"status":0},
+    "sr":{"posx":1, "posy":1, "posz":-1}
+}
+#
+#### G92 Offsets in MM on top of G55 coordinate offsets ###
+# Assumes init has set up G54 as 0,0,0
+# Assumes init has set up G55 as -40,-40, 20
+#
+{
+    "t":{"label":"G92-3A: Confirm G55 offsets for (0,0,0)",
+        "before":["G21 G54 G92.1"],
+        "send":["G0 X0 Y0 Z0",
+                "G55"]},
+    "r":{"status":0},
+    "sr":{"posx":40, "posy":40, "posz":-20, "mpox":0, "mpoy":0, "mpoz":0}
+}
+#
+{
+    "t":{"label":"G92-3B: Move in G55, confirm offsets",
+        "before":["g55"],
+        "send":["g0 x20 y20 z-15"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15, "mpox":-20, "mpoy":-20, "mpoz":5}
+}
+#
+{
+    "t":{"label":"G92-3C: Display new position in G54 (no offsets)",
+        "send":["g54"]},
+    "r":{"status":0},
+    "sr":{"posx":-20, "posy":-20, "posz":5}
+}
+#
+{
+    "t":{"label":"G92-3D: Set G92 offsets",
+        "before":["G21"],
+        "send":["G0  X10 Y10 Z-10",
+                "G92 X20 Y20 Z-15"]},
+    "r":{"status":0},
+    "sr":{"posx":20, "posy":20, "posz":-15, "mpox":10, "mpoy":10, "mpoz":-10}
+}
+#
+{
+    "t":{"label":"G92-3E: Display combined G55 and G92 offsets",
+        "send":["G55"]},
+    "r":{"status":0},
+    "sr":{"posx":60, "posy":60, "posz":-35}
+}
+#
+{
+    "t":{"label":"G92-3F: Move and display combined G55 and G92 offsets",
+        "send":["G0 X10 Y11 Z-12"]},
+    "r":{"status":0},
+    "sr":{"posx":10, "posy":11, "posz":-12, "mpox":-40, "mpoy":-39, "mpoz":13}
+}
+#
+{
+    "t":{"label":"G92-3G: Reset G92 offsets and display accurate G55 position",
+        "send":["G92.1"]},
+    "r":{"status":0},
+    "sr":{"posx":0, "posy":1, "posz":-7}
+}
+#
+{
+    "t":{"label":"G92-3H: Go back to G54 (no offsets) and display position",
+        "send":["G54"]},
+    "r":{"status":0},
+    "sr":{"posx":-40, "posy":-39, "posz":13}
+}

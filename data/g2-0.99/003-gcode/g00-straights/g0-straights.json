@@ -52,28 +52,28 @@
 # Simple Traverses
 #
 {
-    "t":{"label":"Straight traverse to x100",
+    "t":{"label":"G0-1A: Straight traverse to x100",
          "send":["G0 X100"]},
     "sr":{"posx": 100, "posy": 0, "stat":3},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight traverse to x100 y100",
+    "t":{"label":"G0-1B: Straight traverse to x100 y100",
          "send":["G0 X100 Y100"]},
     "sr":{"posx": 100, "posy": 100, "stat":3},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight traverse and return",
+    "t":{"label":"G0-1C: Straight traverse and return",
          "send":["G0 X100 Y100", "G0 X0 Y0"]},
     "sr":{"posx": 0, "posy": 0, "stat":3},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight traverse to same location (zero length move)",
+    "t":{"label":"G0-1D: Straight traverse to same location (zero length move)",
         "before":["G0 X0 Y0"],
         "send":["G0 X0 Y0"]},
     "sr":{"posx": 0, "posy": 0, "stat":3},
@@ -82,14 +82,14 @@
 #
 # Simple Feeds
 {
-    "t":{"label":"Straight feed to x100",
+    "t":{"label":"G0-2A: Straight feed to x100",
          "send":["G1 X100 F5000"]},
     "sr":{"posx": 100, "posy": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight feed to x100 y100",
+    "t":{"label":"G0-2B: Straight feed to x100 y100",
          "before":["G28"],
          "send":["G1 X100 Y100 F8000"]},
     "sr":{"posx": 100, "posy": 100},
@@ -97,35 +97,35 @@
 }
 #
 {
-    "t":{"label":"Straight feed and return at different rates",
+    "t":{"label":"G0-2C: Straight feed and return at different rates",
          "send":["G1 X100 Y100 F10000", "G1 X0 Y0 F3000"]},
     "sr":{"posx": 0, "posy": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight feed at F100",
+    "t":{"label":"G0-2D: Straight feed at F100",
          "send":["G1 X10 Y10 F100"]},
     "sr":{"posx": 10, "posy": 10},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight feed at F10",
+    "t":{"label":"G0-2E: Straight feed at F10",
          "send":["G1 X2 Y2 F10"]},
     "sr":{"posx": 2, "posy": 2},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight feed at F1",
+    "t":{"label":"G0-2F: Straight feed at F1",
          "send":["G1 X0.2 Y0.2 F1"]},
     "sr":{"posx": 0.2, "posy": 0.2},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Straight feed to same location (zero length move)",
+    "t":{"label":"G0-2G: Straight feed to same location (zero length move)",
         "before":["G0 X0 Y0"],
         "send":["G1 X0 Y0 F1000"]},
     "sr":{"posx": 0, "posy": 0, "stat":3},
@@ -134,21 +134,21 @@
 #
 # Mixed Feeds
 {
-    "t":{"label":"Mixed G1 feed to x100 - 2 segments",
+    "t":{"label":"G0-3A: Mixed G1 feed to x100 - 2 segments",
          "send":["F5000","G1 X50","X100"]},
     "sr":{"posx": 100, "posy": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Mixed G1 feed to x100 - 5 segments at different rates",
+    "t":{"label":"G0-3B: Mixed G1 feed to x100 - 5 segments at different rates",
          "send":["F2000","G1 X20","F4000 X40","F8000 X60","F3000 X80","F1000 X100"]},
     "sr":{"posx": 100, "posy": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"Mixed G1/G0 feeds to x100 - 5 segments at different rates",
+    "t":{"label":"G0-3C: Mixed G1/G0 feeds to x100 - 5 segments at different rates",
          "send":["F2000","G1 X20","G0 X40","G1 X60 F1000","G0 X80","G1 F1000 X100"]},
     "sr":{"posx": 100, "posy": 0},
     "r":{"status":0}
@@ -156,7 +156,7 @@
 # Gcode wrapped in JSON
 #
 {
-    "t":{"label":"JSON wrapped gcode",
+    "t":{"label":"G0-4A: JSON wrapped gcode",
          "send":["{gc:\"G0 X100\"}"]},
     "sr":{"posx": 100, "posy": 0, "stat":3},
     "r":{"status":0}
