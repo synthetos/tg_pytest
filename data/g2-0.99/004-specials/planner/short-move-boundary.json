@@ -10,7 +10,7 @@
 # include 004-specials/planner/planner-init.json
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.1 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-1: Traverse 0.1 mm - test short-move boundary conditions",
         "send":["G0 X0.1",
                 "G0 X0.0"]},
     "sr":{"posx": 0, "stat":3},
@@ -18,7 +18,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Feed 0.1 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-2: Feed 0.1 mm - test short-move boundary conditions",
         "send":["G1 F1000 X0.1",
                 "G0 X0"]},
     "sr":{"posx": 0, "stat":3},
@@ -26,7 +26,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.01 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-3: Traverse 0.01 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.01",
                 "G0 X0"]},
@@ -35,7 +35,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.001 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-4: Traverse 0.001 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.001",
                 "G0 X0"]},
@@ -44,7 +44,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.0001 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-5: Traverse 0.0001 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.0001",
                 "G0 X0"]},
@@ -53,7 +53,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.00008 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-6: Traverse 0.00008 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.00008",
                 "G0 X0"]},
@@ -62,7 +62,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.00004 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-7: Traverse 0.00004 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.00004",
                 "G0 X0"]},
@@ -71,7 +71,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.00003 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-8: Traverse 0.00003 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.00003",
                 "G0 X0"]},
@@ -80,7 +80,7 @@
 }
 #
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.000021 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-9: Traverse 0.000021 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.000021",
                 "G0 X0"]},
@@ -90,7 +90,7 @@
 #
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.00002 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-10: Traverse 0.00002 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.00002",
                 "G0 X0"]},
@@ -101,7 +101,7 @@
 #
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.00002 mm ONSET TEST - test onset to short-move boundary conditions",
+    "t":{"label":"SMB-11: Traverse 0.00002 mm ONSET TEST - test onset to short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.00002"]},
     "sr":{"posx": 0, "stat":3},
@@ -111,7 +111,7 @@
 #
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.19999 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-12: Traverse 0.19999 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.19999",
                 "G0 X0"]},
@@ -125,18 +125,18 @@
 # Thus test requires 2 JSON objects to catch the trap
 # The trap fires on the transition from 0.0000133514404 back to 0.0
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.0000133514404 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-13: Traverse 0.0000133514404 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.0000133514404",
                 "G0 X0"]},
     "sr":{"posx": 0, "stat":3},
     "r":{"status":0}
 }
-# 
+#
 # Test fails w/trap: Line 271: "mp_exec_move() buffer prepped but not planned"
 # For this test length is at exactly EPSILON (0.00001)
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.00001 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-14: Traverse 0.00001 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X0.00001",
                 "G0 X0"]},
@@ -145,7 +145,7 @@
 }
 # This one returns as 10.00000 due to display truncation to 5 digits
 {
-    "t":{"label":"BOUNDARY CASES: Traverse 0.000001 mm - test short-move boundary conditions",
+    "t":{"label":"SMB-15: Traverse 0.000001 mm - test short-move boundary conditions",
         "before":["G0 X0"],
         "send":["G0 X10",
                 "G0 X10.000001"],

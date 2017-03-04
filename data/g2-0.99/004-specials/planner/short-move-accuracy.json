@@ -8,7 +8,7 @@
 # include 004-specials/planner/planner-init.json
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.1 mm - test reported position",
+    "t":{"label":"SMA-1: Traverse 0.1 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.1"]},
     "sr":{"posx": 0.1, "stat":3},
@@ -16,7 +16,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Feed 0.1 mm - test reported position",
+    "t":{"label":"SMA-2: Feed 0.1 mm - test reported position",
         "before":["G0 X0"],
         "send":["G1 F1000 X0.0",
                 "G0 X0.1"]},
@@ -25,7 +25,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.01 mm - test reported position",
+    "t":{"label":"SMA-3: Traverse 0.01 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.01"]},
     "sr":{"posx": 0.01, "stat":3},
@@ -33,7 +33,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.001 mm - test reported position",
+    "t":{"label":"SMA-4: Traverse 0.001 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.001"]},
     "sr":{"posx": 0.001, "stat":3},
@@ -41,7 +41,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.0001 mm - test reported position",
+    "t":{"label":"SMA-5: Traverse 0.0001 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.0001"]},
     "sr":{"posx": 0.0001, "stat":3},
@@ -49,7 +49,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.00008 mm - test reported position",
+    "t":{"label":"SMA-6: Traverse 0.00008 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.00008"]},
     "sr":{"posx": 0.00008, "stat":3},
@@ -57,7 +57,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.00004 mm - test reported position",
+    "t":{"label":"SMA-7: Traverse 0.00004 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.00004"]},
     "sr":{"posx": 0.00004, "stat":3},
@@ -65,7 +65,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.00003 mm - test reported position",
+    "t":{"label":"SMA-8: Traverse 0.00003 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.00003"]},
     "sr":{"posx": 0.00003, "stat":3},
@@ -73,7 +73,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.000021 mm - test reported position",
+    "t":{"label":"SMA-9: Traverse 0.000021 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.000021"]},
     "sr":{"posx": 0.00002, "stat":3},
@@ -81,7 +81,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.00002 mm - test reported position",
+    "t":{"label":"SMA-10: Traverse 0.00002 mm - test reported position",
         "before":["G0 X0"],
         "send":["G0 X0.00002"]},
     "sr":{"posx": 0.00002, "stat":3},
@@ -89,7 +89,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.19999 mm - test reported position - should report as ZERO",
+    "t":{"label":"SMA-11: Traverse 0.19999 mm - test reported position - should report as ZERO",
         "before":["G0 X0"],
         "send":["G0 X0.19999"]},
     "sr":{"posx": 0.19999, "stat":3},
@@ -97,7 +97,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.0000133514404 mm - test reported position - should report as ZERO",
+    "t":{"label":"SMA-12: Traverse 0.0000133514404 mm - test reported position - should report as ZERO",
         "before":["G0 X0"],
         "send":["G0 X0.0000133514404"]},
     "sr":{"posx": 0.0000133514404, "stat":3},
@@ -105,7 +105,7 @@
 }
 # For this test length is at exactly EPSILON (0.00001)
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.00001 mm - test reported position - should report as ZERO",
+    "t":{"label":"SMA-13: Traverse 0.00001 mm - test reported position - should report as ZERO",
         "before":["G0 X0"],
         "send":["G0 X0.00001"]},
     "sr":{"posx": 0, "stat":3},
@@ -113,7 +113,7 @@
 }
 #
 {
-    "t":{"label":"REPORTING ACCURACY: Traverse 0.000009 mm - test reported position - should report as ZERO",
+    "t":{"label":"SMA-14: Traverse 0.000009 mm - test reported position - should report as ZERO",
         "before":["G0 X0"],
         "send":["G0 X0.000009"]},
     "sr":{"posx": 0, "stat":3},

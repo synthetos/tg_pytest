@@ -1,0 +1,157 @@
+################################################################################
+#
+#  g53-offsets-static.json - test G53 - G59 coordinate system settings
+#
+# See the following include file for machine setup instructions:
+# include 003-gcode/g53-coordinates/g53-offsets-init.json
+#
+#   Values used for testing:
+# 	    x-mm     y-mm     z-mm		x-in	y-in	z-in
+# g54   0.0000   0.0000   0.0000    0.0000  0.0000  0.0000
+# g55  25.4000  25.4000 -12.7000    1.0000  1.0000 -0.5000
+# g56  20.0000  19.0000 -10.0000    0.7874  0.7480 -0.3937
+# g57  14.0000  14.1000  -8.7000    0.5512  0.5551 -0.3425
+# g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
+# g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
+#
+#### G10 TESTS ###
+#
+# G10 L2 TESTS
+#
+{
+    "t":{"label":"Set G55 offsets in millimeters",
+        "before":["g21 g54","g0 x0 y0 z0"],
+        "send":["G10 L2 P2 X25.4 Y25.4 Z-12.7"]},
+    "r":{"status":0},
+    "sr":{"posx":0, "posy":0, "posz":0}
+}
+#
+{
+    "t":{"label":"Read G55 position in mm",
+        "send":["G21 G55"]},
+    "r":{"status":0},
+    "sr":{"posx":-25.4, "posy":-25.4, "posz":12.7}
+}
+#
+{
+    "t":{"label":"Read G55 position in inches",
+        "send":["G20 G55"]},
+    "r":{"status":0},
+    "sr":{"posx":-1.0, "posy":-1.0, "posz":0.5}
+}
+#
+{
+    "t":{"label":"Set G56 offset in inches",
+        "before":["g20 g54","g0 x0 y0 z0"],
+        "send":["G10 L2 P3 X0.7874 Y0.748 Z-0.3937"]},
+    "r":{"status":0},
+    "sr":{"posx":0, "posy":0, "posz":0}
+}
+#
+{
+    "t":{"label":"Read G56 position in mm",
+        "send":["G21 G56"]},
+    "r":{"status":0},
+    "sr":{"posx":-20.0, "posy":-19.0, "posz":10.0}
+}
+#
+{
+    "t":{"label":"Read G56 position in inches",
+        "send":["G20 G56"]},
+    "r":{"status":0},
+    "sr":{"posx":-0.7874, "posy":-0.748, "posz":0.3937}
+}
+#
+# G10 L20 TESTS
+#
+{
+    "t":{"label":"Set G57 offsets in millimeters",
+        "before":["g21 g54","g0 x0 y0 z0"],
+        "send":["G10 L20 P4 X14 Y14.1 Z-8.7"]},
+    "r":{"status":0},
+    "sr":{"posx":0, "posy":0, "posz":0}
+}
+#
+{
+    "t":{"label":"Read G57 position in mm",
+        "send":["G21 G57"]},
+    "r":{"status":0},
+    "sr":{"posx":14, "posy":14.1, "posz":-8.7}
+}
+#
+{
+    "t":{"label":"Read G57 position in inches",
+        "send":["G20 G57"]},
+    "r":{"status":0},
+    "sr":{"posx":0.5512, "posy":0.5551, "posz":-0.3425}
+}
+#
+{
+    "t":{"label":"Set G58 offsets in inches",
+        "before":["g20 g54","g0 x0 y0 z0"],
+        "send":["G10 L20 P5 X0.4724 Y0.4331 Z-0.2480"]},
+    "r":{"status":0},
+    "sr":{"posx":0, "posy":0, "posz":0}
+}
+#
+{
+    "t":{"label":"Read G58 position in mm",
+        "send":["G21 G58"]},
+    "r":{"status":0},
+    "sr":{"posx":12, "posy":11, "posz":-6.3}
+}
+#
+{
+    "t":{"label":"Read G58 position in inches",
+        "send":["G20 G58"]},
+    "r":{"status":0},
+    "sr":{"posx":0.4724, "posy":0.4331, "posz":-0.2480}
+}
+#
+# SET COORDINATE OFFSETS USING JSON - NON-GROUPED
+#
+{
+    "t":{"label":"Set G59 offsets in millimeters using JSON, non-grouped",
+        "before":["g21 g54","g0 x0 y0 z0"],
+        "send":["{g59x:11.5}","{g59y:6.6}","{g59z:-4.3}"]},
+    "r":{"status":0},
+    "sr":{"g59":{"x":0, "y":0, "z":0}}
+}
+#
+{
+    "t":{"label":"Read G59 position in mm",
+        "send":["G21 G59"]},
+    "r":{"status":0},
+    "sr":{"posx":-11.5, "posy":-6.6, "posz":4.3}
+}
+#
+{
+    "t":{"label":"Read G59 position in inches",
+        "send":["G20 G59"]},
+    "r":{"status":0},
+    "sr":{"posx":-0.4528, "posy":-0.2598, "posz":0.1693}
+}
+#
+# SET COORDINATE OFFSETS USING JSON - GROUPED
+#
+{
+    "t":{"label":"Set G57 offsets in millimeters using JSON, grouped",
+        "before":["g21 g54","g0 x0 y0 z0"],
+        "send":["{g57:{x:-14, y:-14.1, z:8.7}}"]},
+    "r":{"status":0},
+    "sr":{"posx":0, "posy":0, "posz":0}
+}
+#
+{
+    "t":{"label":"Read G57 position in mm",
+        "send":["G21 G57"]},
+    "r":{"status":0},
+    "sr":{"posx":14, "posy":14.1, "posz":-8.7}
+}
+#
+{
+    "t":{"label":"Read G57 position in inches",
+        "send":["G20 G57"]},
+    "r":{"status":0},
+    "sr":{"posx":0.5512, "posy":0.5551, "posz":-0.3425}
+}
