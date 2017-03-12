@@ -23,98 +23,86 @@
 }
 #
 ### TESTS START HERE
-#
 {
-    "t":{"label":"G2E-1: Send G2 only. No other words",
-        "send":["G2"]},
-    "sr":{"posx": 0, "posy": 0},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"G2E-2: Send G3 only. No other words",
-        "send":["G3"]},
-    "sr":{"posx": 0, "posy": 0},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"G2E-3: Send G2 and I word, no feedrate specified",
-        "send":["G2 I50"]},
-    "sr":{"posx": 0, "posy": 0},
-    "r":{"status":142}
-}
-#
-{
-    "t":{"label":"G2E-4: Send G2 R word, no feedrate specified",
-        "send":["G2 R50"]},
-    "sr":{"posx": 0, "posy": 0},
-    "r":{"status":142}
-}
-#
-{
-    "t":{"label":"G2E-5: Send valid G2 command with feedrate specified",
+    "t":{"label":"G2E-1: Send valid G2 command with feedrate specified",
         "send":["G2 I50 F2000"]},
     "sr":{"posx": 0, "posy": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2E-6: Send invalid G2 R command - no endpoints",
+    "t":{"label":"G2E-2: Send G2 only. No other words",
+        "before":["F0"],
+        "send":["G2"]},
+    "sr":{"posx": 0, "posy": 0},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"G2E-3: Send G3 only. No other words",
+        "before":["F0"],
+        "send":["G3"]},
+    "sr":{"posx": 0, "posy": 0},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"G2E-4: Send G2 and I word, no feedrate specified",
+        "before":["F0"],
+        "send":["G2 I50"]},
+    "sr":{"posx": 0, "posy": 0},
+    "r":{"status":142}
+}
+#
+{
+    "t":{"label":"G2E-5: Send G2 R word, no feedrate specified",
+        "send":["G2 R50"]},
+    "sr":{"posx": 0, "posy": 0},
+    "r":{"status":142}
+}
+#
+{
+    "t":{"label":"G2E-6: Arc has impossible center point",
+        "send":["G2 X110 Y120 I50 F2000"]},
+    "sr":{"posx": 0, "posy": 0},
+    "r":{"status":154}
+}
+#
+{
+    "t":{"label":"G2E-7: Send invalid G2 R command - no endpoints",
         "send":["G2 R50 F2000"]},
     "sr":{"posx": 0, "posy": 0},
     "r":{"status":156}
 }
-
-
-# EOF
+#
 {
-    "t":{"label":"G2D-1A: CW 360 degree circle at F2000",
-         "before":["G21",
-                   "{ct:0.001}","{jt:2.0}",
-                   "{xvm:40000}","{xjm:10000}",
-                   "{yvm:40000}","{yjm:10000}"],
-        "send":["G28","G2 I50 F2000"]},
+    "t":{"label":"G2E-8: Send arc absolute distance mode missing offset",
+        "before":["G0 X100 Y100", "G90.1"],
+        "send":["G2 I50 F2000"]},
     "sr":{"posx": 100, "posy": 100},
-    "r":{"status":0}
+    "r":{"status":157}
 }
 #
 {
-    "t":{"label":"G2D-1B: CW 360 degree circle at F4000",
-         "send":["G28","G2 I50 F4000"]},
+    "t":{"label":"G2E-9: Send radius arc less than minimum radius",
+        "before":["G0 X100 Y100"],
+        "send":["G2 X100 Y100 R0.09 F2000"]},
     "sr":{"posx": 100, "posy": 100},
-    "r":{"status":0}
+    "r":{"status":158}
 }
 #
 {
-    "t":{"label":"G2D-1C: CW 360 degree circle at F10,000",
-         "send":["G28","G2 I50 F10000"]},
+    "t":{"label":"G2E-10: Send radius mode with startpoint = endpoint (error)",
+        "before":["G0 X100 Y100"],
+        "send":["G2 X100 Y100 R50 F2000"]},
     "sr":{"posx": 100, "posy": 100},
-    "r":{"status":0}
+    "r":{"status":159}
 }
 #
 {
-    "t":{"label":"G2D-1D: CW 360 degree circle at F40,000",
-         "send":["G28","G2 I50 F40000"]},
-    "sr":{"posx": 100, "posy": 100},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"G2D-1E: CW 360 degree circle at F80,000",
-         "send":["G28","G2 I50 F80000"]},
-    "sr":{"posx": 100, "posy": 100},
-    "r":{"status":0}
-}
-#
-{
-    "t":{"label":"CW 360 degree circle in INCHES at F10",
-         "before":["G20",
-                   "{ct:0.005}","{jt:1.0}",
-                   "{xvm:600}","{xjm:150}",
-                   "{yvm:600}","{yjm:150}"],
-        "send":["G0 X4 Y4",
-                "G2 I50 F2000"]},
-    "sr":{"posx": 4, "posy": 4},
+    "t":{"label":"G2E-11: Regression for something that use to incorrectly throw an error",
+        "before":["G0 X0 Y0"],
+        "send":["G2 X10 Y10 R10 F2000"]},
+    "sr":{"posx": 10, "posy": 10},
     "r":{"status":0}
 }
