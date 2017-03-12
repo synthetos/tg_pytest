@@ -1,0 +1,98 @@
+################################################################################
+#
+#   g2-init.json - initialization for arc tests
+#
+# MACHINE SETUP
+#   Prior to running this file:
+#     Position the machine in the center of travel in X, Y and Z
+#     Clearance must be at least 25mm positive and negative in each dimension.
+#     This position will be set (0,0,0) by setup-centered's G28.3 command
+#
+# TEST SETUP
+#   Selects:
+#     XZ plane (G18)
+#     mm mode (G21)
+#     absolute distance mode (G90)
+#     incremental arc distrance mode (G91.1)
+#     units-per-minute feerate mode (G94)
+#
+#   Sets centered point to be (100,100,0) in G55 coordinate system
+#   Selects G55 coordinate system
+#   Record current position as G28 home
+#   Set feed rate for tests
+#
+# DEFAULTS
+{
+    "defaults":{
+        "fail":"hard",
+        "fail_hard":true,
+        "fail_returned_er":false,
+        "fail_missing_sr":true,
+        "delay":0.100,
+        "precision":0.001
+    }
+}
+# BEFORE AND AFTERS
+{
+    "before_all":{
+        "label":"Reset default settings & cancel cycles - Always run this one by itself",
+        "before":["{clear:n}","{defa:t}","G80", "M30"]
+    }
+}
+#
+{
+    "before_each":{
+        "label":"clear alarms",
+        "before":["{clear:n}"]
+    }
+}
+#
+{
+    "after_each":{
+        "label":"Reset to home position",
+        "after":["G28"]
+    }
+}
+#
+{
+    "after_all":{
+        "label":"Restore axes, return to start, M30 end (also clears alarms)",
+        "after":["{2ma:1}",
+                 "{3ma:2}",
+                 "g21",
+                 "g0 x0 y0 z0 a0",
+                 "M30"]
+    }
+}
+#
+# SETUP STATUS REPORTS (should run before the SETUP)
+#
+# SKIP - SRS not yet implemented
+{
+    "t":{"label":"Clear and set status report - THIS FUNCTION SHOULD ALWAYS RUN BY ITSELF",
+        "send":["{srs:{clear:t}}",
+                "{srs:{set:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}}"]},
+    "r":{"status":0}
+}
+# Use old-style status report setup line
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
+    "r":{"status":0}
+}
+# SETUP ROUTINE - See individual tests for the particular setup it needs
+# EOF
+{
+    "t":{"label":"Setup for arc tests. Run in G55 with offsets 100,100",
+        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+                "{ct:0.01}","{sl:t}","{lim:f}",
+                "{xvm:40000}","{xjm:10000}",
+                "{yvm:40000}","{yjm:10000}",
+                "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
+                "G10 L20 P2 X100 Y100 Z0",
+                "G55",
+                "G28.1",
+                "F2000"
+               ]},
+    "r":{"status":0}
+}

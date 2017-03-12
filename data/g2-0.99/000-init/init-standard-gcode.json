@@ -27,15 +27,15 @@
         "before":["{clear:n}","{defa:t}","g80"]
     }
 }
-# SKIP
+#
 {
     "before_each":{
         "label":"clear alarms, cancel cycles",
-        "before":["{clear:n}","g80"],
+        "before":["{clear:n}","G80","M30"],
         "delay":0.100
     }
 }
-# SKIP
+#
 {
     "after_all":{
         "label":"Return to start and M30 program end (also clears alarms)",

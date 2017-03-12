@@ -41,9 +41,9 @@
     "t":{"label":"FKJ1B: Kill job from within from feedhold",
         "send":["\u0004"]},
     "r":{"status":0},
-    "sr":{"stat":2,"com":3,"cof":3,"spc":3}
+    "sr":{"stat":4,"com":3,"cof":3,"spc":3}
 }
-#
+# EOF
 # Clear the alram then do it again. Run a feedhold then kill job
 {
     "t":{"label":"FKJ2A: Single move test to 30 - start movement and do a feedhold",

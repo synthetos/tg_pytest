@@ -1,0 +1,30 @@
+################################################################################
+#
+#   feedhold-p2-movement.json - tests for movement within a feedhold
+#
+#   See feedhold-init file for machine setup instructions
+#
+# include 004-specials/feedhold/feedhold-init.json
+#
+# TESTS START HERE
+#
+{
+    "t":{"label":"Move in X, feedhold, Move in Y in feedhold, feedhold, return",
+        "before":["{clear:n}","~","g21 g0 x0 y0"],
+        "send":["m3 m7 m8",
+                "G1 X50 F1000",
+                "!",
+                "{gc2:\"G1 Y40 F888\"}",
+                "!"],
+        "delay":0.7},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+{
+    "t":{"label":"Resume from p2 feedhold back to p1",
+        "send":["~"],
+        "after":["G21"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":50,"com":1,"cof":1,"spc":1}
+}

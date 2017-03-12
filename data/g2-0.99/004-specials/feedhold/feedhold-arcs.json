@@ -1,0 +1,44 @@
+################################################################################
+#
+#   feedhold-arcs.json - tests for feedholds in arcs
+#
+#   See feedhold-init file for machine setup instructions
+#
+# include 004-specials/feedhold/feedhold-init.json
+#
+# Feedhold and resume an arc move
+#
+{
+    "t":{"label":"FR04A: Feedhold a CW 360 degree arc move",
+         "before":["g0 x0 y0"],
+         "send":["m3 m7 m8",
+                 "G2 I25 F4000", "!"],
+         "delay":0.75},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"FR04B: Resume from feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":0,"posy":0,"com":1,"cof":1,"spc":1}
+}
+# EOF
+# Feedhold and resume an arc move
+#
+{
+    "t":{"label":"Feedhold a CW 360 degree arc move",
+         "before":["g0 x0 y0"],
+         "send":["m3 m7 m8",
+                 "G2 I25 F4000", "!"],
+         "delay":0.75,
+         "after":["g0 x10 y10"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Resume from feedhold",
+        "send":["~"]},
+    "r":{"status":0},
+    "sr":{"stat":3,"posx":10,"posy":10,"com":1,"cof":1,"spc":1}
+}
