@@ -15,7 +15,7 @@
 # TESTS START HERE
 # Test G55 offsets in inches
 {
-    "t":{"label":"FO01A: Single move test to 4 inches - start movement and do a feedhold",
+    "t":{"label":"FO-1A: Single move test to 4 inches - start movement and do a feedhold",
         "before":["{clear:n}", "~",
                 "G20",
                 "G10 L20 P2 X-1 Y-1 Z-2",
@@ -29,7 +29,7 @@
 }
 #
 {
-    "t":{"label":"FO01B: Exit feedhold and resume",
+    "t":{"label":"FO-1B: Exit feedhold and resume",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":4}

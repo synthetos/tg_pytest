@@ -1,11 +1,11 @@
 ################################################################################
 #
-#  g53-offsets-init.json - setup for G53 - G59 coordinate system tests
+#   g28-goto-init.json - common initialization for g28/g30 tests
 #
 # This file sets up the board to behave as an Othermachine Othermill:
-#   X min/max travel                0, 145.6
-#   Y min/max travel                0, 119.1
-#   Z min/max travel                -60.1, 0
+#   X min/max travel                0, 145.6 (mm)
+#   Y min/max travel                0, 119.1 (mm)
+#   Z min/max travel                -60.1, 0 (mm)
 #
 #   XYZ maximum velocity            1500 mm/min
 #   XYZ maximum jerk                 500 mm/min^3 (* 1,000,000)
@@ -18,21 +18,15 @@
 *   Ensure that clearance from start position is at least (60,60,-30)
 #   The origin position will be set to (0,0,0) by the G28.3 command
 #
-#   Values used for testing:
-# 	    x-mm     y-mm     z-mm		x-in	y-in	z-in
-# g54   0.0000   0.0000   0.0000    0.0000  0.0000  0.0000
-# g55  25.4000  25.4000 -12.7000    1.0000  1.0000 -0.5000
-# g56  20.0000  19.0000 -10.0000    0.7874  0.7480 -0.3937
-# g57  14.0000  14.1000  -8.7000    0.5512  0.5551 -0.3425
-# g58  12.0000  11.0000  -6.3000    0.4724  0.4331 -0.2480
-# g59  11.5000   6.6000  -4.3000    0.4528  0.2598 -0.1693
-#
-# DEFAULTS
+# DEFAULTS (precision was 5 digits, reduced to 3)
 {
     "defaults":{
         "fail":"hard",
+        "fail_hard":true,
+        "fail_returned_er":false,
+        "fail_missing_sr":true,
         "delay":0.100,
-        "precision":0.01
+        "precision":0.001
     }
 }
 # BEFORE AND AFTERS
@@ -42,12 +36,34 @@
         "before":["{clear:n}","{defa:t}","g80"]
     }
 }
+#
+{
+    "before_each":{
+        "label":"clear alarms, cancel cycles",
+        "before":["{clear:n}","G80"],
+        "delay":0.100
+    }
+}
+#
+{
+    "after_all":{
+        "label":"Return to start and M30 program end (also clears alarms)",
+        "after":["g21", "g0 x0 y0 z0 a0","M30"]
+    }
+}
+#
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,mpox:t,mpoy:t,mpoz:t,mpoa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
+    "r":{"status":0}
+}
+#
 # SETUP ROUTINES
 #
 {
     "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
         "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
-                "{ct:0.1}","{sl:f}","{lim:f}",
+                "{ct:0.1}","{sl:t}","{lim:f}",
                 "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
                 "G10 L2 P1 X0 Y0 Z0",
                 "G10 L2 P2 X0 Y0 Z0",
@@ -58,19 +74,13 @@
                ]},
     "r":{"status":0}
 }
-#
-{
-    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
-        "send":["{sr:{line:t,posx:t,posy:t,posz:t,posa:t,mpox:t,mpoy:t,mpoz:t,mpoa:t,feed:t,vel:t,unit:t,coor:t,dist:t,stat:t}}"]},
-    "r":{"status":0}
-}
-#
+# HOMING
 {
     "t":{"label":"Set current point as machine origin (0,0,0)",
-        "send":["g28.3 x0 y0 z0 a0"]},
+        "send":["g21", "g28.3 x0 y0 z0 a0"]},
     "r":{"status":0}
 }
-#
+# SET A RETURN POSITION
 {
     "t":{"label":"Save G28 position",
         "send":["G28.1"]},

@@ -16,7 +16,7 @@
 #
 # Standard spindle actions - no spinup delay
 {
-    "t":{"label":"Turn on spindle, verify spindle pause into feedhold",
+    "t":{"label":"FS-1A: Turn on spindle, verify spindle pause into feedhold",
         "before":["{clear:n}",
                 "{spph:1}",
                 "{spde:0}",
@@ -30,7 +30,7 @@
 }
 #
 {
-    "t":{"label":"Exit feedhold",
+    "t":{"label":"FS-1B: Exit feedhold",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"spc":1}
@@ -38,7 +38,7 @@
 #
 # Standard spindle actions - with spinup delay
 {
-    "t":{"label":"Turn on spindle, verify spindle pause into feedhold",
+    "t":{"label":"FS-2A: Turn on spindle, verify spindle pause into feedhold",
         "before":["{clear:n}",
                 "{spph:1}",
                 "{spde:1}",
@@ -53,7 +53,7 @@
 }
 #
 {
-    "t":{"label":"Exit feedhold",
+    "t":{"label":"FS-2B: Exit feedhold",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"spc":1}

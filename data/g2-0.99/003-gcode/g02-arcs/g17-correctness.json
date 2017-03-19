@@ -25,49 +25,49 @@
 #
 # Clockwise arcs
 {
-    "t":{"label":"G2C-1A: CW 90 degree arc",
+    "t":{"label":"G2C17-1A: CW 90 degree arc",
          "send":["G2 I25 X125 Y125"]},
     "sr":{"posx": 125, "posy": 125},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-1B: CW 180 degree arc",
+    "t":{"label":"G2C17-1B: CW 180 degree arc",
          "send":["G2 I25 X150"]},
     "sr":{"posx": 150, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-1C: CW 270 degree arc",
+    "t":{"label":"G2C17-1C: CW 270 degree arc",
          "send":["G2 I25 X125 Y75"]},
     "sr":{"posx": 125, "posy": 75},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-1D: CW 360 degree circle - full circle spec",
+    "t":{"label":"G2C17-1D: CW 360 degree circle - full circle spec",
          "send":["G2 I25"]},
     "sr":{"posx": 100, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-1E: CW 540 degree circle - 1.5 rotations",
+    "t":{"label":"G2C17-1E: CW 540 degree circle - 1.5 rotations",
          "send":["G2 I25 X150 P1"]},
     "sr":{"posx": 150, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-1F: CW 720 degree circle - 2 rotations",
+    "t":{"label":"G2C17-1F: CW 720 degree circle - 2 rotations",
        	 "send":["G2 I25 P2"]},
     "sr":{"posx": 100, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-1G: CW 720 degree helix - 2 rotations w/Z rise",
+    "t":{"label":"G2C17-1G: CW 720 degree helix - 2 rotations w/Z rise",
        	 "send":["G2 I25 Z25 P2"]},
     "sr":{"posx": 100, "posy": 100, "posz": 25},
     "r":{"status":0}
@@ -76,42 +76,42 @@
 # Counterclockwise arcs
 #
 {
-    "t":{"label":"G2C-2A: CCW 90 degree arc",
+    "t":{"label":"G2C17-2A: CCW 90 degree arc",
       	 "send":["G3 I25 X125 Y75"]},
     "sr":{"posx": 125, "posy": 75},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-2B: CCW 180 degree arc",
+    "t":{"label":"G2C17-2B: CCW 180 degree arc",
       	 "send":["G3 I25 X150"]},
     "sr":{"posx": 150, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-2C: CCW 360 degree circle - tests full circle specification",
+    "t":{"label":"G2C17-2C: CCW 360 degree circle - tests full circle specification",
       	 "send":["G3 I25"]},
     "sr":{"posx": 100, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-2D: CCW 540 degree circle - 1.5 rotations",
+    "t":{"label":"G2C17-2D: CCW 540 degree circle - 1.5 rotations",
       	 "send":["G3 I25 X150 P1"]},
     "sr":{"posx": 150, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-2E: CCW 720 degree circle - 2 rotations",
+    "t":{"label":"G2C17-2E: CCW 720 degree circle - 2 rotations",
       	 "send":["G3 I25 P2"]},
     "sr":{"posx": 100, "posy": 100},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G2C-2F: CCW 720 degree helix - 2 rotations w/Z rise",
+    "t":{"label":"G2C17-2F: CCW 720 degree helix - 2 rotations w/Z rise",
       	 "send":["G3 I25 Z25 P2"]},
     "sr":{"posx": 100, "posy": 100, "posz": 25},
     "r":{"status":0}

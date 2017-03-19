@@ -29,98 +29,98 @@
 ### TESTS START HERE
 #
 {
-    "t":{"label":"CW 90 degree arc using I offset (X)",
+    "t":{"label":"G2C18T-1A: CW 90 degree arc using I offset (X)",
         "send":["G28","G2 I20 X20 Z20"]},
     "sr":{"posx": 20, "posz": 20},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CW 180 degree arc using I offset (X)",
+    "t":{"label":"G2C18T-2A: CW 180 degree arc using I offset (X)",
         "send":["G28","G2 I20 X40"]},
     "sr":{"posx": 40, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CW 270 degree arc using I offset (X)",
+    "t":{"label":"G2C18T-3A: CW 270 degree arc using I offset (X)",
         "send":["G28","G2 I20 X20 Z-20"]},
     "sr":{"posx": 20, "posz": -20},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CW 360 degree circle - full circle using I offset (X)",
+    "t":{"label":"G2C18T-4A: CW 360 degree circle - full circle using I offset (X)",
         "send":["G28","G2 I20"]},
     "sr":{"posx": 0, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CW 540 degree circle - 1.5 rotations using I offset (X)",
+    "t":{"label":"G2C18T-5A: CW 540 degree circle - 1.5 rotations using I offset (X)",
         "send":["G28","G2 I20 X40 P1"]},
     "sr":{"posx": 40, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CW 720 degree circle - 2 rotations using I offset (X)",
+    "t":{"label":"G2C18T-6A: CW 720 degree circle - 2 rotations using I offset (X)",
        	"send":["G28","G2 I20 P2"]},
     "sr":{"posx": 0, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CW 720 degree helix - 2 rotations w/Y helix",
+    "t":{"label":"G2C18T-7A: CW 720 degree helix - 2 rotations w/Y helix",
        	"send":["G28","G2 I20 Y50 P2"]},
     "sr":{"posx": 0, "posy": 50, "posz": 0},
     "r":{"status":0}
 }
-#
+# Counterclockwise arcs
 {
-    "t":{"label":"CCW 90 degree arc using I offset (X)",
+    "t":{"label":"G2C18T-1B: CCW 90 degree arc using I offset (X)",
       	"send":["G28","G3 I20 X20 Z-20"]},
     "sr":{"posx": 20, "posz": -20},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CCW 180 degree arc using I offset (X)",
+    "t":{"label":"G2C18T-2B: CCW 180 degree arc using I offset (X)",
       	"send":["G28","G3 I20 X40"]},
     "sr":{"posx": 40, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CCW 270 degree arc using I offset (X)",
+    "t":{"label":"G2C18T-3B: CCW 270 degree arc using I offset (X)",
         "send":["G28","G3 I20 X20 Z20"]},
     "sr":{"posx": 20, "posz": 20},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CCW 360 degree circle",
+    "t":{"label":"G2C18T-4B: CCW 360 degree circle",
       	"send":["G28","G3 I20"]},
     "sr":{"posx": 0, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CCW 540 degree circle - 1.5 rotations",
+    "t":{"label":"G2C18T-5B: CCW 540 degree circle - 1.5 rotations",
       	"send":["G28","G3 I20 X40 P1"]},
     "sr":{"posx": 40, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CCW 720 degree circle - 2 rotations",
+    "t":{"label":"G2C18T-6B: CCW 720 degree circle - 2 rotations",
       	"send":["G28","G3 I20 P2"]},
     "sr":{"posx": 0, "posz": 0},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"CCW 720 degree helix - 2 rotations w/Y helix",
+    "t":{"label":"G2C18T-7B: CCW 720 degree helix - 2 rotations w/Y helix",
       	"send":["G28","G3 I25 Y50 P2"]},
     "sr":{"posx": 0, "posz": 50, "posz": 0},
     "r":{"status":0}

@@ -1,0 +1,300 @@
+################################################################################
+#
+#   n-line-numbers-float.json - test line numbers kept as 32 bit floats
+#
+# See include file for machine setup
+# include 000-init/init-standard-gcode.json
+#
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{n:t,line:t,posx:t,posy:t,posz:t,vel:t,stat:t}}"]},
+    "r":{"status":0}
+}
+#
+# TESTS START HERE
+#
+{
+    "t":{"label":"N-1: Test line number 0",
+        "send":["N0 G0 X1 Y1"]},
+    "sr":{"n":0, "line":0, "posx":1, "posy":1, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-2: Test line number 1",
+        "send":["N1 G0 X2 Y2"]},
+    "sr":{"n":1, "line":1, "posx":2, "posy":2, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-3: Test line number 10",
+        "send":["N10 G0 X3 Y3"]},
+    "sr":{"n":10, "line":10, "posx":3, "posy":3, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-4: Test line number 1001",
+        "send":["N1001 G0 X4 Y4"]},
+    "sr":{"n":1001, "line":1001, "posx":4, "posy":4, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-5: Test line number 100,005",
+        "send":["N100005 G0 X5 Y5"]},
+    "sr":{"n":100005, "line":100005, "posx":5, "posy":5, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-6: Test line number 1,000,006",
+        "send":["N1000006 G0 X6 Y6"]},
+    "sr":{"n":1000006, "line":1000006, "posx":6, "posy":6, "stat":3},
+    "r":{"status":0}
+}
+#
+# FP Max Integer = 8,388,608
+#
+{
+    "t":{"label":"N-7A: Test line number 8,388,606, 2 under FP max integer",
+        "send":["N8388606 G0 X0 Y0"]},
+    "sr":{"n":8388606, "line":8388606, "posx":0, "posy":0, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-7B: Test line number 8,388,607, 1 under FP max integer",
+        "send":["N8388607 G0 X1 Y1"]},
+    "sr":{"n":8388607, "line":8388607, "posx":1, "posy":1, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-7C: Test line number 8,388,608, FP max integer",
+        "send":["N8388608 G0 X2 Y2"]},
+    "sr":{"n":8388608, "line":8388608, "posx":2, "posy":2, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-7D: Test line number 8,388,609, 1 over FP max integer",
+        "send":["N8388609 G0 X3 Y3"]},
+    "sr":{"n":8388609, "line":8388609, "posx":3, "posy":3, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-7E: Test line number 8,388,610, 2 over FP max integer",
+        "send":["N8388610 G0 X4 Y4"]},
+    "sr":{"n":8388610, "line":8388610, "posx":4, "posy":4, "stat":3},
+    "r":{"status":0}
+}
+#
+# 10 million
+#
+{
+    "t":{"label":"N-8A: Test line number 10,000,007",
+        "send":["N10000007 G0 X0 Y0"]},
+    "sr":{"n":10000007, "line":10000007, "posx":0, "posy":0, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8B: Test line number 10,000,008",
+        "send":["N10000008 G0 X1 Y1"]},
+    "sr":{"n":10000008, "line":10000008, "posx":1, "posy":1, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8B: Test line number 10,000,009",
+        "send":["N10000009 G0 X2 Y2"]},
+    "sr":{"n":10000009, "line":10000009, "posx":2, "posy":2, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8B: Test line number 10,000,010",
+        "send":["N10000010 G0 X3 Y3"]},
+    "sr":{"n":10000010, "line":10000010, "posx":3, "posy":3, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8B: Test line number 10,000,011",
+        "send":["N10000011 G0 X4 Y4"]},
+    "sr":{"n":10000011, "line":10000011, "posx":4, "posy":4, "stat":3},
+    "r":{"status":0}
+}
+#
+# 20 million
+#
+{
+    "t":{"label":"N-9A: Test line number 20,000,006",
+        "send":["N20000006 G0 X6 Y6"],
+        "precision":10},
+    "sr":{"n":20000006, "line":20000006, "posx":6, "posy":6, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-9B: Test line number 20,000,007",
+        "send":["N20000007 G0 X7 Y7"],
+        "precision":10},
+    "sr":{"n":20000007, "line":20000007, "posx":7, "posy":7, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-9C: Test line number 20,000,008",
+        "send":["N20000008 G0 X8 Y8"],
+        "precision":10},
+    "sr":{"n":20000008, "line":20000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+# 40 million
+#
+{
+    "t":{"label":"N-10A: Test line number 40,000,006",
+        "send":["N40000006 G0 X6 Y6"],
+        "precision":10},
+    "sr":{"n":40000006, "line":40000006, "posx":6, "posy":6, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-10B: Test line number 40,000,007",
+        "send":["N40000007 G0 X7 Y7"],
+        "precision":10},
+    "sr":{"n":40000007, "line":40000007, "posx":7, "posy":7, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-10C: Test line number 40,000,008",
+        "send":["N40000008 G0 X8 Y8"],
+        "precision":10},
+    "sr":{"n":40000008, "line":40000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+# Exceptions
+{
+    "t":{"label":"N-12: Test line number 2147483647",
+        "send":["N2147483647 G0 X12 Y12"]},
+    "sr":{"n":2147483647, "line":2147483647, "posx":12, "posy":12, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-13: Test negative line number",
+        "send":["N-13 G0 X0 Y0"]},
+    "sr":{"n":0, "line":0, "posx":0, "posy":0, "stat":3},
+    "r":{"status":0}
+}
+# EOF
+
+
+# UNUSED
+#
+{
+    "t":{"label":"N-8: Test line number 99,999,900",
+        "send":["N99999900 G0 X8 Y8"]},
+    "sr":{"n":99999900, "line":99999900, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+#
+{
+    "t":{"label":"N-9: Test line number 99,999,990",
+        "send":["N99999990 G0 X9 Y9"]},
+    "sr":{"n":99999990, "line":99999990, "posx":9, "posy":9, "stat":3},
+    "r":{"status":0}
+}
+#
+#
+{
+    "t":{"label":"N-10: Test line number 99,999,999",
+        "send":["N99999999 G0 X10 Y10"]},
+    "sr":{"n":99999999, "line":99999999, "posx":10, "posy":10, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-11: Test line number 100,000,008",
+        "send":["N100000008 G0 X11 Y11"]},
+    "sr":{"n":100000008, "line":100000008, "posx":11, "posy":11, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 100,000,008",
+        "send":["N100000008 G0 X8 Y8"]},
+    "sr":{"n":100000008, "line":100000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 100,000,008",
+        "send":["N100000008 G0 X8 Y8"]},
+    "sr":{"n":100000008, "line":100000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 100,000,008",
+        "send":["N100000008 G0 X8 Y8"]},
+    "sr":{"n":100000008, "line":100000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 200,445,009",
+        "send":["N200445009 G0 X0 Y0"]},
+    "sr":{"n":200445009, "line":200445009, "posx":0, "posy":0, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 451,113,010",
+        "send":["N451113010 G0 X8 Y8"]},
+    "sr":{"n":451113010, "line":451113010, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 100,000,008",
+        "send":["N100000008 G0 X8 Y8"]},
+    "sr":{"n":100000008, "line":100000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-8: Test line number 100,000,008",
+        "send":["N100000008 G0 X8 Y8"]},
+    "sr":{"n":100000008, "line":100000008, "posx":8, "posy":8, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-9: Test line number 1,000,000,009",
+        "send":["N1000000009 G0 X9 Y9"]},
+    "sr":{"n":1000000009, "line":1000000009, "posx":9, "posy":9, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-10: Test line number 2,000,000,010",
+        "send":["N2000000010 G0 X10 Y10"]},
+    "sr":{"n":2000000010, "line":2000000010, "posx":10, "posy":10, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-11: Test line number 2,147,483,647",
+        "send":["N2147483647 G0 X11 Y11"]},
+    "sr":{"n":2147483647, "line":2147483647, "posx":11, "posy":11, "stat":3},
+    "r":{"status":0}
+}

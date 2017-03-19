@@ -1,0 +1,85 @@
+################################################################################
+#
+#   feedhold-init.json - shared initialization for feedhold tests
+#
+# MACHINE SETUP
+#   Prior to running this file:
+#     Position X anywhere, this will become (0,0)
+#     X must have > 100mm clearance in the positive direction
+#     This position will be set (0,0,0) by G28.3 command
+#
+# TEST SETUP
+#   Selects:
+#     mm mode (G21)
+#     absolute distance mode (G90)
+#     units-per-minute feedrate mode (G94)
+#
+#   Sets current point to be (0,0,0) in G55 coordinate system
+#   Selects G55 coordinate system
+#   Record current position as G28 home
+#   Set feed rate for tests
+#
+# DEFAULTS
+{
+    "defaults":{
+        "fail":"hard",
+        "fail_returned_er":true,
+        "fail_missing_sr":false,
+        "delay":0.100,
+        "precision":0.001
+    }
+}
+# BEFORE AND AFTERS
+{
+    "before_all":{
+        "label":"Clear alarm conditions, reset default settings & cancel cycles - Always run this one by itself",
+        "before":["{clear:n}, {defa:t}, g80"]
+    }
+}
+#
+{
+    "after_all":{
+        "label":"Clear alarm conditions, return to zero",
+        "after":["{clear:n}, g0 x0 y0 z0"]
+    }
+}
+#
+# SETUP ROUTINES
+#
+# Use old-style status report setup line
+#
+{
+    "t":{"label":"Set status report - RUN AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{stat:t,hold:t,posx:t,posy:t,posz:t,feed:t,vel:t,unit:t,com:t,cof:t,spc:t}}"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set machine zero - Must be in MM mode and run by itself",
+        "send":["G21", "g28.3 x0 y0 z-95 a0"]},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"Set Standard Gcode defaults - clear coordinate offsets",
+        "send":["{ej:1}", "{jv:5}", "{tv:1}", "{qv:0}", "{sv:2}", "{si:200}",
+                "G21","M30",
+                "{ct:0.1}",
+                "{sl:f}",
+                "{lim:f}",
+                "{coph:1}",
+                "{spph:1}",
+                "{spde:0}",
+                "{zl:5}",
+                "G21 G17 G49 G54 G80 G90 G91.1 G92.1 G94",
+                "G10 L20 P1 X0 Y0 Z0",
+                "G10 L20 P2 X0 Y0 Z0",
+                "G10 L20 P3 X0 Y0 Z0",
+                "G10 L20 P4 X0 Y0 Z0",
+                "G10 L20 P5 X0 Y0 Z0",
+                "G10 L20 P6 X0 Y0 Z0",
+                "g55",
+                "G28.1"
+               ]},
+    "r":{"status":0}
+}

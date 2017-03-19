@@ -37,7 +37,7 @@
 # Square move test in inches - no feedhold
 #
 {
-    "t":{"label":"FI00: Square move test in inches - no feedhold",
+    "t":{"label":"FI-0: Square move test in inches - no feedhold",
         "before":["~","g20 g0 x0 y0"],
         "send":["N10 m3 m7 m8",
                 "N20 G1 X2 Y0 F120",
@@ -54,7 +54,7 @@
 # Square move test in inches - feedhold should occur early in X acceleration (move 1)
 #
 {
-    "t":{"label":"FI01A: Square move test in inches - feedhold early in X acceleration",
+    "t":{"label":"FI-1A: Square move test in inches - feedhold early in X acceleration",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -71,7 +71,7 @@
 # The y-too-fast failure occurs occasionally at 0.687. Trying 0.6865
 #
 {
-    "t":{"label":"FI01B: Square move test in inches - feedhold late in X deceleration",
+    "t":{"label":"FI-1B: Square move test in inches - feedhold late in X deceleration",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -86,7 +86,7 @@
 # Square move test in inches - feedhold should occur early in Y acceleration (move 2)
 #
 {
-    "t":{"label":"FI01C: Square move test in inches - feedhold early in Y acceleration (move 2)",
+    "t":{"label":"FI-1C: Square move test in inches - feedhold early in Y acceleration (move 2)",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -100,6 +100,6 @@
 }
 # Release from feedhold
 {
-    "t":{"label":"FI01D: Release from feedhold",
+    "t":{"label":"FI-1D: Release from feedhold",
         "before":["~"]}
 }

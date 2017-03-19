@@ -1,0 +1,101 @@
+################################################################################
+#
+#   feedhold-job-kill.json - feedhold tests for ^D kill job
+#
+#   See feedhold-init file for machine setup instructions
+#
+# include 004-specials/feedhold/feedhold-init.json
+#
+# DEFAULTS
+{
+    "defaults":{
+        "fail":"hard",
+        "fail_returned_er":false,
+        "fail_missing_sr":false,
+        "delay":0.100,
+        "precision":0.001
+    }
+}
+#
+{
+    "after_all":{
+        "label":"Reset default settings & cancel cycles",
+        "after":["{clear:n}"]
+    }
+}
+#
+# TESTS START HERE
+# SKIP
+# Run job kill when not in cycle
+{
+    "t":{"label":"FJK-1: Job kill when not in cycle. Enter alarm state",
+        "before":["{clear:n}","m3 m7 m8"],
+        "send":["\u0004"],
+        "delay":0.75},
+}
+#
+# Run job kill in cycle
+#
+{
+    "t":{"label":"FJK-2A: Job kill when in cycle. Enter alarm state",
+        "before":["{clear:n}","g0 x0 y0"],
+        "send":["N5 G1 F2000 X50 Y21.2342",
+                "\u0004"],
+        "delay":0.75},
+    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+}
+# Return to zero
+{
+    "t":{"label":"FJK-2B: return to zero",
+        "before":["{clear:n}"],
+        "send":["G0 X0 Y0"]},
+    "sr":{"stat":3, "posx": 0, "posy": 0},
+    "r":{"status":0}
+}
+#
+# Run it again
+{
+    "t":{"label":"FJK-2A: Job kill when in cycle. Enter alarm state, again",
+        "send":["N5 G1 F2000 X50 Y21.2342",
+                "\u0004"],
+        "delay":0.75},
+    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+}
+#
+# Run a feedhold then kill job
+#
+{
+    "t":{"label":"FJK-3A: Single move to 30 - start movement and do a feedhold",
+        "before":["{clear:n}", "g0 x0 y0"],
+        "send":["m3 m7 m8",
+                "N10 G1 F2000 X30",
+                "!"],
+        "delay":0.75},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+{
+    "t":{"label":"FJK-3B: Kill job from within from feedhold",
+        "send":["\u0004"]},
+    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+}
+#
+# Clear the alarm then do it again. Run a feedhold then kill job
+#
+{
+    "t":{"label":"FJJ-4A: Single move test to 30 - start movement and do a feedhold",
+        "before":["{clear:n}", "g0 x0 y0"],
+        "send":["m3 m7 m8",
+                "N20 G1 F500 X30", "!"],
+        "delay":0.75},
+    "r":{"status":0},
+    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
+}
+#
+{
+    "t":{"label":"FJK-4B: Kill job from within from feedhold",
+        "send":["\u0004"]},
+    "r":{"status":0},
+    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+}

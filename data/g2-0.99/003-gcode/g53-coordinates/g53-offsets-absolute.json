@@ -31,28 +31,28 @@
 # ABSOLUTE OVERRIDE TESTS
 #
 {
-    "t":{"label":"Move to test position in G55 coordinates",
+    "t":{"label":"G53A-1A: Move to test position in G55 coordinates",
         "send":["g55 g0 x40 y40 z-20"]},
     "r":{"status":0},
     "sr":{"posx":40, "posy":40, "posz":-20}
 }
 #
 {
-    "t":{"label":"Return to origin as G53 absolute override",
+    "t":{"label":"G53A-1B: Return to origin as G53 absolute override",
         "send":["G53 g0 x0 y0 z0"]},
     "r":{"status":0},
     "sr":{"posx": 25.4, "posy": 25.4, "posz": -12.7}
 }
 #
 {
-    "t":{"label":"Report G55 position after G53 move. Supposed to revert automatically",
+    "t":{"label":"G53A-1C: Report G55 position after G53 move. Supposed to revert automatically",
         "send":["{sr:n}"]},
     "r":{"status":0},
     "sr":{"posx": 25.4, "posy": 25.4, "posz": -12.7}
 }
 #
 {
-    "t":{"label":"return to test position in G54",
+    "t":{"label":"G53A-1D: Return to test position in G54",
         "send":["g0 x40 y40 z-20"]},
     "r":{"status":0},
     "sr":{"posx":40, "posy":40, "posz":-20}

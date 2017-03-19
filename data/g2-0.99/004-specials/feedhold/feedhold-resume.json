@@ -11,33 +11,10 @@
 #
 # Run a feedhold and resume cycle on a multi move sequence
 #
-{
-    "t":{"label":"FR06A: Start multi-move movement and do a feedhold",
-        "before":["g0 x0 y0", "~"],
-        "send":["m3 m7 m8",
-                "g1 f200 x5",
-                "x7.5 y7.7",
-                "x8.9 y7.9",
-                "x9.1 y8.2",
-                "!"],
-        "delay":0.5},
-    "r":{"status":0},
-    "sr":{"stat":6,"com":3,"cof":3,"spc":3}
-}
-#
-{
-    "t":{"label":"FR06B: Resume from feedhold (this one is slow)",
-        "send":["~"]},
-    "r":{"status":0},
-    "sr":{"stat":3,"posx":9.1,"posy":8.2,"com":1,"cof":1,"spc":1}
-}
-#
-
-#
 # Run a feedhold and resume cycle on a single move
 #
 {
-    "t":{"label":"FR01A: Single move test to 30 - start movement and do a feedhold",
+    "t":{"label":"FR-1A: Single move test to 30 - start movement and do a feedhold",
         "before":["g21 g0 x0 y0","~"],
         "send":["m3 m7 m8",
                 "G1 F500 X30", "!"],
@@ -47,7 +24,7 @@
 }
 #
 {
-    "t":{"label":"FR01B: Resume from feedhold - test 1",
+    "t":{"label":"FR-1B: Resume from feedhold - test 1",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
@@ -56,7 +33,7 @@
 # Run it again - back to zero, this time with movement in the feedhold
 #
 {
-    "t":{"label":"FR02A: Single move test to 0 - start movement and do a feedhold",
+    "t":{"label":"FR-2A: Single move test to 0 - start movement and do a feedhold",
         "before":["~"],
         "send":["m3 m7 m8",
                 "G1 F500 X0", "!"],
@@ -66,7 +43,7 @@
 }
 #
 {
-    "t":{"label":"FR02B: Resume from feedhold - test 2",
+    "t":{"label":"FR-2B: Resume from feedhold - test 2",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":0,"com":1,"cof":1,"spc":1}
@@ -75,7 +52,7 @@
 # Run a third feedhold and resume cycle on a single move
 #
 {
-    "t":{"label":"FR03A: Start movement to 30 and do a feedhold",
+    "t":{"label":"FR-3A: Start movement to 30 and do a feedhold",
         "before":["g21 g0 x0 y0","~"],
         "send":["m3 m7 m8",
                 "G1 F500 X30", "!"],
@@ -85,7 +62,7 @@
 }
 #
 {
-    "t":{"label":"FR03B: Resume from feedhold - test 3",
+    "t":{"label":"FR-3B: Resume from feedhold - test 3",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
@@ -94,7 +71,7 @@
 # Feedhold and resume an arc move
 #
 {
-    "t":{"label":"FR04A: Feedhold a CW 360 degree arc move",
+    "t":{"label":"FR-4A: Feedhold a CW 360 degree arc move",
          "before":["g0 x0 y0"],
          "send":["m3 m7 m8",
                  "G2 I25 F4000", "!"],
@@ -103,7 +80,7 @@
 }
 #
 {
-    "t":{"label":"FR04B: Resume from feedhold",
+    "t":{"label":"FR-4B: Resume from feedhold",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":0,"posy":0,"com":1,"cof":1,"spc":1}
@@ -112,7 +89,7 @@
 # Run a feedhold and resume cycle on a multi move sequence
 #
 {
-    "t":{"label":"FR05: Return to zero",
+    "t":{"label":"FR-5: Return to zero",
         "before":["g0 x0 y0"],
         "delay":0.5},
     "r":{"status":0},
@@ -122,7 +99,7 @@
 # Run a feedhold and resume cycle on a multi move sequence
 #
 {
-    "t":{"label":"FR06A: Start multi-move movement and do a feedhold",
+    "t":{"label":"FR-6A: Start multi-move movement and do a feedhold",
         "before":["g0 x0 y0", "~"],
         "send":["m3 m7 m8",
                 "g1 f200 x5",
@@ -136,14 +113,14 @@
 }
 #
 {
-    "t":{"label":"FR06B: Resume from feedhold (this one is slow)",
+    "t":{"label":"FR-6B: Resume from feedhold (this one is slow)",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":9.1,"posy":8.2,"com":1,"cof":1,"spc":1}
 }
 #
 {
-    "t":{"label":"FR07: Move back to starting position",
+    "t":{"label":"FR-7: Move back to starting position",
         "send":["G28"]},
     "r":{"status":0}
 }
@@ -151,7 +128,7 @@
 # Run a feedhold and resume cycle in a square move - MM
 #
 {
-    "t":{"label":"FR08A: Square move test in MM - start 4 moves and do a feedhold",
+    "t":{"label":"FR-8A: Square move test in MM - start 4 moves and do a feedhold",
         "before":["~","g21 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X50.8 F3048",
@@ -165,7 +142,7 @@
 }
 #
 {
-    "t":{"label":"FR08B: Resume from feedhold",
+    "t":{"label":"FR-8B: Resume from feedhold",
         "send":["~"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":0,"posy":0,"com":1,"cof":1,"spc":1}
@@ -174,7 +151,7 @@
 # Run a feedhold and resume cycle in a square move - INCHES
 #
 {
-    "t":{"label":"FR09A: Square move test in inches - start 4 moves and do a feedhold",
+    "t":{"label":"FR-9A: Square move test in inches - start 4 moves and do a feedhold",
         "before":["~","g20 g0 x0 y0"],
         "send":["m3 m7 m8",
                 "G1 X2 F120",
@@ -188,7 +165,7 @@
 }
 #
 {
-    "t":{"label":"FR09B: Resume from feedhold",
+    "t":{"label":"FR-9B: Resume from feedhold",
         "send":["~"],
         "after":["G21"]},
     "r":{"status":0},

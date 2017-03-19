@@ -1,22 +1,10 @@
 ################################################################################
 #
-#   feedhold-baseline.json - basic feedhold tests
+#   homing-baseline.json - basic homing tests
 #
-#   See feedhold-init file for machine setup instructions
+#   See homing-init file for machine setup instructions
 #
-# include 004-specials/feedhold/feedhold-init.json
-#
-# More tests:
-#   Send ~ and % while feedhold entry actions are occurring (Z, spindle, coolant)
-#   Send ~ and % while feedhold exit actions are occurring (coolant, spindle, delay, Z)
-#   Send ~ and % while p2movement is occurring
-#   Test spindle delay durations, 0 (off), various delay times
-#   Change spindle settings while in p2. Try all combinations - spph:t/f, ON/OFF, S word
-#   Change spindle S words while in p2
-#   Change coolant settings while in p2. Try all combinations - coph:t/f, ON/OFF, mist, flood
-#   Feedhold request received during dwell
-#   Feedhold request received during homing (what's the proper handling?)
-#   Feedhold request received during probing (what's the proper handling?)
+# include 004-specials/homing/homing-init.json
 #
 # TESTS START HERE
 #
@@ -145,7 +133,7 @@
 }
 #
 # Shotgun - Run a bunch of commands in seqeunce
-# 
+#
 {
     "t":{"label":"FB-9: Shotgun test - hold, resume, hold-resume, hold, flush",
         "before":["g0 x0 m3 m7 m8"],

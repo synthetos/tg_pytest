@@ -19,7 +19,7 @@
 # G10 L2 TESTS
 #
 {
-    "t":{"label":"Set G55 offsets in millimeters",
+    "t":{"label":"G53S-1A: Set G55 offsets in millimeters",
         "before":["g21 g54","g0 x0 y0 z0"],
         "send":["G10 L2 P2 X25.4 Y25.4 Z-12.7"]},
     "r":{"status":0},
@@ -27,21 +27,21 @@
 }
 #
 {
-    "t":{"label":"Read G55 position in mm",
+    "t":{"label":"G53S-1B: Read G55 position in mm",
         "send":["G21 G55"]},
     "r":{"status":0},
     "sr":{"posx":-25.4, "posy":-25.4, "posz":12.7}
 }
 #
 {
-    "t":{"label":"Read G55 position in inches",
+    "t":{"label":"G53S-1C: Read G55 position in inches",
         "send":["G20 G55"]},
     "r":{"status":0},
     "sr":{"posx":-1.0, "posy":-1.0, "posz":0.5}
 }
-#
+# G56
 {
-    "t":{"label":"Set G56 offset in inches",
+    "t":{"label":"G53S-2A: Set G56 offset in inches",
         "before":["g20 g54","g0 x0 y0 z0"],
         "send":["G10 L2 P3 X0.7874 Y0.748 Z-0.3937"]},
     "r":{"status":0},
@@ -49,14 +49,14 @@
 }
 #
 {
-    "t":{"label":"Read G56 position in mm",
+    "t":{"label":"G53S-2B: Read G56 position in mm",
         "send":["G21 G56"]},
     "r":{"status":0},
     "sr":{"posx":-20.0, "posy":-19.0, "posz":10.0}
 }
 #
 {
-    "t":{"label":"Read G56 position in inches",
+    "t":{"label":"G53S-2C: Read G56 position in inches",
         "send":["G20 G56"]},
     "r":{"status":0},
     "sr":{"posx":-0.7874, "posy":-0.748, "posz":0.3937}
@@ -65,7 +65,7 @@
 # G10 L20 TESTS
 #
 {
-    "t":{"label":"Set G57 offsets in millimeters",
+    "t":{"label":"G53S-3A: Set G57 offsets in millimeters",
         "before":["g21 g54","g0 x0 y0 z0"],
         "send":["G10 L20 P4 X14 Y14.1 Z-8.7"]},
     "r":{"status":0},
@@ -73,21 +73,21 @@
 }
 #
 {
-    "t":{"label":"Read G57 position in mm",
+    "t":{"label":"G53S-3B: Read G57 position in mm",
         "send":["G21 G57"]},
     "r":{"status":0},
     "sr":{"posx":14, "posy":14.1, "posz":-8.7}
 }
 #
 {
-    "t":{"label":"Read G57 position in inches",
+    "t":{"label":"G53S-3C: Read G57 position in inches",
         "send":["G20 G57"]},
     "r":{"status":0},
     "sr":{"posx":0.5512, "posy":0.5551, "posz":-0.3425}
 }
-#
+# G58
 {
-    "t":{"label":"Set G58 offsets in inches",
+    "t":{"label":"G53S-4A: Set G58 offsets in inches",
         "before":["g20 g54","g0 x0 y0 z0"],
         "send":["G10 L20 P5 X0.4724 Y0.4331 Z-0.2480"]},
     "r":{"status":0},
@@ -95,14 +95,14 @@
 }
 #
 {
-    "t":{"label":"Read G58 position in mm",
+    "t":{"label":"G53S-4B: Read G58 position in mm",
         "send":["G21 G58"]},
     "r":{"status":0},
     "sr":{"posx":12, "posy":11, "posz":-6.3}
 }
 #
 {
-    "t":{"label":"Read G58 position in inches",
+    "t":{"label":"G53S-4C: Read G58 position in inches",
         "send":["G20 G58"]},
     "r":{"status":0},
     "sr":{"posx":0.4724, "posy":0.4331, "posz":-0.2480}
@@ -111,7 +111,7 @@
 # SET COORDINATE OFFSETS USING JSON - NON-GROUPED
 #
 {
-    "t":{"label":"Set G59 offsets in millimeters using JSON, non-grouped",
+    "t":{"label":"G53S-5A: Set G59 offsets in millimeters using JSON, non-grouped",
         "before":["g21 g54","g0 x0 y0 z0"],
         "send":["{g59x:11.5}","{g59y:6.6}","{g59z:-4.3}"]},
     "r":{"status":0},
@@ -119,14 +119,14 @@
 }
 #
 {
-    "t":{"label":"Read G59 position in mm",
+    "t":{"label":"G53S-5B: Read G59 position in mm",
         "send":["G21 G59"]},
     "r":{"status":0},
     "sr":{"posx":-11.5, "posy":-6.6, "posz":4.3}
 }
 #
 {
-    "t":{"label":"Read G59 position in inches",
+    "t":{"label":"G53S-5C: Read G59 position in inches",
         "send":["G20 G59"]},
     "r":{"status":0},
     "sr":{"posx":-0.4528, "posy":-0.2598, "posz":0.1693}
@@ -135,7 +135,7 @@
 # SET COORDINATE OFFSETS USING JSON - GROUPED
 #
 {
-    "t":{"label":"Set G57 offsets in millimeters using JSON, grouped",
+    "t":{"label":"G53S-6A: Set G57 offsets in millimeters using JSON, grouped",
         "before":["g21 g54","g0 x0 y0 z0"],
         "send":["{g57:{x:-14, y:-14.1, z:8.7}}"]},
     "r":{"status":0},
@@ -143,14 +143,14 @@
 }
 #
 {
-    "t":{"label":"Read G57 position in mm",
+    "t":{"label":"G53S-6B: Read G57 position in mm",
         "send":["G21 G57"]},
     "r":{"status":0},
     "sr":{"posx":14, "posy":14.1, "posz":-8.7}
 }
 #
 {
-    "t":{"label":"Read G57 position in inches",
+    "t":{"label":"G53S-6C: Read G57 position in inches",
         "send":["G20 G57"]},
     "r":{"status":0},
     "sr":{"posx":0.5512, "posy":0.5551, "posz":-0.3425}
