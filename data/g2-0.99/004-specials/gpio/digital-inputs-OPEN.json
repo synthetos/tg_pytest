@@ -1,0 +1,30 @@
+################################################################################
+#
+#   digital-inputs-OPEN.json - Digital input functions - switches opened
+#
+# include 004-specials/gpio/gpio-init.json
+#
+# Test assumptions:
+#   Inputs are in OPEN position
+#   Inputs are mapped to DI's 1:1, di1 = in1, etc.
+#   UUT has 4 or more inputs
+#   SERIAL_TIMEOUT is 1 second or more (tg_utils.py)
+#
+{
+    "t":{"label":"Set status report - RUNS AFTER CLEAR STATUS REPORT",
+        "send":["{sr:{line:t,in1:t,in2:t,in3:t,in4:t,out1:t,out2:t,out3:t,out4:t,stat:t}}"]},
+    "r":{"status":0}
+}
+#
+# TESTS BEGIN HERE
+#
+{
+    "t":{"label":"Set and read di1",
+        "before":["{di1:{mo:0,ac:0,fn:0}}",
+                  "{di2:{mo:0,ac:0,fn:0}}",
+                  "{di3:{mo:0,ac:0,fn:0}}",
+                  "{di4:{mo:0,ac:0,fn:0}}"],
+        "send":["{sr:n}"]},
+    "r":{"status":0, "sr":{"in1":false,"in2":false,"in3":false,"in4":false}
+    }
+}

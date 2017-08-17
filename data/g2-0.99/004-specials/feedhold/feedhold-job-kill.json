@@ -42,7 +42,7 @@
         "send":["N5 G1 F2000 X50 Y21.2342",
                 "\u0004"],
         "delay":0.75},
-    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+    "sr":{"stat":4,"com":0,"cof":0,"spc":0}
 }
 # Return to zero
 {
@@ -59,10 +59,10 @@
         "send":["N5 G1 F2000 X50 Y21.2342",
                 "\u0004"],
         "delay":0.75},
-    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+    "sr":{"stat":4,"com":0,"cof":0,"spc":0}
 }
 #
-# Run a feedhold then kill job
+# Run a feedhold then kill job - completed HOLD
 #
 {
     "t":{"label":"FJK-3A: Single move to 30 - start movement and do a feedhold",
@@ -78,7 +78,7 @@
 {
     "t":{"label":"FJK-3B: Kill job from within from feedhold",
         "send":["\u0004"]},
-    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+    "sr":{"stat":4,"com":0,"cof":0,"spc":0}
 }
 #
 # Clear the alarm then do it again. Run a feedhold then kill job
@@ -97,5 +97,18 @@
     "t":{"label":"FJK-4B: Kill job from within from feedhold",
         "send":["\u0004"]},
     "r":{"status":0},
-    "sr":{"stat":2,"com":0,"cof":0,"spc":0}
+    "sr":{"stat":4,"com":0,"cof":0,"spc":0}
+}
+# Run a feedhold then job kill before hold completes
+#
+{
+    "t":{"label":"FJK-5: Single move to 30 - start movement and do a feedhold",
+        "before":["{clear:n}", "g0 x0 y0"],
+        "send":["m3 m7 m8",
+                "N10 G1 F2000 X30",
+                "!",
+                "\u0004"],
+        "delay":0.05},
+    "r":{"status":0},
+    "sr":{"stat":4,"com":0,"cof":0,"spc":0}
 }

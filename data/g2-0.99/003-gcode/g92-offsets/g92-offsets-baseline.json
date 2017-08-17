@@ -18,24 +18,48 @@
 }
 #
 {
-    "t":{"label":"G92-1B: Suspend G92 offsets",
+    "t":{"label":"G92-1B: Read G92 offset enable JSON",
+        "send":["{g92e:n}"]},
+    "r":{"status":0, "g92e":1}
+}
+#
+{
+    "t":{"label":"G92-1C: Suspend G92 offsets",
         "send":["G92.2"]},
     "r":{"status":0},
     "sr":{"posx":10, "posy":10, "posz":-10}
 }
+# SKIP
+{
+    "t":{"label":"G92-1D: Read G92 offset suspended JSON",
+        "send":["{g92e:n}"]},
+    "r":{"status":0, "g92e":2}
+}
 #
 {
-    "t":{"label":"G92-1C: Resume G92 offsets",
+    "t":{"label":"G92-1E: Resume G92 offsets",
         "send":["G92.3"]},
     "r":{"status":0},
     "sr":{"posx":20, "posy":20, "posz":-15}
 }
 #
 {
-    "t":{"label":"G92-1D: Reset G92 offsets",
+    "t":{"label":"G92-1F: Read G92 offset resumed JSON",
+        "send":["{g92e:n}"]},
+    "r":{"status":0, "g92e":1}
+}
+#
+{
+    "t":{"label":"G92-1G: Reset G92 offsets",
         "send":["G92.1"]},
     "r":{"status":0},
     "sr":{"posx":10, "posy":10, "posz":-10}
+}
+#
+{
+    "t":{"label":"G92-1H: Read G92 offset reset JSON",
+        "send":["{g92e:n}"]},
+    "r":{"status":0, "g92e":0}
 }
 #
 #### G92 Offset Tests in Inches - Must be run as a set of 4 ###

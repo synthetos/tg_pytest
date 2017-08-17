@@ -5,24 +5,25 @@
 # include 000-init/init-standard-json.json
 #
 # JSON TYPE ERRORS
+# SKIP
 {
     "t":{"label":"TYPE ERROR: Boolean value is float 0.0",
          "send":["{sl:0.0}"]},
         "r":{"status":117, "sl":null}
 }
-#
+# SKIP
 {
     "t":{"label":"TYPE ERROR: Boolean value is float 1.0",
          "send":["{sl:1.0}"]},
         "r":{"status":117, "sl":null}
 }
-#
+# SKIP
 {
     "t":{"label":"TYPE ERROR: Boolean value is fractional 0.5",
          "send":["{sl:0.5}"]},
         "r":{"status":117, "sl":null}
 }
-#
+# SKIP
 {
     "t":{"label":"TYPE ERROR: Boolean value is fractional 0.99999999999",
          "send":["{sl:0.99999999999}"]},

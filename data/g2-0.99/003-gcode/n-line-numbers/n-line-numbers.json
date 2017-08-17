@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   n-line-numbers-int.json - test line numbers kept as 32 bit integers
+#   n-line-numbers.json - test line numbers kept as 32 bit integers
 #
 # See include file for machine setup
 # include 000-init/init-standard-gcode.json
@@ -208,23 +208,23 @@
 }
 #
 {
-    "t":{"label":"N-11E: Test line number 100,000,008",
-        "send":["N100000008 G0 X4 Y4"]},
-    "sr":{"n":100000008, "line":100000008, "posx":4, "posy":4, "stat":3},
+    "t":{"label":"N-11E: Test line number 100,000,009",
+        "send":["N100000009 G0 X4 Y4"]},
+    "sr":{"n":100000009, "line":100000009, "posx":4, "posy":4, "stat":3},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"N-11F: Test line number 100,000,008",
-        "send":["N100000008 G0 X5 Y5"]},
-    "sr":{"n":100000008, "line":100000008, "posx":5, "posy":5, "stat":3},
+    "t":{"label":"N-11F: Test line number 100,000,010",
+        "send":["N100000010 G0 X5 Y5"]},
+    "sr":{"n":100000010, "line":100000010, "posx":5, "posy":5, "stat":3},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"N-11G: Test line number 100,000,008",
-        "send":["N100000008 G0 X6 Y6"]},
-    "sr":{"n":100000008, "line":100000008, "posx":6, "posy":6, "stat":3},
+    "t":{"label":"N-11G: Test line number 100,000,011",
+        "send":["N100000011 G0 X6 Y6"]},
+    "sr":{"n":100000011, "line":100000011, "posx":6, "posy":6, "stat":3},
     "r":{"status":0}
 }
 #
@@ -259,18 +259,18 @@
 }
 #
 {
-    "t":{"label":"N-12E: Test line number 2,000,000,010",
-        "send":["N2000000010 G0 X4 Y4"]},
-    "sr":{"n":2000000010, "line":2000000010, "posx":4, "posy":4, "stat":3},
+    "t":{"label":"N-12E: Test line number 1,999,000,010",
+        "send":["N1999000010 G0 X4 Y4"]},
+    "sr":{"n":1999000010, "line":1999000010, "posx":4, "posy":4, "stat":3},
     "r":{"status":0}
 }
 #
-# Maximum
+# Maximum line number
 #
 {
-    "t":{"label":"N-13: Test line number 2,147,483,647",
-        "send":["N2147483647 G0 X1 Y1"]},
-    "sr":{"n":2147483647, "line":2147483647, "posx":1, "posy":1, "stat":3},
+    "t":{"label":"N-13: Test line number 2,000,000,000",
+        "send":["N2000000000 G0 X1 Y1"]},
+    "sr":{"n":2000000000, "line":2000000000, "posx":1, "posy":1, "stat":3},
     "r":{"status":0}
 }
 #
@@ -278,14 +278,21 @@
 #
 {
     "t":{"label":"N-12: Test line number 2147483648",
-        "send":["N2147483647 G0 X0 Y0"]},
-    "sr":{"n":2147483648, "line":2147483648, "posx":0, "posy":0, "stat":3},
+        "send":["N2147483648 G0 X0 Y0"]},
+    "sr":{"n":0, "line":0, "posx":0, "posy":0, "stat":3},
+    "r":{"status":0}
+}
+#
+{
+    "t":{"label":"N-12: Test line number 4000000000",
+        "send":["N4000000000 G0 X0 Y0"]},
+    "sr":{"n":0, "line":0, "posx":0, "posy":0, "stat":3},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"N-13: Test negative line number",
-        "send":["N-13 G0 X-13 Y-13"]},
-    "sr":{"n":0, "line":0, "posx":-13, "posy":-13, "stat":3},
+        "send":["N-13 G0 X13 Y13"]},
+    "sr":{"n":0, "line":0, "posx":13, "posy":13, "stat":3},
     "r":{"status":0}
 }

@@ -1,0 +1,18 @@
+################################################################################
+#
+#   digital-outputs-action.json - Digital output functions - performs action
+#
+# include 004-specials/gpio/gpio-init.json
+#
+# TESTS BEGIN HERE
+#
+{
+    "t":{"label":"DOA-1: Set do1",
+        "before":["{do1:{mo:1}}",
+                  "{do2:{mo:1}}",
+                  "{do3:{mo:1}}",
+                  "{do4:{mo:1}}"],
+        "send":["{out1:1}","{sr:n}"]},
+    "r":{"status":0, "sr":{"out1":true}
+    }
+}

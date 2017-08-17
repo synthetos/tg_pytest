@@ -358,7 +358,7 @@ def run_test(t_data, before_data, after_data, params):
     for line in send:
         print("  ----> {0}".format(line))
         tg.write(line+"\n")
-        time.sleep(delay)
+#        time.sleep(delay)
 
     # Collect the response objects
     r_datae = []

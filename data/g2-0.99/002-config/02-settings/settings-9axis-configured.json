@@ -1,0 +1,85 @@
+################################################################################
+#
+#   settings-9axis.json - Test 9 axis settings with 9 axes configured
+#
+# This file assumes the following configuration:
+#   - 9 axes are defined
+#   - 4 (or more) motors are defined and mapped as:
+#       1=X, 2=Y, 3=Z, 4=W
+#
+# include 000-init/init-standard-json.json
+#
+{
+    "t":{"label":"Return everything to zero",
+         "send":["g0x0y0z0u0v0w0a0b0c0"]},
+    "r":{"status":0},
+    "sr":{"stat":3}
+}
+#
+# Test for axes being present
+#
+{
+    "t":{"label":"Test presence of X axis",
+         "send":["{x:null}"]},
+         "r":{"status":0, "x":{"am":1}}
+}
+#
+{
+    "t":{"label":"Test presence of U axis",
+         "send":["{u:null}"]},
+         "r":{"status":0, "u":{"am":1}}
+}
+#
+{
+    "t":{"label":"Test presence of V axis",
+         "send":["{v:null}"]},
+         "r":{"status":0, "v":{"am":1}}
+}
+#
+{
+    "t":{"label":"Test presence of W axis",
+         "send":["{w:null}"]},
+         "r":{"status":0, "w":{"am":1}}
+}
+#
+# Spot check various UVW axis settings are working
+#
+{
+    "t":{"label":"Test W axis mode",
+         "send":["{wam:0}"]},
+         "r":{"status":0, "wam":0}
+}
+#
+{
+    "t":{"label":"Test W axis mode",
+         "send":["{wam:1}"]},
+         "r":{"status":0, "wam":1}
+}
+#
+{
+    "t":{"label":"Test U axis max velocity setting",
+         "send":["{uvm:12345}"]},
+         "r":{"status":0, "uvm":12345}
+}
+#
+# check axis mapping works correctly
+#
+{
+    "t":{"label":"Test current W mapping",
+         "send":["g0w10","g0w0"]},
+    "r":{"status":0},
+    "sr":{"stat":3}
+}
+#
+{
+    "t":{"label":"Remap W to motor 3 - uses external axis numbers (8)",
+         "send":["{3ma:8}"]},
+         "r":{"status":0, "3ma":8}
+}
+#
+{
+    "t":{"label":"Test W remapped to motor 3",
+         "send":["g0w10","g0w0"]},
+    "r":{"status":0},
+    "sr":{"stat":3}
+}

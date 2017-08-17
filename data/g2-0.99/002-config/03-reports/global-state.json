@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  reports-global-state.json - Test common state values returned by status reports
+#  global-state.json - Test common state values returned by status reports
 #
 # include 000-init/init-standard-json.json
 #

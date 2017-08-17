@@ -8,8 +8,11 @@ Utility class to clean up the logic for alden :)
 """
 import sys, serial, glob
 import json
+import time
+from time import sleep
 
 SERIAL_TIMEOUT = 1      # time to stop listening in seconds
+MARLIN_DELAY = 2.1      # time to delay if Marlin mode is detected
 
 class TinyG(object):
 
@@ -40,11 +43,12 @@ class TinyG(object):
         while count < 4:
             self.write("\x05")      # send ENQ
             raw = self.s.readline()
+            print raw
             try:
                 response = json.loads(raw)
             except:
-                pass
-
+                time.sleep(SERIAL_TIMEOUT)
+        
             if "ack" in response and response["ack"] == True:
                 break;
             
@@ -53,7 +57,7 @@ class TinyG(object):
                 print ("Serial port connected but board not responding to ENQuiry (0x05)")
                 print ("Exiting")
                 sys.exit(1)
- 
+                 
         print("Serial port connected: {0}".format(raw))            
 
 

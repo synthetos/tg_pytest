@@ -1,0 +1,120 @@
+################################################################################
+#
+#   digital-inputs-config.json - Digital input configuration functions
+#
+# include 000-init/init-standard-json.json
+#
+# Test digital input mode settings
+#
+{
+    "t":{"label":"DIC:-1A: Write di1mo with 0",
+        "send":["{di1mo:0}"]},
+    "r":{"status":0, "di1mo":0}
+}
+#
+{
+    "t":{"label":"DIC:-1B: Write di1mo with 1",
+        "send":["{di1mo:1}"]},
+    "r":{"status":0, "di1mo":1}
+}
+#
+{
+    "t":{"label":"DIC:-1C: Write di1mo DISABLE (2)",
+        "send":["{di1mo:2}"]},
+    "r":{"status":0, "di1mo":2}
+}
+#
+{
+    "t":{"label":"DIC:-1D: Read di1mo DISABLE (2)",
+        "send":["{di1mo:null}"]},
+    "r":{"status":0, "di1mo":2}
+}
+#
+{
+    "t":{"label":"DIC:-1E: Write di1mo with invalid value -1",
+        "send":["{di1mo:-1}"]},
+    "r":{"status":108, "di1mo":null}
+}
+#
+{
+    "t":{"label":"DIC:-1F: Write di1mo with invalid value 3",
+        "send":["{di1mo:3}"]},
+    "r":{"status":109, "di1mo":null}
+}
+#
+# Test digital input action settings
+#
+{
+    "t":{"label":"DIC:-2A: Write di2ac with INPUT_ACTION_NONE (0)",
+        "send":["{di2ac:0}"]},
+    "r":{"status":0, "di2ac":0}
+}
+#
+{
+    "t":{"label":"DIC:-2B: Write di2ac with INPUT_ACTION_STOP (1)",
+        "send":["{di2ac:1}"]},
+    "r":{"status":0, "di2ac":1}
+}
+#
+{
+    "t":{"label":"DIC:-2C: Write di2ac INPUT_ACTION_FAST_STOP (2)",
+        "send":["{di2ac:2}"]},
+    "r":{"status":0, "di2ac":2}
+}
+#
+{
+    "t":{"label":"DIC:-2D: Read di2ac INPUT_ACTION_FAST_STOP (2)",
+        "send":["{di2ac:null}"]},
+    "r":{"status":0, "di2ac":2}
+}
+#
+{
+    "t":{"label":"DIC:-2E: Write di2ac with invalid value -1",
+        "send":["{di2ac:-1}"]},
+    "r":{"status":108, "di2ac":null}
+}
+#
+{
+    "t":{"label":"DIC:-2F: Write di2ac with invalid value 10",
+        "send":["{di2ac:10}"]},
+    "r":{"status":109, "di2ac":null}
+}
+#
+#
+# Test digital input function settings
+#
+{
+    "t":{"label":"DIC:-3A: Write di3fn with INPUT_FUNCTION_NONE (0)",
+        "send":["{di3fn:0}"]},
+    "r":{"status":0, "di3fn":0}
+}
+#
+{
+    "t":{"label":"DIC:-3B: Write di3fn with INPUT_FUNCTION_LIMIT (1)",
+        "send":["{di3fn:1}"]},
+    "r":{"status":0, "di3fn":1}
+}
+#
+{
+    "t":{"label":"DIC:-3C: Write di3fn INPUT_FUNCTION_INTERLOCK (2)",
+        "send":["{di3fn:2}"]},
+    "r":{"status":0, "di3fn":2}
+}
+#
+{
+    "t":{"label":"DIC:-3D: Read di3fn INPUT_FUNCTION_INTERLOCK (2)",
+        "send":["{di3fn:null}"]},
+    "r":{"status":0, "di3fn":2}
+}
+#
+{
+    "t":{"label":"DIC:-3E: Write di3fn with invalid value -1",
+        "send":["{di3fn:-1}"]},
+    "r":{"status":108, "di3fn":null}
+}
+#
+{
+    "t":{"label":"DIC:-3F: Write di3fn with invalid value 10",
+        "send":["{di3fn:10}"]},
+    "r":{"status":109, "di3fn":null}
+}

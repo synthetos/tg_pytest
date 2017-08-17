@@ -145,7 +145,7 @@
 }
 #
 # Shotgun - Run a bunch of commands in seqeunce
-# 
+#
 {
     "t":{"label":"FB-9: Shotgun test - hold, resume, hold-resume, hold, flush",
         "before":["g0 x0 m3 m7 m8"],
