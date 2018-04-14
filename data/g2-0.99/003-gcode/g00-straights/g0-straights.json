@@ -69,14 +69,14 @@
 }
 #
 {
-    "t":{"label":"G0-2E: Straight feed at F10",
+    "t":{"label":"G0-2E: Straight feed at F10 - TAKES A LONG TIME",
          "send":["G1 X1 Y1 F10"]},
     "sr":{"posx": 1, "posy": 1},
     "r":{"status":0}
 }
 #
 {
-    "t":{"label":"G0-2F: Straight feed at F1",
+    "t":{"label":"G0-2F: Straight feed at F1 - TAKES A LONGER TIME",
          "send":["G1 X0.1 Y0.1 F1"]},
     "sr":{"posx": 0.1, "posy": 0.1},
     "r":{"status":0}

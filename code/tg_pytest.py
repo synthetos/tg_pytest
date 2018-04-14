@@ -179,7 +179,7 @@ def analyze_sr(t_data, r_datae, params):
     if last_sr == None:             # return if there were no SRs in the response set
         return 0
 
-    print last_sr["response"]       # print response just once for all SR tests
+    print (last_sr["response"])     # print response just once for all SR tests
 
     # test if keys are present and match t_data           
     for k in t_data["sr"]:

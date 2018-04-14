@@ -64,7 +64,7 @@
 }
 #
 {
-    "t":{"label":"Turn spindle CW with 0.5 second spinup. Position should be 10",
+    "t":{"label":"SPIN-01 Turn spindle CW with 0.5 second spinup. Position should be 10",
         "before":["{spde:0.5}",
                   "g0 x0 y0",
                   "m5",
@@ -75,7 +75,7 @@
 }
 #
 {
-    "t":{"label":"Turn spindle CW with 1.5 second spinup. Position should be 0",
+    "t":{"label":"SPIN-02 Turn spindle CW with 1.5 second spinup. Position should be 0",
         "before":["{spde:1.5}",
                   "g0 x0 y0",
                   "m5",
