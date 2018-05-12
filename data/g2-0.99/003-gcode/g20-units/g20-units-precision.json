@@ -1,17 +1,17 @@
 ################################################################################
 #
-#   g20-units-baseline.json - G20/G21 units tests
+#   g20-units-precision.json - G20/G21 units precision tests
 #
 # include 000-init/init-standard-gcode.json
 #
 # G20 UNITS TESTS BEGIN HERE
 {
-    "t":{"label":"Move 2.54 mm off zero",
-        "send":["g21 g0 x25.4 y25.4"]},
+    "t":{"label":"Move 1.9999 inches off zero",
+        "send":["g20 g0 x1.9999 y1.9999"]},
     "r":{"status":0},
-    "sr":{"posx":25.4,"posy":25.4,"posz":0.0,"posa":0.0}
+    "sr":{"posx":1.9999,"posy":1.9999,"posz":0.0,"posa":0.0}
 }
-#
+# EOF
 {
     "t":{"label":"Readout in inches mode",
         "send":["g20"]},

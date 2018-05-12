@@ -78,7 +78,7 @@
                 "{xjm:80000}"]},
     "r":{"status":0}
 }
-# 
+#
 # Fails trap line 924: "mr->segment_time < MIN_SEGMENT_TIME (body)"
 {
     "t":{"label":"SENSITIVITY: Traverse 0.000021 mm - jerk 80,000",
@@ -103,3 +103,4 @@
     "sr":{"posx": 0.000019999, "stat":3},
     "r":{"status":0}
 }
+# EOF
