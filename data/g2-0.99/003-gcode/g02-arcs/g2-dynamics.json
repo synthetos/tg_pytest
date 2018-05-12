@@ -30,11 +30,11 @@
                    "{ct:0.01}","{jt:1}",
                    "{xvm:40000}","{xjm:10000}",
                    "{yvm:40000}","{yjm:10000}"],
-        "send":["G28","G2 I50 F2000"]},
+        "send":["G28","G2 I50 F1000"]},
     "sr":{"posx": 100, "posy": 100},
     "r":{"status":0}
 }
-#
+# EOF
 {
     "t":{"label":"G2D-1A: CW 360 degree circle at F2000",
          "before":["G21",
