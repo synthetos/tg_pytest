@@ -1,0 +1,65 @@
+################################################################################
+#
+#   json-issue-298.json - JSON nested read tests - See also Issue #354
+#
+# include 000-init/init-standard-json.json
+#
+# Test Nested JSON - Baseline functionality
+{
+    "t":{"label":"Write nested write of y:{vm in MM",
+        "before":["G21"],
+        "send":["{y:{vm:1000}}"]},
+    "r":{"status":0, "y":{"vm":1000}}
+}
+#
+{
+    "t":{"label":"Read y:{vm in MM",
+        "before":["G21","{yvm:1000}"],
+        "send":["{y:{vm:null}}"]},
+    "r":{"status":0, "y":{"vm":1000}}
+}
+#
+{
+    "t":{"label":"Read y:{vm in Inches",
+        "before":["G21","{yvm:1000}","G20"],
+        "send":["{y:{vm:null}}"]},
+    "r":{"status":0, "y":{"vm":39}}
+}
+#
+{
+    "t":{"label":"Write y:{vm in Inches",
+        "before":["G20"],
+        "send":["{y:{vm:30.1}}"],
+        "after":["G21"]},
+    "r":{"status":0, "y":{"vm":30}}
+}
+#
+# Test Issue #298 sequence - A nested read in inches mode returns in MM units
+#
+{
+    "t":{"label":"Write y:{vm in Inches",
+        "before":["G20"],
+        "send":["{y:{vm:30.1}}"]},
+    "r":{"status":0, "y":{"vm":30}}
+}
+# -- read back the value - it fails in fb 100.26 - SHA: af26ad8
+{
+    "t":{"label":"Read back y:{vm - should be in Inches",
+        "send":["{y:{vm:null}}"]},
+    "r":{"status":0, "y":{"vm":30}}
+}
+#
+# Test SR setting works properly - Issue #354
+#
+{
+    "t":{"label":"Set SR to posx, posy, posz",
+         "send":["{sr:{posx:true, posy:true, posz:true}}"]},
+    "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0}}
+}
+#
+{
+    "t":{"label":"SR should return posx, posy, posz",
+         "before":["G0 X0 Y0 Z0"],
+         "send":["{sr:n}"]},
+    "r":{"status":0, "sr":{"posx":0.0,"posy":0.0,"posz":0.0}}
+}

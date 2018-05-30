@@ -4,7 +4,36 @@
 #
 # include 000-init/init-standard-json.json
 #
-# Velocity Max
+# Velocity Max - Nested JSON
+{
+    "t":{"label":"Write nested write of y:{vm in MM",
+        "before":["G21"],
+        "send":["{y:{vm:1000}}"]},
+    "r":{"status":0, "y":{"vm":1000}}
+}
+#
+{
+    "t":{"label":"Read y:{vm in MM",
+        "before":["G21","{yvm:1000}"],
+        "send":["{y:{vm:null}}"]},
+    "r":{"status":0, "y":{"vm":1000}}
+}
+#
+{
+    "t":{"label":"Read y:{vm in Inches",
+        "before":["G21","{yvm:1000}","G20"],
+        "send":["{y:{vm:null}}"]},
+    "r":{"status":0, "y":{"vm":39}}
+}
+#
+{
+    "t":{"label":"Write y:{vm in Inches",
+        "before":["G20"],
+        "send":["{y:{vm:30.1}}"],
+        "after":["G21"]},
+    "r":{"status":0, "y":{"vm":30}}
+}
+# Velocity Max - Flat JSON
 {
     "t":{"label":"Write yvm in MM",
         "before":["G21"],
