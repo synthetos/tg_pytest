@@ -17,12 +17,12 @@
     "t":{"label":"FR-1A: Single move test to 30 - start movement and do a feedhold",
         "before":["g21 g0 x0 y0","~"],
         "send":["m3 m7 m8",
-                "G1 F500 X30", "!"],
+                "G1 F500 X30", "delay 500", "!"],
         "delay":0.5},
     "r":{"status":0},
     "sr":{"stat":6,"com":3,"cof":3,"spc":3}
 }
-#
+# EOF
 {
     "t":{"label":"FR-1B: Resume from feedhold - test 1",
         "send":["~"]},

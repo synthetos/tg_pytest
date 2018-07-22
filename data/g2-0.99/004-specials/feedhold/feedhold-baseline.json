@@ -29,9 +29,10 @@
         "after":["m5 m9"],
         "delay":0.75},
         "r":{"status":0},
-        "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
+        "sr":{"stat":3,"posx":30}
 }
 #
+# "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 #
 # Try to enter a feedhold ! when not in a cycle
 #

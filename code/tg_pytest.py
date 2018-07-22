@@ -3,7 +3,7 @@
 """
 __author__ = 'Alden Hart'
 __version__ = '$Revision: 0.2 $'[11:-2]
-__copyright__ = 'Copyright (c) 2016 Alden Hart'
+__copyright__ = 'Copyright (c) 2016 - 2018 Alden Hart'
 __license__ = 'Python'
 
 #### CONSTANTS AND SWITCHES ####
@@ -299,6 +299,22 @@ def do_before_after(key, data, params):
             print("AFTER ALL TESTS: {0}".format(data[key]["label"]))
             send_before_after("after", data["after_all"], delay)
 
+################################################################################
+#
+#   Execute a delay
+#
+#   String is "delay NNN" where NNN is number of millisecond to delay
+#   Return True is delay was performed
+#
+
+def run_delay(string):
+    tag = string.split(' ')[0]
+    if (tag == "delay"):
+        value = float(string.split(' ')[1])
+        print ("  DELAY {0}ms".format(value))
+        time.sleep(value/1000)
+        return True
+    return False
 
 ################################################################################
 #
@@ -356,6 +372,8 @@ def run_test(t_data, before_data, after_data, params):
     send = [x.encode("utf8") for x in t_data["t"]["send"]]
     first_line = send[0]                # used later in no-response cases    
     for line in send:
+        if (run_delay(line)):
+            continue
         print("  ----> {0}".format(line))
         tg.write(line+"\n")
 #        time.sleep(delay)

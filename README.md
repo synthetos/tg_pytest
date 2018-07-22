@@ -140,6 +140,11 @@ Additional JSON objects can be provided in a file that will run before and after
  - `setup:true`
   - can be included in a test to prevent `before_each`, `after_each` and local `before` and `after` from being run. This supports building setup "tests" that run before the actual tests in the file. _(Note: this tag may evolve to something with more fine-grained control)_
 
+### Inline Delays in Send Objects
+It's possible to add a delay between strings in a send array. For example: <br>
+`"send":["m3 m7 m8", "G1 F500 X30", "delay 500", "!"]`<br>
+inserts a 500 ms delay before the bang. The space before the value is required.
+
 ### Defaults
 A `defaults` JSON object can be included in a test file. Defaults are read and applied in the location they are found in the file, so it's good to list these first, or sometimes after the before_all. The default settings will be applied to all subsequent tests. Local, per-test settings for the same variables will override the defaults. Values supported include:
 - `fail` set as `soft` or `hard`. Hard fail will stop tests immediately on a failure, Defaults to `hard`
