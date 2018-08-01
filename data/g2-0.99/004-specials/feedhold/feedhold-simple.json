@@ -25,8 +25,7 @@
     "t":{"label":"FB-1A: Simple feedhold and exit - 250ms delays",
         "before":["{fh:0}", "g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.25", "!", "del 0.25", "~"],
-        "after":["m5 m9", "g0 x0"],
-        "delay":0.75},
+        "after":["m5 m9", "g0 x0"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
@@ -36,8 +35,7 @@
     "t":{"label":"FB-1B: Simple feedhold and exit - 100ms delays",
         "before":["{fh:0}", "g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.1", "!", "del 0.1", "~"],
-        "after":["m5 m9", "g0 x0"],
-        "delay":0.75},
+        "after":["m5 m9", "g0 x0"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
@@ -46,8 +44,7 @@
     "t":{"label":"FB-1C: Simple feedhold and exit - no delays",
         "before":["{fh:0}", "g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.8", "!~"],
-        "after":["m5 m9", "g0 x0"],
-        "delay":0.75},
+        "after":["m5 m9", "g0 x0"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
@@ -92,8 +89,7 @@
     "t":{"label":"FB-5A: Enter feedhold and exit ~ immediately",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!~"],
-        "after":["m5 m9"],
-        "delay":0.75},
+        "after":["m5 m9"]},
         "r":{"status":0},
         "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
@@ -104,8 +100,7 @@
     "t":{"label":"FB-5B: Enter feedhold and exit ~ immediately, again",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!~"],
-        "after":["m5 m9"],
-        "delay":0.75},
+        "after":["m5 m9"]},
         "r":{"status":0},
         "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
@@ -117,7 +112,6 @@
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!%"],
         "after":["m5 m9"],
-        "delay":0.75,
         "precision":1},
         "r":{"status":0},
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
@@ -130,7 +124,6 @@
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!%"],
         "after":["m5 m9"],
-        "delay":0.75,
         "precision":1},
         "r":{"status":0},
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
@@ -143,7 +136,6 @@
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!~%"],
         "after":["m5 m9"],
-        "delay":0.75,
         "precision":1},
         "r":{"status":0},
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
@@ -156,7 +148,6 @@
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!%~"],
         "after":["m5 m9"],
-        "delay":0.75,
         "precision":1},
         "r":{"status":0},
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
@@ -167,15 +158,13 @@
 {
     "t":{"label":"FB-9: Shotgun test - hold, resume, hold-resume, hold, flush",
         "before":["g0 x0 m3 m7 m8"],
-        "send":["G1 F1000 X40", "del 0.5", "!", "del 0.5", "~", "del 0.5", "!~", "del 0.5", "!", "del 0.5", "%"],
-        "delay":0.75},
+        "send":["G1 F1000 X40", "del 0.5", "!", "del 0.5", "~", "del 0.5", "!~", "del 0.5", "!", "del 0.5", "%"]},
     "r":{"status":0}
 }
 #
 {
     "t":{"label":"FB-10: Sanity moves following shotgun test",
-        "send":["G0 X0","G0 X40","G0 X0"],
-        "delay":0.75},
+        "send":["G0 X0","G0 X40","G0 X0"]},
     "r":{"status":0}
 }
 # EOF
