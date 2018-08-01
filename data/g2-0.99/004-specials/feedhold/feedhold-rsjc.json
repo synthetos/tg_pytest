@@ -10,52 +10,60 @@
 #
 # Basic feedholds
 #
-# RSJC feedhold and cycle start w/250ms delay
+# RSJC feedhold and cycle start w/500ms delay
+# Should test receiving cycle start after deceleration has completed
 {
-    "t":{"label":"FR-1A: RSJC feedhold and exit - 250ms delays",
+    "t":{"label":"FR-1A: RSJC feedhold and cycle start - 500ms delays",
         "before":["{fh:1}", "g0 x0 m3 m7 m8"],
-        "send":["G1 F1000 X30", "del 0.25", "!", "del 0.25", "~"],
+        "send":["G1 F1000 X30", "del 0.5", "!", "del 0.5", "~"],
         "after":["m5 m9", "g0 x0"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
-# "delay":0.75},
-# RSJC feedhold and cycle start w/100ms delay
+# RSJC feedhold and cycle start w/50ms delay
+# Should test receiving cycle start during deceleration
 {
-    "t":{"label":"FR-1B: RSJC feedhold and exit - 100ms delays",
+    "t":{"label":"FR-1B: RSJC feedhold and cycle start - 50ms delays",
         "before":["{fh:1}", "g0 x0 m3 m7 m8"],
-        "send":["G1 F1000 X30", "del 0.1", "!", "del 0.1", "~"],
+        "send":["G1 F1000 X30", "del 0.05", "!", "del 0.05", "~"],
         "after":["m5 m9", "g0 x0"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
 #
 # RSJC feedhold and cycle start immediately
+# Should test receiving cycle start during deceleration,
+# with ~ delivered on same command line
 {
-    "t":{"label":"FR-1C: RSJC feedhold and exit - no delays",
+    "t":{"label":"FR-1C: RSJC feedhold and cycle start on same command line",
         "before":["{fh:1}", "g0 x0 m3 m7 m8"],
-        "send":["G1 F1000 X30", "del 0.8", "!~"],
+        "send":["G1 F1000 X30", "del 0.75", "!~"],
         "after":["m5 m9", "g0 x0"]},
     "r":{"status":0},
     "sr":{"stat":3,"posx":30,"com":1,"cof":1,"spc":1}
 }
-#
 # Test RSJC queue flush (%)
-#
 {
-    "t":{"label":"FR-2A: RSJC feedhold w/queue flush",
+    "t":{"label":"FR-2A: RSJC feedhold w/queue flush exit",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!", "del 0.5", "%"],
-        "after":["m5 m9", "g0 x0"],
         "precision":1},
         "r":{"status":0},
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
 }
-#
-# Enter feedhold and exit % immediately, again
+#         "after":["m5 m9", "g0 x0"],
+# Test proper return to zero from the queue flush
+{
+    "t":{"label":"FR-2B: Return to zero after RSJC queue flush",
+        "send":["m5 m9", "g0 x0"]},
+        "r":{"status":0},
+        "sr":{"stat":3,"posx":0}
+}
+# EOF
+# Enter feedhold and exit % immediately
 #
 {
-    "t":{"label":"FB-6B: Enter feedhold and queue flush % immediately, again",
+    "t":{"label":"FB-6B: Enter feedhold and queue flush % immediately",
         "before":["g0 x0 m3 m7 m8"],
         "send":["G1 F1000 X30", "del 0.5", "!%"],
         "after":["m5 m9"],
@@ -64,7 +72,6 @@
         "sr":{"stat":3,"com":1,"cof":1,"spc":1}
 }
 #
-
 # EOF
 # RSJC Movement and Recovery
 #
