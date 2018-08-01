@@ -11,8 +11,8 @@ import json
 import time
 from time import sleep
 
-SERIAL_TIMEOUT = 1      # time to stop listening in seconds
-MARLIN_DELAY = 2.1      # time to delay if Marlin mode is detected
+SERIAL_TIMEOUT = 1.5        # time to stop listening in seconds
+MARLIN_MODE_DELAY = 2.1     # time to delay if Marlin mode is detected
 
 class TinyG(object):
 

@@ -26,7 +26,7 @@
         "fail_returned_er":true,
         "fail_missing_sr":false,
         "delay":0.100,
-        "precision":0.001
+        "precision":0.1
     }
 }
 # BEFORE AND AFTERS

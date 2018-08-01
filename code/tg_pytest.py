@@ -303,16 +303,16 @@ def do_before_after(key, data, params):
 #
 #   Execute a delay
 #
-#   String is "delay NNN" where NNN is number of millisecond to delay
+#   String is "del NNN" where NNN is number of seconds to delay
 #   Return True is delay was performed
 #
 
 def run_delay(string):
     tag = string.split(' ')[0]
-    if (tag == "delay"):
+    if (tag == "del"):
         value = float(string.split(' ')[1])
-        print ("  DELAY {0}ms".format(value))
-        time.sleep(value/1000)
+        print ("  DELAY {0} seconds".format(value))
+        time.sleep(value)
         return True
     return False
 
